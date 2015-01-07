@@ -52,7 +52,7 @@
                                     <th>Modal</th>
                                     <th>Harga</th>
                                     <th>Posisi</th>
-                                    <th style="text-align:center;">Action</th>
+                                    <th style="text-align:center;"  class="action">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

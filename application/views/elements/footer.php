@@ -16,7 +16,11 @@
 <!-- page script -->
 <script type="text/javascript">
 $(function() {
-    $("#dataTable").dataTable();
+    $("#dataTable").DataTable({
+    	      "aoColumnDefs": [
+          { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ]
+    });
 });
 </script>
 </body>

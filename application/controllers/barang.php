@@ -71,14 +71,20 @@ class Barang extends CI_Controller {
 
 	function update($id){
 		$dt['title']='Toko Onderdil | Barang';
-		$update['id_barang'] = $id;
+		$update['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_barang', $update)->result();
 		foreach ($result as $key => $value) {
-			$data['id_barang'] = $value->id_barang;
-			$data['judul_barang'] = $value->judul_barang;
-			$data['isi_barang'] = $value->isi_barang;
-			$data['prev_image'] = $value->image_barang; 
+			$data['kd_barang'] = $value->kd_barang;
+			$data['nama_barang'] = $value->nama_barang;
+			$data['kategori'] = $value->kategori;
+			$data['brand'] = $value->brand; 
+			$data['type'] = $value->type; 
+			$data['min_stok'] = $value->min_stok; 
+			$data['stok'] = $value->stok; 
+			$data['modal'] = $value->modal; 
+			$data['harga'] = $value->harga; 
+			$data['posisi'] = $value->posisi; 
 		}
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
@@ -86,7 +92,7 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('isi_barang', 'Isi', 'required');
 			if(isset($id)){
 				if ($this->form_validation->run()) {
-					$id_update['id_barang'] = $id;
+					$id_update['kd_barang'] = $id;
 					$update['judul_barang'] = $this->input->post('judul_barang');
 					$update['isi_barang'] = $this->input->post('isi_barang');
 					$update['tgl_barang'] =  date('Y-m-d');
@@ -117,7 +123,7 @@ class Barang extends CI_Controller {
 
 	function delete($id){
 		$dt['title']='Toko Onderdil | Barang';
-		$delete['id_barang'] = $id;
+		$delete['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
 			if(isset($id)){
