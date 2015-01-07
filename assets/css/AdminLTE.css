@@ -3548,3 +3548,8 @@ fieldset[disabled] .btn-vk.active {
 .cleaner_h40 { clear: both; width:100%; height: 40px; }
 .cleaner_h50 { clear: both; width:100%; height: 50px; }
 .cleaner_h60 { clear: both; width:100%; height: 60px; }
+
+.box-button{
+  padding: 10px;
+  float: none;
+}
