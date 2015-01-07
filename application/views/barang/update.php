@@ -7,7 +7,7 @@
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>
             <li class="active"><a href="<?php echo base_url('barang')?>">Barang</a></li>
-            <li class="active"><a href="<?php echo base_url('barang/create')?>">Create Barang</a></li>
+            <li class="active"><a href="<?php echo base_url('barang/update/'.$kd_barang)?>">Update Barang</a></li>
         </ol>
     </section>
     
@@ -35,7 +35,7 @@
                             <div class="col-md-12">
                                 <?php
                                 if(isset($pesan)){
-                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i> '.$pesan.'</div>';
+                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> '.$pesan.'</div>';
                                 };
                                 ?>
                             </div>

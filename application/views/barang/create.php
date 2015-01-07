@@ -2,7 +2,7 @@
     <section class="content-header">
         <h1>
             Master Barang
-            <small>Create Barang</small>
+            <small>Update Barang</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>
@@ -35,7 +35,7 @@
                             <div class="col-md-12">
                                 <?php
                                 if(isset($pesan)){
-                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i> '.$pesan.'</div>';
+                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> '.$this->session->flashdata('pesan').'</div>';
                                 };
                                 ?>
                             </div>
@@ -163,7 +163,7 @@
                             ?>
                                 <label for="harga" class="col-md-2 control-label">Harga</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="harga" name="harga" value='<?php echo set_value('Harga'); ?>'>
+                                    <input type="text" class="form-control flat" id="harga" name="harga" value='<?php echo set_value('harga'); ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('harga'); ?></div>
                             </div>

@@ -16,24 +16,24 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                    <div class="box-button">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a href="<?php echo base_url('barang');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
-                                <a href="<?php echo base_url('barang/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> New</a>
+                        <div class="box-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="<?php echo base_url('barang');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
+                                    <a href="<?php echo base_url('barang/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> New</a>
+                                </div>
                             </div>
+                            <div class="cleaner_h3"></div>
                         </div>
-                        <div class="cleaner_h3"></div>
-                    </div>
                     </div><!-- /.box-header -->
                     <hr>
                     <div class="box-body table-responsive">
                         <div class="cleaner_h3"></div>
                         <div class="row">
                             <div class="col-md-12">
-                                <?php
-                                if(isset($pesan)){
-                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i> '.$pesan.'</div>';
+                                <?php                                
+                                if(!empty($this->session->flashdata('pesan'))){
+                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> '.$this->session->flashdata('pesan').'</div>';
                                 };
                                 ?>
                             </div>
@@ -78,16 +78,16 @@
                                                 </a>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="<?php echo base_url('barang/update/'.$value->kd_barang);?>">Tambah Stok</a>
+                                                        <a href="<?php echo base_url('barang/addStok/'.$value->kd_barang);?>">Tambah Stok</a>
                                                     </li>
                                                     <li>
                                                         <a href="<?php echo base_url('barang/update/'.$value->kd_barang);?>">Update</a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo base_url('barang/update/'.$value->kd_barang);?>">Detail</a>
+                                                        <a href="<?php echo base_url('barang/detail/'.$value->kd_barang);?>">Detail</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#myModal" role="button" data-toggle="modal" onclick="myModalInsertInHere(<?php echo $value->kd_barang; ?>)">Delete</a>
+                                                        <a href="#deleteModal" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $value->kd_barang; ?>')">Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -118,4 +118,27 @@
             </div>
         </div>
 
-                                    </section><!-- /.content -->
+    </section><!-- /.content -->
+
+    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="modal-title" id="deleteLabel">Delete</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Barang ini akan dihapus, Anda Yakin?</h4>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" href="javascript:;">Tidak</a>
+                    <a class="btn btn-primary" id="deleteModalFunction" href="javascript:;">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function deleteModalFunction(temp_id){
+        $("#deleteModalFunction").attr("href","<?php echo base_url();?>barang/delete/"+temp_id);
+    }
+    </script>
