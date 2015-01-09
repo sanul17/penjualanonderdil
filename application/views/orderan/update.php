@@ -75,6 +75,9 @@
                         <div class="col-md-2">
                             <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $this->session->userdata('kd_sales'); ?>' readonly>
                         </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control flat" id="nama_sales" name="nama_sales" value='<?php echo $nama_sales; ?>' readonly>
+                        </div>
                         <div class="col-md-4"><?php echo form_error('kd_sales'); ?></div>
                     </div>
 

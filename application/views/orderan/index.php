@@ -59,7 +59,7 @@
                             <thead>
                                 <tr>
                                     <th>Kode Orderan</th>
-                                    <th>Kode Sales</th>
+                                    <th>Nama Sales</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Tanggal Order</th>
                                     <th style="text-align:center;"  class="action">Action</th>
@@ -71,7 +71,7 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $value->kd_order; ?></td>
-                                        <td><?php echo $value->kd_sales; ?></td>
+                                        <td><?php echo $value->nama_sales; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
                                         <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_order); ?></td>
                                         <td style="text-align:center;">

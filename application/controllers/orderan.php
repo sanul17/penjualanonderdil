@@ -15,9 +15,9 @@ class Orderan extends CI_Controller {
 		if (!empty($cek)) {	
 			$this_sales = $this->session->userdata('kd_sales');
 			if ($this->session->userdata('level') == 'sales') {
-				$data['data'] = $this->app_model->manualQuery("SELECT kd_order, kd_sales, nama_pelanggan, tgl_order, status, (select count(kd_order) as jum from tbl_order_detail where kd_order=kd_order) as jumlah from tbl_order where status='Pending' && kd_sales = '".$this_sales."'")->result();
+				$data['data'] = $this->app_model->manualQuery("SELECT a.kd_order, a.kd_sales, a.nama_pelanggan, b.nama_sales, a.tgl_order, a.status, (select count(kd_order) as jum from tbl_order_detail where kd_order=kd_order) as jumlah from tbl_order a left join tbl_sales b on a.kd_sales=b.kd_sales where status='Pending' && a.kd_sales = '".$this_sales."'")->result();
 			}else{
-				$data['data'] = $this->app_model->manualQuery("SELECT kd_order, kd_sales, nama_pelanggan, tgl_order, status, (select count(kd_order) as jum from tbl_order_detail where kd_order=kd_order) as jumlah from tbl_order where status='Pending'")->result();
+				$data['data'] = $this->app_model->manualQuery("SELECT a.kd_order, a.kd_sales, a.nama_pelanggan, b.nama_sales, a.tgl_order, a.status, (select count(kd_order) as jum from tbl_order_detail where kd_order=kd_order) as jumlah from tbl_order a left join tbl_sales b on a.kd_sales=b.kd_sales where status='Pending'")->result();
 			}
 			$this->load->view('elements/header', $dt);
 			$this->load->view('orderan/index', $data);
@@ -31,6 +31,7 @@ class Orderan extends CI_Controller {
 		$dt['title']='Toko Onderdil | Create orderan';
 		$data['kd_order'] = $this->app_model->getMaxKodeOrder();
 		$data['data_barang'] = $this->app_model->getBarangJual()->result();
+		$data['nama_sales'] = $this->app_model->getNamaSales($this->session->userdata('kd_sales'));
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
@@ -159,6 +160,7 @@ class Orderan extends CI_Controller {
 		foreach ($data['data_order'] as $key => $value) {
 			$data['kd_order'] = $value->kd_order;
 			$data['kd_sales'] = $value->kd_sales;
+			$data['nama_sales'] = $this->app_model->getNamaSales($value->kd_sales);
 			$data['nama_pelanggan'] = $value->nama_pelanggan;
 			$data['tgl_order'] = $value->tgl_order;
 		}
@@ -195,6 +197,7 @@ class Orderan extends CI_Controller {
 		foreach($data['data_order']->result() as $dph)
 		{
 			$sess_data['nama_pelanggan'] = $dph->nama_pelanggan;
+			$data['nama_sales'] = $this->app_model->getNamaSales($dph->kd_sales);
 			$this->session->set_userdata($sess_data);
 		}
 
@@ -344,6 +347,7 @@ class Orderan extends CI_Controller {
 		foreach ($data['data_order'] as $key => $value) {
 			$data['kd_order'] = $value->kd_order;
 			$data['kd_sales'] = $value->kd_sales;
+			$data['nama_sales'] = $this->app_model->getNamaSales($value->kd_sales);
 			$data['nama_pelanggan'] = $value->nama_pelanggan;
 			$data['tgl_order'] = $value->tgl_order;
 		}

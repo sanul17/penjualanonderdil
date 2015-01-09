@@ -173,6 +173,17 @@ class App_model extends CI_Model {
         return $this->db->query ("SELECT * from tbl_barang where stok > 0");
     }
 
+
+    function getNamaSales($id){
+        $q = $this->db->query ("SELECT nama_sales from tbl_sales where kd_sales='".$id."'");
+		$nama_sales = "";
+		foreach($q->result() as $d)
+		{
+			$nama_sales = $d->nama_sales;
+		}
+		return $nama_sales;
+    }
+
 	//query login
 	public function getLoginData($tabel, $usr, $psw)
 	{

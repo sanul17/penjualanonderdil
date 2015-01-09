@@ -18,10 +18,10 @@ $(function() {
     $('.chzn-select-deselect').chosen({allow_single_deselect:true});
 
     $("#dataTable").DataTable({
-     "aoColumnDefs": [
-     { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
-     ]
- });
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ],
+   });
 
     $.ajax({
         url: '<?php echo base_url(); ?>dashboard/barangNotification',
@@ -50,6 +50,6 @@ $(function() {
 });
 
 
-</script>
+ </script>
 </body>
 </html>

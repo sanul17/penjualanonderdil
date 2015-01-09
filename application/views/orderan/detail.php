@@ -74,7 +74,7 @@
                         ?>
                         <label for="tgl_order" class="col-md-6 control-label pull-left">Tanggal Orderan</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control flat" id="tgl_order" name="tgl_order" value='<?php echo $tgl_order; ?>' readonly>
+                            <input type="text" class="form-control flat" id="tgl_order" name="tgl_order" value='<?php echo gmdate('d/m/Y - H:i:s', $tgl_order); ?>' readonly>
                         </div>
                         <div class="col-md-4"><?php echo form_error('tgl_order'); ?></div>
                     </div>
@@ -105,6 +105,9 @@
                         <label for="kd_sales" class="col-md-4 control-label pull-left">Kode Sales</label>
                         <div class="col-md-4">
                             <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $kd_sales; ?>' readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control flat" id="nama_sales" name="nama_sales" value='<?php echo $nama_sales; ?>' readonly>
                         </div>
                         <div class="col-md-4"><?php echo form_error('kd_sales'); ?></div>
                     </div>
