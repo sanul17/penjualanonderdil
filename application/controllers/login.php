@@ -38,9 +38,11 @@ class Login extends CI_Controller {
 				if(!$login_as_admin){
 				$sess_data['nama'] = $value->nama_sales;
 				$sess_data['level'] = 'sales';
+				$sess_data['kd_sales'] = $value->kd_sales;
 			}else{
 				$sess_data['nama'] = $value->nama_user;
 				$sess_data['level'] = $value->level;
+				$sess_data['kd_user'] = $value->kd_user;
 			}
 				if($remember){
 				$sess_data['new_expiration'] = 60*60*24*30;//30 days

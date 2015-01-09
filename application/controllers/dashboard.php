@@ -17,4 +17,25 @@ class Dashboard extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
+	function barangNotification(){
+		$jml_notif = count($this->app_model->manualQuery('select * from tbl_barang where stok <= min_stok')->result());
+		if ($jml_notif != 0) {
+			echo "<small class='badge pull-right bg-red'>".$jml_notif."</small>";
+		}
+	}
+	function orderNotification(){
+		$jml_notif = count($this->app_model->manualQuery('select * from tbl_order where status = "Pending"')->result());
+		if ($jml_notif != 0) {
+			echo "<small class='badge pull-right bg-red'>".$jml_notif."</small>";
+		}
+	}
+
+	function notification(){
+		$jml_notif = count($this->app_model->manualQuery('select * from tbl_barang where stok <= min_stok')->result());
+		$jml_notif2 = count($this->app_model->manualQuery('select * from tbl_order where status = "Pending"')->result());
+		$jml_notif += $jml_notif2;
+		if ($jml_notif != 0) {
+			echo $jml_notif;
+		}
+	}
 }

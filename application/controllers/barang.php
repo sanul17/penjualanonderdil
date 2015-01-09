@@ -223,19 +223,5 @@ class Barang extends CI_Controller {
 		}
 
 	}
-	function search(){
-		$dt['title']='Toko Onderdil | Barang';
-		$cek = $this->session->userdata('logged_in');
-		if (!empty($cek)) {
-			$q=($this->input->get('q') ? $this->input->get('q') : '');
-			$data['data'] = $this->app_model->searchData('tbl_barang', $q)->result();
-			$this->load->view('elements/header', $dt);
-			$this->load->view('barang/index', $data);
-			$this->load->view('elements/footer');
-		}else{
-			redirect(base_url('login'));
-		}
-
-	}
 
 }

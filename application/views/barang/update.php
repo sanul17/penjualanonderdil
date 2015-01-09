@@ -2,7 +2,7 @@
     <section class="content-header">
         <h1>
             Master Barang
-            <small>Create Barang</small>
+            <small>Update Barang</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>

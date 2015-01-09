@@ -73,7 +73,7 @@ class App_model extends CI_Model {
 	
 	public function getMaxKodeSales()
 	{
-		$q = $this->db->query("select MAX(RIGHT(kd_user, 3)) as kd_max from tbl_sales");
+		$q = $this->db->query("select MAX(RIGHT(kd_sales, 3)) as kd_max from tbl_sales");
 		$kd = "";
 		if($q->num_rows()>0)
 		{
@@ -109,9 +109,9 @@ class App_model extends CI_Model {
 		return "BR".$kd;
 	}
 
-	public function getMaxKodePesanan()
+	public function getMaxKodeOrder()
 	{
-		$q = $this->db->query("select MAX(RIGHT(kd_pesanan,8)) as kd_max from tbl_order");
+		$q = $this->db->query("select MAX(RIGHT(kd_order,8)) as kd_max from tbl_order");
 		$kd = "";
 		if($q->num_rows()>0)
 		{
@@ -130,7 +130,7 @@ class App_model extends CI_Model {
 	
 	public function getMaxKodePenjualan()
 	{
-		$q = $this->db->query("select MAX(RIGHT(kd_pesanan,8)) as kd_max from tbl_penjualan");
+		$q = $this->db->query("select MAX(RIGHT(kd_penjualan,8)) as kd_max from tbl_penjualan");
 		$kd = "";
 		if($q->num_rows()>0)
 		{
@@ -145,25 +145,6 @@ class App_model extends CI_Model {
 			$kd = "00000001";
 		}	
 		return "PJ".$kd;
-	}
-	
-	public function getMaxKodeFaktur()
-	{
-		$q = $this->db->query("select MAX(RIGHT(kd_faktur,8)) as kd_max from tbl_faktur");
-		$kd = "";
-		if($q->num_rows()>0)
-		{
-			foreach($q->result() as $k)
-			{
-				$tmp = ((int)$k->kd_max)+1;
-				$kd = sprintf("%08s", $tmp);
-			}
-		}
-		else
-		{
-			$kd = "00000001";
-		}	
-		return "FK".$kd;
 	}
 	
 	public function getSisaStok($kd_barang)
@@ -187,6 +168,10 @@ class App_model extends CI_Model {
 		}
 		return $stok;
 	}
+
+    function getBarangJual(){
+        return $this->db->query ("SELECT * from tbl_barang where stok > 0");
+    }
 
 	//query login
 	public function getLoginData($tabel, $usr, $psw)
