@@ -32,6 +32,12 @@ class App_model extends CI_Model {
 		return $this->db->update($table,$data,$field_key);
 	}
 	
+	function updateStok($data, $id)
+	{       
+		$this->db->where('kd_barang', $id);
+        $this->db->update('tbl_barang', $data);
+	}
+	
 	function deleteData($table,$data)
 	{
 		return $this->db->delete($table,$data);

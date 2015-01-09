@@ -206,8 +206,8 @@
                     }
                     ?>
                     <td><input type="text" class="form-control flat harga" readonly name="harga[]" value="<?php echo $items['price']; ?>"/></td>
-                    <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan" value="0"></td>
-                    <td><input type="text" class="form-control flat" id="dus" name="dus"></td>
+                    <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="0"></td>
+                    <td><input type="text" class="form-control flat" id="dus" name="dus[]"></td>
                     <td><input type="text" class="form-control flat subtotal" id="subtotal" name="subtotal" readonly></td>
                 </tr>
                 <?php
@@ -255,7 +255,7 @@ $('.qty-dikirim').change(function(event) {
     var total = $('#total');
     if (qty_dikirim != 0) {
         potongan_val = (potongan/100)*harga;
-        subtotal_val = (harga*qty_dikirim)-potongan_val;
+        subtotal_val = (harga-potongan_val)*qty_dikirim;
         subtotal =  $(this).closest('.gradeX').find('.subtotal');
         subtotal.val(subtotal_val);
     };

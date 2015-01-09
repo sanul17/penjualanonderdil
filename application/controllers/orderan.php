@@ -374,25 +374,42 @@ class Orderan extends CI_Controller {
 				$confirm['kd_order'] = $this->input->post('kd_order');
 				$confirm['nama_pelanggan'] = $this->input->post('nama_pelanggan');
 				$confirm['kd_user'] = $this->input->post('kd_user');
-				$confirm['total'] = $this->input->post('total');
+				$confirm['total_harga'] = $this->input->post('total');
 				$confirm['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
 				$confirm['jenis'] = 'Order';
-				$result = $this->app_model->insertData('tbl_order', $confirm);
+				$status['status'] = 'Confirm';
+				$result = $this->app_model->insertData('tbl_penjualan', $confirm);
+				$result2 = $this->app_model->updateData('tbl_order', $status, $detail);
+				$result3 = 0;
 
+
+				$qty_dikirim = $this->input->post('qty_dikirim');
+				$harga = $this->input->post('harga');
+				$potongan = $this->input->post('potongan');
+				$dus = $this->input->post('dus');
+
+
+				$i = 0;
 				foreach($this->cart->contents() as $items)
 				{
 					$confirm_detail['kd_penjualan'] = $this->input->post('kd_penjualan');
 					$confirm_detail['kd_barang'] = $items['id'];
-					$confirm_detail['qty'] = $items['qty'];
-					$confirm_detail['price'] = $items['price'];
-					$result2 = $this->app_model->insertData("tbl_order_detail",$confirm_detail);
+					$confirm_detail['qty'] = $qty_dikirim[$i];
+					$confirm_detail['harga_tersimpan'] = $harga[$i];
+					$confirm_detail['potongan'] = $potongan[$i];
+					$confirm_detail['dus'] = $dus[$i];
+					$result3 = $this->app_model->insertData("tbl_penjualan_detail", $confirm_detail);
+					$stok['stok'] = $this->app_model->getBalancedStok($confirm_detail['kd_barang'], $confirm_detail['qty']);
+					$key = $items['id'];
+					$this->app_model->updateStok($stok, $key); 
+					$i++;
 				}
 
 				$this->session->unset_userdata('nama_pelanggan');
 				$this->session->unset_userdata('limit_add_cart');
 				$this->cart->destroy();
 
-				if ($result && $result2) {
+				if ($result && $result2 && $result3) {
 					$pesan = 'confirm Orderan Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
 					redirect(base_url('orderan'));
