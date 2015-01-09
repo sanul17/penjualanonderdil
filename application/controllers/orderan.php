@@ -370,18 +370,21 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
-				$id_confirm['kd_order'] = $this->input->post('kd_order');
+				$confirm['kd_penjualan'] = $this->input->post('kd_penjualan');
+				$confirm['kd_order'] = $this->input->post('kd_order');
 				$confirm['nama_pelanggan'] = $this->input->post('nama_pelanggan');
-				$confirm['kd_sales'] = $this->input->post('kd_sales');
-				$result = $this->app_model->confirmData('tbl_order', $confirm, $id_confirm);
-
-				$this->app_model->deleteData("tbl_order_detail", $id_confirm);
+				$confirm['kd_user'] = $this->input->post('kd_user');
+				$confirm['total'] = $this->input->post('total');
+				$confirm['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
+				$confirm['jenis'] = 'Order';
+				$result = $this->app_model->insertData('tbl_order', $confirm);
 
 				foreach($this->cart->contents() as $items)
 				{
-					$confirm_detail['kd_order'] = $this->input->post('kd_order');
+					$confirm_detail['kd_penjualan'] = $this->input->post('kd_penjualan');
 					$confirm_detail['kd_barang'] = $items['id'];
 					$confirm_detail['qty'] = $items['qty'];
+					$confirm_detail['price'] = $items['price'];
 					$result2 = $this->app_model->insertData("tbl_order_detail",$confirm_detail);
 				}
 

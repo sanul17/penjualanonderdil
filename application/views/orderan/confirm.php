@@ -226,8 +226,8 @@
     <div class="cleaner_h20"></div>
     <div class="form-group">
         <div class="col-sm-8">
-            <button type="submit" class="btn btn-primary flat" disabled="disabled" name="btnsimpan">Confirm</button>
-            <button type="submit" class="btn bg-black flat" disabled="disabled" name="btnsimpancetak">Confirm and Print Faktur</button>
+            <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
+            <button type="submit" class="btn bg-black flat" disabled="disabled" id="btnsimpancetak">Confirm and Print Faktur</button>
         </div>
     </div>
 </form>
@@ -266,6 +266,10 @@ $('.qty-dikirim').change(function(event) {
         total_val += Number(all_sub_total[i].value);
     };
     total.val(total_val);
+
+    $('#btnsimpan').removeAttr('disabled');
+    $('#btnsimpancetak').removeAttr('disabled');
+
 });
 
 $('.potongan').change(function(event) {
@@ -288,5 +292,10 @@ $('.potongan').change(function(event) {
         total_val += Number(all_sub_total[i].value);
     };
     total.val(total_val);
+});
+
+$('#btnsimpancetak').on('click', function(event) {
+    event.preventDefault();
+    /* Act on the event */
 });
 </script>
