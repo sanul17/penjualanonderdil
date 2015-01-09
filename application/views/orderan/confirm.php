@@ -279,6 +279,7 @@ $('.potongan').change(function(event) {
     var potongan_val = 0;
     var subtotal_val = 0;
     var subtotal =  $(this).closest('.gradeX').find('.subtotal');
+    var total = $('#total');
     if (qty_dikirim != 0) {
         potongan_val = (potongan/100)*harga;
         subtotal_val = (harga*qty_dikirim)-potongan_val;
@@ -292,6 +293,9 @@ $('.potongan').change(function(event) {
         total_val += Number(all_sub_total[i].value);
     };
     total.val(total_val);
+
+    $('#btnsimpan').removeAttr('disabled');
+    $('#btnsimpancetak').removeAttr('disabled');
 });
 
 $('#btnsimpancetak').on('click', function(event) {
