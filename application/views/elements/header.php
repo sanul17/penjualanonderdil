@@ -183,6 +183,14 @@
                                 </a>
                             </li>
                             <?php
+                        }elseif ($this->session->userdata('level') == 'gudang') {
+                            ?>
+                            <li>
+                                <a href="<?php echo base_url('barang')?>">
+                                    <i class="fa fa-cubes"></i> <span>Barang</span>
+                                </a>
+                            </li>
+                            <?php
                         }
                         ?>
                     </ul>
