@@ -82,7 +82,7 @@
                     </div>
 
                     <?php
-                    if (form_error('username')) {
+                    if (form_error('nama_pelanggan')) {
                         echo '<div class="form-group has-error">';
                     }else{
                         echo '<div class="form-group">';

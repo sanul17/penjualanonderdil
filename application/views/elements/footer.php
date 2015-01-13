@@ -27,7 +27,7 @@ $(function() {
         url: '<?php echo base_url(); ?>dashboard/barangNotification',
     })
     .done(function(msg) {
-        $('#barang_notification').html(msg)
+        $('.barang_notification').html(msg)
         console.log(msg);
     });
     
@@ -35,7 +35,7 @@ $(function() {
         url: '<?php echo base_url(); ?>dashboard/orderNotification',
     })
     .done(function(msg) {
-        $('#order_notification').html(msg)
+        $('.order_notification').html(msg)
         console.log(msg);
     });
 
@@ -43,7 +43,7 @@ $(function() {
         url: '<?php echo base_url(); ?>dashboard/notification',
     })
     .done(function(msg) {
-        $('#notification').html(msg)
+        $('.notification').html(msg)
         console.log(msg);
     });
     

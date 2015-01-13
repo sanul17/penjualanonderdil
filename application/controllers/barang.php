@@ -132,6 +132,9 @@ class Barang extends CI_Controller {
 					$update['type'] = $this->input->post('type'); 
 					$update['min_stok'] = $this->input->post('min_stok'); 
 					$update['stok'] = $this->input->post('stok'); 
+					if ($update['stok'] < 0) {
+						$update['stok'] = 0;
+					}
 					$update['modal'] = $this->input->post('modal'); 
 					$update['harga'] = $this->input->post('harga'); 
 					$update['posisi'] = $this->input->post('posisi'); 
@@ -183,6 +186,9 @@ class Barang extends CI_Controller {
 					$update['min_stok'] = $this->input->post('min_stok'); 
 					$stok = $this->input->post('stok');
 					$update['stok'] = $stok+$this->input->post('qty');
+					if ($update['stok'] < 0) {
+						$update['stok'] = 0;
+					}
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
 						$pesan = 'Tambah Stok Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);

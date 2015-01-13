@@ -227,8 +227,7 @@
     <div class="form-group">
         <div class="col-sm-8">
             <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
-            <button type="submit" class="btn bg-black flat" disabled="disabled" id="btnsimpancetak">Confirm and Print Faktur</button>
-        </div>
+         </div>
     </div>
 </form>
 <div class="cleaner_h20"></div>
@@ -255,7 +254,8 @@ $('.qty-dikirim').change(function(event) {
     var total = $('#total');
     if (qty_dikirim != 0) {
         potongan_val = (potongan/100)*harga;
-        subtotal_val = (harga-potongan_val)*qty_dikirim;
+        harga = harga-potongan_val;
+        subtotal_val = (harga*qty_dikirim);
         subtotal =  $(this).closest('.gradeX').find('.subtotal');
         subtotal.val(subtotal_val);
     };
@@ -268,7 +268,6 @@ $('.qty-dikirim').change(function(event) {
     total.val(total_val);
 
     $('#btnsimpan').removeAttr('disabled');
-    $('#btnsimpancetak').removeAttr('disabled');
 
 });
 
@@ -282,7 +281,8 @@ $('.potongan').change(function(event) {
     var total = $('#total');
     if (qty_dikirim != 0) {
         potongan_val = (potongan/100)*harga;
-        subtotal_val = (harga*qty_dikirim)-potongan_val;
+        harga = harga-potongan_val;
+        subtotal_val = (harga*qty_dikirim);
         subtotal =  $(this).closest('.gradeX').find('.subtotal');
         subtotal.html(subtotal_val);
     };
@@ -295,11 +295,6 @@ $('.potongan').change(function(event) {
     total.val(total_val);
 
     $('#btnsimpan').removeAttr('disabled');
-    $('#btnsimpancetak').removeAttr('disabled');
 });
 
-$('#btnsimpancetak').on('click', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-});
 </script>

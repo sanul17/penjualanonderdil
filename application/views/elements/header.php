@@ -42,13 +42,13 @@
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
                         <?php
-                        if ($this->session->userdata('level') == 'owner' || $this->session->userdata('level') == 'owner' ) {
+                        if ($this->session->userdata('level') == 'owner' || $this->session->userdata('level') == 'admin' ) {
                         ?>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-danger" id="notification"></span>
+                                <span class="label label-danger notification" ></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have Notifications</li>
@@ -57,12 +57,12 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="<?php echo base_url('barang')?>">
-                                                <i class="fa fa-cubes danger"></i> <span id="barang_notification"></span> Barang
+                                                <i class="fa fa-cubes danger"></i> <span class="barang_notification"></span> Stok Barang
                                             </a>
                                         </li>
                                         <li>
                                             <a href="<?php echo base_url('orderan')?>">
-                                                <i class="fa fa-shopping-cart danger"></i> <span id="order_notification"></span> Orderan
+                                                <i class="fa fa-shopping-cart danger"></i> <span class="order_notification"></span> Orderan
                                             </a>
                                         </li>
                                     </ul>
@@ -140,7 +140,7 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url('barang')?>">
-                                    <i class="fa fa-cubes"></i> <span>Barang</span> <span id="barang_notification"></span>
+                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span> <span class="barang_notification"></span>
                                 </a>
                             </li>
                             <li>
@@ -155,7 +155,7 @@
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span id="order_notification"></span></a></li>
+                                    <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
                                     <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
                                 </ul>
                             </li>
@@ -174,7 +174,7 @@
                             ?>
                             <li>
                                 <a href="<?php echo base_url('barang')?>">
-                                    <i class="fa fa-cubes"></i> <span>Barang</span>
+                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span>
                                 </a>
                             </li>
                             <li>
@@ -187,7 +187,7 @@
                             ?>
                             <li>
                                 <a href="<?php echo base_url('barang')?>">
-                                    <i class="fa fa-cubes"></i> <span>Barang</span>
+                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span>
                                 </a>
                             </li>
                             <?php

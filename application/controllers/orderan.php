@@ -30,7 +30,7 @@ class Orderan extends CI_Controller {
 	function create(){
 		$dt['title']='Toko Onderdil | Create orderan';
 		$data['kd_order'] = $this->app_model->getMaxKodeOrder();
-		$data['data_barang'] = $this->app_model->getBarangJual()->result();
+		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
 		$data['nama_sales'] = $this->app_model->getNamaSales($this->session->userdata('kd_sales'));
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -95,37 +95,38 @@ class Orderan extends CI_Controller {
 			'qty'   => $this->input->post('qty'),
 			'price' => $this->input->post('harga'),
 			'name'  => $this->input->post('nama_barang'),
+			'options'    => array('potongan' => $this->input->post('potongan')),
 			);
-		$this->cart->insert($data);
-		$create_or_update = $this->input->post('create_or_update');
-		if ($create_or_update == 'create') {
-			redirect(base_url('orderan/create'));
-		}elseif ($create_or_update == 'update') {
-			$kd_order = $this->input->post('kd_order');
-			redirect(base_url('orderan/update/'.$kd_order));
-		}else{
-			redirect(base_url('orderan/index'));
-		}
-	}
+$this->cart->insert($data);
+$create_or_update = $this->input->post('create_or_update');
+if ($create_or_update == 'create') {
+	redirect(base_url('orderan/create'));
+}elseif ($create_or_update == 'update') {
+	$kd_order = $this->input->post('kd_order');
+	redirect(base_url('orderan/update/'.$kd_order));
+}else{
+	redirect(base_url('orderan/index'));
+}
+}
 //    DELETE
-	function remove_from_cart(){
-		$cek = $this->session->userdata('logged_in');
-		if(!empty($cek))
+function remove_from_cart(){
+	$cek = $this->session->userdata('logged_in');
+	if(!empty($cek))
+	{
+		$kode = explode("/",$_GET['kode']);
+		if($kode[0]=="create")
 		{
-			$kode = explode("/",$_GET['kode']);
-			if($kode[0]=="create")
-			{
-				$data = array(
-					'rowid' => $kode[1],
-					'qty'   => 0);
-				$this->cart->update($data);
-			}
-			else if($kode[0]=="update")
-			{
-				$data = array(
-					'rowid' => $kode[1],
-					'qty'   => 0);
-				$this->cart->update($data);
+			$data = array(
+				'rowid' => $kode[1],
+				'qty'   => 0);
+			$this->cart->update($data);
+		}
+		else if($kode[0]=="update")
+		{
+			$data = array(
+				'rowid' => $kode[1],
+				'qty'   => 0);
+			$this->cart->update($data);
 				/* LANGSUNG UPDATE ORDER DETAIL
 				$hps['kd_order'] = $kode[2];
 				$hps['kd_barang'] = $kode[3];
@@ -192,7 +193,7 @@ class Orderan extends CI_Controller {
 		$dt['title']='Toko Onderdil | Update orderan';
 		$update['kd_order'] = $id;
 		$data['kd_order'] = $update['kd_order'];
-		$data['data_barang'] = $this->app_model->getBarangJual()->result();
+		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
 		$data['data_order'] = $this->app_model->getSelectedData("tbl_order", $update);
 		foreach($data['data_order']->result() as $dph)
 		{
@@ -258,54 +259,6 @@ class Orderan extends CI_Controller {
 				$this->load->view('elements/header', $dt);
 				$this->load->view('orderan/update', $data);
 				$this->load->view('elements/footer');				
-			}
-		}else{
-			redirect(base_url('login'));
-		}
-	}
-
-	function addStok($id){
-		$dt['title']='Toko Onderdil | Tambah orderan';
-		$update['kd_order'] = $id;
-		$cek = $this->session->userdata('logged_in');
-		$result = $this->app_model->getSelectedData('tbl_order', $update)->result();
-		foreach ($result as $key => $value) {
-			$data['kd_order'] = $value->kd_order;
-			$data['nama_orderan'] = $value->nama_orderan; 
-			$data['min_stok'] = $value->min_stok; 
-			$data['stok'] = $value->stok; 
-		}
-		if (!empty($cek)) {
-			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
-			$this->form_validation->set_rules('kd_order', 'kd_order', 'required');
-			$this->form_validation->set_rules('nama_orderan', 'Nama orderan', 'required');
-			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
-			$this->form_validation->set_rules('stok', 'Stok', 'required');
-			$this->form_validation->set_rules('qty', 'Quantity', 'required');
-			if(isset($id)){
-				if ($this->form_validation->run()) {
-					$id_update['kd_order'] = $id;
-					$update['nama_orderan'] = $this->input->post('nama_orderan');
-					$update['min_stok'] = $this->input->post('min_stok'); 
-					$stok = $this->input->post('stok');
-					$update['stok'] = $stok+$this->input->post('qty');
-					if ($this->app_model->updateData('tbl_order', $update, $id_update)) {
-						$pesan = 'Tambah Stok orderan Sukses';
-						$this->session->set_flashdata('pesan', $pesan);
-						redirect(base_url('orderan'));
-					}else{
-						$data['pesan'] = 'Tambah Stok orderan Gagal';
-						$this->load->view('elements/header', $dt);
-						$this->load->view('orderan/add', $data);
-						$this->load->view('elements/footer');
-					}
-				}else{
-					$this->load->view('elements/header', $dt);
-					$this->load->view('orderan/add', $data);
-					$this->load->view('elements/footer');
-				}
-			}else{
-				redirect(base_url('orderan'));
 			}
 		}else{
 			redirect(base_url('login'));
