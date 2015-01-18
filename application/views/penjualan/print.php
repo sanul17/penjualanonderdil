@@ -1,4 +1,26 @@
  <!-- Content Header (Page header) -->
+     <style type="text/css">
+        body{
+            background-color: #ffffff;
+        }
+        [class*="span"] {
+            float: left;
+            min-height: 1px;
+            margin-left: 5px;
+        }
+        .span {
+            width: 220px;
+        }
+        .sign{
+            height: 100px;
+            border-bottom: 1px solid #000000;
+        }
+        .text-center{
+            text-align: center
+        }
+
+    </style>
+
  <section class="content-header">
     <h1>
         Cetak Faktur
@@ -31,16 +53,16 @@
     <!-- info row -->
     <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
-                <strong>Alvindo Motor Jakarta</strong><br>
-                Jl. Nirmala Raya No 3H<br>
+            <span class="lead">Alvindo Motor Jakarta</span class="lead"><br>
+            <small>Jl. Nirmala Raya No 3H</small><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-                <strong>Kode    : </strong><?php echo $kd_penjualan; ?><br>
-                <strong>Tanggal : </strong><?php echo $tgl_cetak; ?><br>
+            <strong>Kode    : </strong><?php echo $kd_penjualan; ?><br>
+            <strong>Tanggal : </strong><?php echo $tgl_cetak; ?><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-                <strong>Pelanggan : </strong><?php echo $nama_pelanggan; ?><br>
-                <strong>Alamat    : </strong><?php echo $alamat; ?><br>
+            <strong>Pelanggan : </strong><?php echo $nama_pelanggan; ?><br>
+            <strong>Alamat    : </strong><?php echo $alamat; ?><br>
         </div><!-- /.col -->
     </div><!-- /.row -->
     <br>
@@ -83,8 +105,24 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
 
+<div class="row">
+        <div class="span center">
+            <h5 class="text-center">Admin</h5>
+            <div class="sign"></div>
+            <h5 class="text-center"><?php echo $nama_user; ?></h5>
+        </div>
+
+        <div class="span center"  style="float: right">
+            <h5 class="text-center">Pelanggan</h5>
+            <div class="sign"></div>
+            <h5 class="text-center"><?php echo $nama_pelanggan?></h5>
+        </div>
+    </div>
+
+
         <!-- this row will not appear when printing -->
         <div class="row no-print">
+            <hr>
             <div class="col-xs-12">
                 <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
                 <a href="<?php echo base_url('penjualan');?>" class="btn btn-default flat">Close</a>
