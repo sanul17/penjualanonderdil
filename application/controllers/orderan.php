@@ -250,7 +250,14 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
-				$confirm['kd_penjualan'] = $this->input->post('kd_penjualan');
+				$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_confirm)->result();
+				$kd_penjualan = '';
+				if (count($cek_kd_penjualan > 0)) {
+					$kd_penjualan = $this->app_model->getMaxKodePenjualan();
+				}else{
+					$kd_penjualan = $this->input->post('kd_penjualan');
+				}
+				$confirm['kd_penjualan'] = $kd_penjualan;
 				$confirm['kd_order'] = $this->input->post('kd_order');
 				$confirm['nama_pelanggan'] = $this->input->post('nama_pelanggan');
 				$confirm['kd_user'] = $this->input->post('kd_user');
@@ -270,7 +277,7 @@ class Orderan extends CI_Controller {
 				$dus = $this->input->post('dus');
 
 				for ($i=0; $i < count($kd_barang); $i++) { 
-					$confirm_detail['kd_penjualan'] = $id;
+					$confirm_detail['kd_penjualan'] = $kd_penjualan;
 					$confirm_detail['kd_barang'] = $kd_barang[$i];
 					$confirm_detail['qty'] = $qty_dikirim[$i];
 					$confirm_detail['harga_tersimpan'] = $harga_potongan[$i];
@@ -279,10 +286,9 @@ class Orderan extends CI_Controller {
 					$result3 = $this->app_model->insertData("tbl_penjualan_detail", $confirm_detail);
 					$stok['stok'] = $this->app_model->getBalancedStok($confirm_detail['kd_barang'], $confirm_detail['qty']);
 					$key = $confirm_detail['kd_barang'];
-					$this->app_model->updateStok($stok, $key); 
-					$i++;
+					$this->app_model->updateStok($stok, $key);
 				}	
-				
+
 				if ($result && $result2 && $result3) {
 					$pesan = 'confirm Orderan Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
