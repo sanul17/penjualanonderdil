@@ -66,7 +66,7 @@
                         </div>
 
                         <?php
-                        if (form_error('kd_sales')) {
+                        if (form_error('tgl_order')) {
                             echo '<div class="form-group has-error">';
                         }else{
                             echo '<div class="form-group">';
@@ -78,11 +78,24 @@
                         </div>
                         <div class="col-md-4"><?php echo form_error('tgl_order'); ?></div>
                     </div>
+                    <?php
+                    if (form_error('potongan')) {
+                        echo '<div class="form-group has-error">';
+                    }else{
+                        echo '<div class="form-group">';
+                    }
+                    ?>
+                    <label for="potongan" class="col-md-6 control-label">Potongan</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control flat" id="potongan" readonly name="potongan" value='<?php echo $potongan;  ?>'>
+                    </div>
+                    <div class="col-md-6"><?php echo form_error('potongan'); ?></div>
+                </div>
                 </div>
 
                                 <div class="col-md-6">
                     <?php
-                    if (form_error('username')) {
+                    if (form_error('nama_pelanggan')) {
                         echo '<div class="form-group has-error">';
                     }else{
                         echo '<div class="form-group">';
@@ -93,6 +106,20 @@
                         <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $nama_pelanggan; ?>' readonly>
                     </div>
                     <div class="col-md-4"><?php echo form_error('nama_pelanggan'); ?></div>
+                </div>
+
+                           <?php
+                    if (form_error('alamat')) {
+                        echo '<div class="form-group has-error">';
+                    }else{
+                        echo '<div class="form-group">';
+                    }
+                    ?>
+                    <label for="alamat" class="col-md-4 control-label">Alamat Pelanggan</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control flat" id="alamat" name="alamat" value='<?php echo $alamat; ?>' readonly>
+                    </div>
+                    <div class="col-md-4"><?php echo form_error('alamat'); ?></div>
                 </div>
 
                         <?php
@@ -128,7 +155,6 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th style="width:50px;">No</th>
                                 <th style="width:120px;">Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th style="width:100px;">Quantity</th>
@@ -136,29 +162,24 @@
                                 <th style="width:150px;">Sub Total</th></tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $i=1; $no=1;
-                            foreach ($this->cart->contents() as $items) {
-                                echo form_hidden('rowid[]', $items['rowid']);
-                                ?>
-                                <tr class="gradeX">
-                                    <td><?php echo $no; ?></td>
-                                    <td><?php echo $items['id']; ?></td>
-                                    <td><?php echo $items['name']; ?></td>
-                                    <td><?php echo $items['qty']; ?></td>
-                                    <td>Rp. <?php echo $this->cart->format_number($items['price']); ?></td>
-                                    <td>Rp. <?php echo $this->cart->format_number($items['subtotal']); ?></td>
-                                </tr>
-                                <?php
-                                $i++; $no++;
-                            }
-                            ?>
-
+                    <?php
+                    foreach ($data_order_detail as $key => $value) {
+                        ?>
+                        <tr class="gradeX">
+                            <td><?php echo $value->kd_barang; ?></td>
+                            <td><?php echo $value->nama_barang; ?></td>
+                            <td><?php echo $value->qty; ?></td>
+                            <td><?php echo $value->harga; ?></td>
+                            <td><?php echo ($value->qty*$value->harga); ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
                         </tbody>
                         <tfoot>
                             <tr class="gradeX">
-                                <td colspan="5">Total</td>
-                                <td>Rp. <?php echo $this->cart->format_number($this->cart->total()); ?></td>
+                                <td colspan="4">Total</td>
+                                <td>Rp. <?php echo $total; ?></td>
                             </tr>
                         </tfoot>
                     </table>

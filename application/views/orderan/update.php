@@ -48,7 +48,7 @@
                             </div>
                             <div class="cleaner_h3"></div>
                         </div>
-                        <form class="form-horizontal" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url('orderan/update/'.$kd_order) ?>">
+                        <form class="form-horizontal" id="update-order" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url('orderan/update/'.$kd_order) ?>">
 
                             <?php
                             if (form_error('kd_order')) {
@@ -73,7 +73,7 @@
                         ?>
                         <label for="kd_sales" class="col-md-2 control-label pull-left">Kode Sales</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $this->session->userdata('kd_sales'); ?>' readonly>
+                            <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $kd_sales; ?>' readonly>
                         </div>
                         <div class="col-md-2">
                             <input type="text" class="form-control flat" id="nama_sales" name="nama_sales" value='<?php echo $nama_sales; ?>' readonly>
@@ -82,7 +82,7 @@
                     </div>
 
                     <?php
-                    if (form_error('username')) {
+                    if (form_error('nama_pelanggan')) {
                         echo '<div class="form-group has-error">';
                     }else{
                         echo '<div class="form-group">';
@@ -90,76 +90,94 @@
                     ?>
                     <label for="nama_pelanggan" class="col-md-2 control-label">Nama Pelanggan</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $this->session->userdata('nama_pelanggan'); ?>'>
+                        <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $nama_pelanggan; ?>'>
                     </div>
                     <div class="col-md-4"><?php echo form_error('nama_pelanggan'); ?></div>
                 </div>
-                <hr>                        
-                <div class="box-button">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>Data Orderan</h4>
-                        </div>
-                    </div>
-                    <div class="cleaner_h3"></div>
+                <?php
+                if (form_error('alamat')) {
+                    echo '<div class="form-group has-error">';
+                }else{
+                    echo '<div class="form-group">';
+                }
+                ?>
+                <label for="alamat" class="col-md-2 control-label">Alamat Pelanggan</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control flat" id="alamat" name="alamat" value='<?php echo $alamat; ?>'>
                 </div>
-                <div class="box-body table-responsive">
-                    <div class="cleaner_h3"></div>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width:50px;">No</th>
-                                <th style="width:120px;">Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th style="width:100px;">Quantity</th>
-                                <th style="width:150px;">Harga</th>
-                                <th style="width:150px;">Sub Total</th>
-                                <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $i=1; $no=1;
-                            foreach ($this->cart->contents() as $items) {
-                                echo form_hidden('rowid[]', $items['rowid']);
-                                ?>
-                                <tr class="gradeX">
-                                    <td><?php echo $no; ?></td>
-                                    <td><?php echo $items['id']; ?></td>
-                                    <td><?php echo $items['name']; ?></td>
-                                    <td><?php echo $items['qty']; ?></td>
-                                    <td>Rp. <?php echo $this->cart->format_number($items['price']); ?></td>
-                                    <td>Rp. <?php echo $this->cart->format_number($items['subtotal']); ?></td>
-                                    <td style="text-align:center;">
-                                        <a href="#" class="btn btn-default flat delbutton" id="<?php echo 'update/'.$items['rowid'].'/'.$kd_order.'/'.$items['id'].'/'.$this->app_model->getSisaStok($items['id']).'/'.$items['qty']; ?>"><i class="fa fa-trash fa-fw"></i> Delete</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                $i++; $no++;
-                            }
-                            ?>
-
-                        </tbody>
-                        <tfoot>
-                            <tr class="gradeX">
-                                <td colspan="5">Total</td>
-                                <td>Rp. <?php echo $this->cart->format_number($this->cart->total()); ?></td>
-                                <td style="text-align:center;"> - </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="cleaner_h20"></div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <button type="submit" class="btn btn-primary flat">Add New Order</button>
-                            <a href="<?php echo base_url('orderan');?>" class="btn btn-default flat">Cancel</a>
-                        </div>
-                    </div>
-                </form>
-                <div class="cleaner_h20"></div>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
-    </div>
+                <div class="col-md-4"><?php echo form_error('alamat'); ?></div>
+            </div>
+            <?php
+            if (form_error('potongan')) {
+                echo '<div class="form-group has-error">';
+            }else{
+                echo '<div class="form-group">';
+            }
+            ?>
+            <label for="potongan" class="col-md-2 control-label">Potongan</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control flat" id="potongan" name="potongan" value='<?php echo $potongan; ?>'>
+            </div>
+            <div class="col-md-4"><?php echo form_error('potongan'); ?></div>
+        </div>
+        <hr>                        
+        <div class="box-button">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Data Orderan</h4>
+                </div>
+            </div>
+            <div class="cleaner_h3"></div>
+        </div>
+        <div class="box-body table-responsive">
+            <div class="cleaner_h3"></div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:120px;">Kode Barang</th>
+                        <th>Nama Barang</th>
+                        <th style="width:100px;">Quantity</th>
+                        <th style="width:150px;">Harga</th>
+                        <th style="width:150px;">Sub Total</th>
+                        <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data_order_detail as $key => $value) {
+                        ?>
+                        <tr class="gradeX">
+                            <td><?php echo $value->kd_barang; ?><input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
+                            <td><?php echo $value->nama_barang; ?></td>
+                            <td><input type="text" class="form-control flat qty" name="qty[]" value="<?php echo $value->qty; ?>"></td>
+                            <td><?php echo $value->harga; ?><input type="hidden" class="form-control flat harga" name="harga[]" readonly value="<?php echo $value->harga; ?>"></td>
+                            <td><span class="subtotal-label"><?php echo ($value->qty*$value->harga); ?></span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value="<?php echo ($value->qty*$value->harga); ?>"></td>
+                            <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+                <tfoot>
+                    <tr class="gradeX">
+                        <td colspan="4">Total</td>
+                        <td><span id="total-label"><?php echo $total; ?></span><input type="hidden" class="form-control" id="total" nama="total" value="<?php echo $total; ?>" readonly></td>
+                        <td style="text-align:center;" colspan="4"> - </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="cleaner_h20"></div>
+            <div class="form-group">
+                <div class="col-sm-8">
+                    <button type="submit" id="submit" class="btn btn-primary flat">Update</button>
+                    <a href="<?php echo base_url('orderan');?>" class="btn btn-default flat">Cancel</a>
+                </div>
+            </div>
+        </form>
+        <div class="cleaner_h20"></div>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+</div>
 </div>
 
 </section><!-- /.content -->
@@ -205,16 +223,17 @@
     </div>
 </div>
 
+
 <script>
-$('#nama_pelanggan').change(function(event) {
-    var kd_sales = $('#kd_sales').val();
-    var nama_pelanggan = $(this).val();
-    $.ajax({
-        url : "<?php echo base_url('orderan/set_session_pemesan'); ?>",
-        type: 'POST',
-        data: { kd_sales: kd_sales, nama_pelanggan:  nama_pelanggan },
-        cache:false,
-    });   
+$('#closemodal').on('click', function(event) {
+    event.preventDefault();
+    $(this).closest('#form-add-order').find('#kd_barang').val('');
+    $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#harga').val('');
+    $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
+    $('#detail_barang').html('');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
 });
 
 $("#kd_barang_add").change(function(){
@@ -231,23 +250,150 @@ $("#kd_barang_add").change(function(){
     });
 });
 
+$("#add").on('click', function(event) {
+    event.preventDefault();
+    var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
+    var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
+    var harga = $(this).closest('#form-add-order').find('#harga').val();
+    var qty = $(this).closest('#form-add-order').find('#qty').val();
+    var subtotal = Number(harga)*Number(qty);
+    var total = $('#total').val();
+    total = Number(total)+Number(subtotal);
 
-$(".delbutton").click(function(){
-    var element = $(this);
-    var del_id = element.attr("id");
-    var info = del_id;
-    if(confirm("Anda yakin akan menghapus?"))
-    {
-        $.ajax({
-            url: "<?php echo base_url(); ?>orderan/remove_from_cart",
-            data: "kode="+info,
-            cache: false,
-            success: function(){
-            }
-        });
-        $(this).parents(".gradeX").animate({ opacity: "hide" }, "slow");
-    }
-    return false;
+    if (qty) {
+        $row = $('<tr class="gradeX"></tr>');
+        $tdKode = $('<td>'+kd_barang+'<input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="'+kd_barang+'"></td>');
+        $tdNama = $('<td>'+nama_barang+'</td>');
+        $tdHarga = $('<td>'+harga+'<input type="hidden" class="form-control flat harga" name="harga[]" readonly value="'+harga+'"></td>');
+        $tdQty = $('<td><input type="text" class="form-control flat qty" name="qty[]" value="'+qty+'"></td>');
+        $tdSubtotal = $('<td><span class="subtotal-label">'+subtotal+'</span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value="'+subtotal+'"></td>');
+        $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
+
+        $row.append($tdKode).append($tdNama).append($tdQty).append($tdHarga).append($tdSubtotal).append($tdDelbutton);
+        $row.appendTo('tbody');
+        $('#total').val(total);
+        $('#total-label').html(total);
+    };
+
+    $(this).closest('#form-add-order').find('#kd_barang').val('');
+    $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#harga').val('');
+    $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
+    $('#detail_barang').html('');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
+    $(this).closest('#modalAddPenjualanBarang').modal('hide');
+    $('#submit').removeAttr('disabled');
+
+    $(".delbutton").on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('tr.gradeX').remove();
+        var all_sub_total = $('.subtotal');
+        var total_val = 0;
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
+
+        if (qty == '' || qty == 0) {
+            $('#submit').attr('disabled', 'disabled');
+        }else{
+            $('#submit').removeAttr('disabled');
+        }
+
+    });
+
+    $('.gradeX').find('.qty').on('change keyup keydown', function(event) {
+        var qty = $(this).val();
+        var harga = $(this).closest('.gradeX').find('.harga').val();
+        var subtotal=Number(harga)*Number(qty);
+        $(this).closest('.gradeX').find('.subtotal').val(subtotal);
+        $(this).closest('.gradeX').find('.subtotal-label').html(subtotal);
+        var all_sub_total = $('.subtotal');
+        var total_val = 0;
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
+
+        if (qty == '' || qty == 0) {
+            $('#submit').attr('disabled', 'disabled');
+        }else{
+            $('#submit').removeAttr('disabled');
+        }
+    });
+
 });
 
-</script>
+    $(".delbutton").on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('tr.gradeX').remove();
+        var all_sub_total = $('.subtotal');
+        var total_val = 0;
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
+
+        if ($(this).closest('.gradeX').find('.qty').val() == '' || $(this).closest('.gradeX').find('.qty').val() == 0) {
+            $('#submit').attr('disabled', 'disabled');
+        }else{
+            $('#submit').removeAttr('disabled');
+        }
+
+    });
+
+    $('.gradeX').find('.qty').on('change keyup keydown', function(event) {
+        var qty = $(this).val();
+        var harga = $(this).closest('.gradeX').find('.harga').val();
+        var subtotal=Number(harga)*Number(qty);
+        $(this).closest('.gradeX').find('.subtotal').val(subtotal);
+        $(this).closest('.gradeX').find('.subtotal-label').html(subtotal);
+        var all_sub_total = $('.subtotal');
+        var total_val = 0;
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
+
+        if (qty == '' || qty == 0) {
+            $('#submit').attr('disabled', 'disabled');
+        }else{
+            $('#submit').removeAttr('disabled');
+        }
+    });
+
+
+    $("#form-add-order").validate({
+        rules: {
+            qty: {
+                required: true,
+                digits: true
+            }
+        }
+    });
+
+    $("#update-order").validate({
+        rules: {
+            nama_pelanggan: {
+                required: true,
+                minlength: 2
+            },
+
+            potongan: {
+                required : true,
+                digits: true
+            },
+
+
+        }
+
+
+    });
+
+
+    </script>

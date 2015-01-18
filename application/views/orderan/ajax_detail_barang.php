@@ -4,30 +4,30 @@ if(isset($detail_barang)){
         ?>
 
                     <div class="form-group">
-                        <label for="kd_barang" class="col-md-3 control-label">List Barang</label>
+                        <label for="kd_barang" class="col-md-3 control-label">Kode Barang</label>
                         <div class="col-md-6">
-                            <input name="kd_barang" type="text" class="form-control flat" value="<?php echo $row->kd_barang; ?>" readonly="readonly">
+                            <input name="kd_barang" id="kd_barang" type="text" class="form-control flat" value="<?php echo $row->kd_barang; ?>" readonly="readonly">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="nama_barang" class="col-md-3 control-label">Nama Barang</label>
                         <div class="col-md-6">
-                            <input name="nama_barang" type="text" class="form-control flat" value="<?php echo $row->nama_barang; ?>" readonly="readonly">
+                            <input name="nama_barang" id="nama_barang" type="text" class="form-control flat" value="<?php echo $row->nama_barang; ?>" readonly="readonly">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="harga" class="col-md-3 control-label">Harga Barang</label>
                         <div class="col-md-6">
-                            <input name="harga" type="text" class="form-control flat" value="<?php echo $row->harga; ?>" readonly="readonly">
+                            <input name="harga" id="harga" type="text" class="form-control flat" value="<?php echo $row->harga; ?>" readonly="readonly">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="qty" class="col-md-3 control-label">Jumlah Orderan</label>
                         <div class="col-md-3">
-                            <input name="qty" type="text" class="form-control flat">
+                            <input name="qty" id="qty" type="text" class="form-control flat">
                         </div>
                     </div>
 

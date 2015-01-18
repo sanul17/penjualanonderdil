@@ -58,11 +58,12 @@
                         <table id="dataTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Kode Orderan</th>
-                                    <th>Nama Sales</th>
+                                    <th width="100">Kode Orderan</th>
+                                    <th width="100">Nama Sales</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Tanggal Order</th>
-                                    <th style="text-align:center;"  class="action">Action</th>
+                                    <th>Alamat</th>
+                                    <th width="150">Tanggal Order</th>
+                                    <th style="text-align:center; width:100px;"  class="action">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,6 +74,7 @@
                                         <td><?php echo $value->kd_order; ?></td>
                                         <td><?php echo $value->nama_sales; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
+                                        <td><?php echo $value->alamat; ?></td>
                                         <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_order); ?></td>
                                         <td style="text-align:center;">
                                             <div class="btn-group">
@@ -114,6 +116,7 @@
                                     <th>Kode Orderan</th>
                                     <th>Kode Sales</th>
                                     <th>Nama Pelanggan</th>
+                                    <th>Alamat</th>
                                     <th>Tanggal Order</th>
                                     <th style="text-align:center;">Action</th>
                                 </tr>

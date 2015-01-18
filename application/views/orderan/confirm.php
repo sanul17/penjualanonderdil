@@ -92,58 +92,86 @@
                             </div>
                             <div class="col-md-4"><?php echo form_error('tgl_order'); ?></div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
                         <?php
-                        if (form_error('nama_pelanggan')) {
+                        if (form_error('potongan')) {
                             echo '<div class="form-group has-error">';
                         }else{
                             echo '<div class="form-group">';
                         }
                         ?>
-                        <label for="nama_pelanggan" class="col-md-4 control-label">Nama Pelanggan</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $nama_pelanggan; ?>' readonly>
+                        <label for="potongan" class="col-md-6 control-label pull-left">Potongan</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control flat" id="potongan" name="potongan" value='<?php echo $potongan; ?>' readonly>
                         </div>
-                        <div class="col-md-4"><?php echo form_error('nama_pelanggan'); ?></div>
+                        <div class="col-md-4"><?php echo form_error('potongan'); ?></div>
                     </div>
+                </div>
 
+                <div class="col-md-6">
                     <?php
-                    if (form_error('kd_sales')) {
+                    if (form_error('nama_pelanggan')) {
                         echo '<div class="form-group has-error">';
                     }else{
                         echo '<div class="form-group">';
                     }
                     ?>
-                    <label for="kd_sales" class="col-md-4 control-label pull-left">Kode Sales</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $kd_sales; ?>' readonly>
+                    <label for="nama_pelanggan" class="col-md-4 control-label">Nama Pelanggan</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $nama_pelanggan; ?>' readonly>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control flat" id="nama_sales" name="nama_sales" value='<?php echo $nama_sales; ?>' readonly>
-                    </div>
-                    <div class="col-md-4"><?php echo form_error('kd_sales'); ?></div>
+                    <div class="col-md-4"><?php echo form_error('nama_pelanggan'); ?></div>
                 </div>
 
                 <?php
-                if (form_error('kd_user')) {
+                if (form_error('alamat')) {
                     echo '<div class="form-group has-error">';
                 }else{
                     echo '<div class="form-group">';
                 }
                 ?>
-                <label for="kd_user" class="col-md-4 control-label pull-left">Kode User</label>
-                <div class="col-md-4">
-                    <input type="text" class="form-control flat" id="kd_user" name="kd_user" value='<?php echo $this->session->userdata('kd_user'); ?>' readonly>
+                <label for="alamat" class="col-md-4 control-label">Nama Pelanggan</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control flat" id="alamat" name="alamat" value='<?php echo $alamat; ?>' readonly>
                 </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control flat" id="nama" name="nama" value='<?php echo $this->session->userdata('nama'); ?>' readonly>
-                </div>
-                <div class="col-md-4"><?php echo form_error('kd_user'); ?></div>
+                <div class="col-md-4"><?php echo form_error('alamat'); ?></div>
             </div>
+
+            <?php
+            if (form_error('kd_sales')) {
+                echo '<div class="form-group has-error">';
+            }else{
+                echo '<div class="form-group">';
+            }
+            ?>
+            <label for="kd_sales" class="col-md-4 control-label pull-left">Kode Sales</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control flat" id="kd_sales" name="kd_sales" value='<?php echo $kd_sales; ?>' readonly>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control flat" id="nama_sales" name="nama_sales" value='<?php echo $nama_sales; ?>' readonly>
+            </div>
+            <div class="col-md-4"><?php echo form_error('kd_sales'); ?></div>
         </div>
+
+        <?php
+        if (form_error('kd_user')) {
+            echo '<div class="form-group has-error">';
+        }else{
+            echo '<div class="form-group">';
+        }
+        ?>
+        <label for="kd_user" class="col-md-4 control-label pull-left">Kode User</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control flat" id="kd_user" name="kd_user" value='<?php echo $this->session->userdata('kd_user'); ?>' readonly>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control flat" id="nama" name="nama" value='<?php echo $this->session->userdata('nama'); ?>' readonly>
+        </div>
+        <div class="col-md-4"><?php echo form_error('kd_user'); ?></div>
     </div>
+</div>
+</div>
 </div>
 <hr>        
 <div class="box-button">
@@ -159,78 +187,57 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th style="width:50px;">No</th>
                 <th style="width:120px;">Kode Barang</th>
                 <th>Nama Barang</th>
                 <th style="width:50px;">Pesanan</th>
-                <th style="width:100px;">Quantity</th>
+                <th style="width:90px;">Quantity</th>
                 <th style="width:100px;">Harga</th>
                 <th style="width:70px;">Pot %</th>
+                <th style="width:100px;">Har*Pot</th>
                 <th style="width:70px;">Dus/Coli</th>
                 <th style="width:110px;">Sub Total</th></tr>
             </thead>
             <tbody>
                 <?php
-                $i=1; $no=1;
-                foreach ($this->cart->contents() as $items) {
-                    echo form_hidden('rowid[]', $items['rowid']);
+                foreach ($data_order_confirm as $key => $value) {
                     ?>
                     <tr class="gradeX">
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $items['id']; ?></td>
-                        <td><?php echo $items['name']; ?></td>
-                        <td><?php echo $items['qty']; ?></td>
-                        <?php if ($this->cart->has_options($items['rowid']) == TRUE){ ?>
-
-                        <td width="70">
-                            <?php foreach ($this->cart->product_options($items['rowid']) as $option_name => $option_value){
-                                switch ($option_name) {
-                                    case "qty_stok": 
-                                    ?>
-                                    <select name="qty_dikirim[]" class="form-control flat qty-dikirim">
-                                        <?php
-                                        for($j=0;$j<=$option_value;$j++)
-                                        {
-                                            echo "<option value='".$j."'>".$j."</option>";
-                                        }   
-                                        ?>
-                                    </select>
-                                    <?php 
-                                    break;
-                                }                               
-                            }
-                            ?>
+                        <td><?php echo $value->kd_barang; ?><input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
+                        <td><?php echo $value->nama_barang; ?></td>
+                        <td><?php echo $value->qty; ?></td>
+                        <td width="60">
+                            <select name="qty_dikirim[]" class="form-control flat qty-dikirim">
+                                <?php for ($i=0; $i <= $value->stok; $i++) { 
+                                    echo "<option value='".$i."'>".$i."</option>";
+                                }      
+                                ?>
+                            </select>
                         </td>
-
-                        <?php 
-                    }
-                    ?>
-                    <td><input type="text" class="form-control flat harga" readonly name="harga[]" value="<?php echo $items['price']; ?>"/></td>
-                    <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="0"></td>
-                    <td><input type="text" class="form-control flat" id="dus" name="dus[]"></td>
-                    <td><input type="text" class="form-control flat subtotal" id="subtotal" name="subtotal" readonly></td>
+                        <td><input type="text" class="form-control flat harga" readonly name="harga[]" value="<?php echo $value->harga; ?>"/></td>
+                        <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="0"></td>
+                        <td><input type="text" class="form-control flat harga_potongan" readonly id="harga_potongan" name="harga_potongan[]"/></td>
+                        <td><input type="text" class="form-control flat" id="dus" name="dus[]"></td>
+                        <td><input type="text" class="form-control flat subtotal" id="subtotal" name="subtotal" readonly></td>
+                    </tr>
+                    <?php
+                }   
+                ?>
+            </tbody>
+            <tfoot>
+                <tr class="gradeX">
+                    <td colspan="8">Total</td>
+                    <td><input type="text" class="form-control flat" id="total" name="total" readonly></td>
                 </tr>
-                <?php
-                $i++; $no++;
-            }
-            ?>
-
-        </tbody>
-        <tfoot>
-            <tr class="gradeX">
-                <td colspan="8">Total</td>
-                <td><input type="text" class="form-control flat" id="total" name="total" readonly></td>
-            </tr>
-        </tfoot>
-    </table>
+            </tfoot>
+        </table>
+        <div class="cleaner_h20"></div>
+        <div class="form-group">
+            <div class="col-sm-7">
+                <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
+            </div>
+        </div>
+    </form>
     <div class="cleaner_h20"></div>
-    <div class="form-group">
-        <div class="col-sm-8">
-            <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
-         </div>
-    </div>
-</form>
-<div class="cleaner_h20"></div>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 </div>
@@ -244,10 +251,11 @@ function bolehUbah()
     document.getElementById("hargabarang").readOnly=false;
 }
 
-$('.qty-dikirim').change(function(event) {
+$('.qty-dikirim').on('keyup keydown change', function(event) {
     var qty_dikirim = $(this).val();
     var harga = $(this).closest('.gradeX').find('.harga').val();
     var potongan = $(this).closest('.gradeX').find('.potongan').val();
+    var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
     var potongan_val = 0;
     var subtotal_val = 0;
     var subtotal =  $(this).closest('.gradeX').find('.subtotal');
@@ -255,6 +263,7 @@ $('.qty-dikirim').change(function(event) {
     if (qty_dikirim != 0) {
         potongan_val = (potongan/100)*harga;
         harga = harga-potongan_val;
+        harga_potongan.val(harga);
         subtotal_val = (harga*qty_dikirim);
         subtotal =  $(this).closest('.gradeX').find('.subtotal');
         subtotal.val(subtotal_val);
@@ -271,30 +280,32 @@ $('.qty-dikirim').change(function(event) {
 
 });
 
-$('.potongan').change(function(event) {
-    var potongan = $(this).val();
-    var harga = $(this).closest('.gradeX').find('.harga').val();
-    var qty_dikirim = $(this).closest('.gradeX').find('.qty-dikirim').val();
-    var potongan_val = 0;
-    var subtotal_val = 0;
-    var subtotal =  $(this).closest('.gradeX').find('.subtotal');
-    var total = $('#total');
-    if (qty_dikirim != 0) {
-        potongan_val = (potongan/100)*harga;
-        harga = harga-potongan_val;
-        subtotal_val = (harga*qty_dikirim);
-        subtotal =  $(this).closest('.gradeX').find('.subtotal');
-        subtotal.html(subtotal_val);
-    };
-    subtotal.val(subtotal_val); 
-    var total_val = 0; 
-    var all_sub_total = $('.subtotal');
-    for (var i = 0; i < all_sub_total.length; i++) {
-        total_val += Number(all_sub_total[i].value);
-    };
-    total.val(total_val);
+    $('.potongan').on('keyup keydown change', function(event) {
+        var potongan = $(this).val();
+        var harga = $(this).closest('.gradeX').find('.harga').val();
+        var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
+        var qty_dikirim = $(this).closest('.gradeX').find('.qty-dikirim').val();
+        var potongan_val = 0;
+        var subtotal_val = 0;
+        var subtotal =  $(this).closest('.gradeX').find('.subtotal');
+        var total = $('#total');
+        if (qty_dikirim != 0) {
+            potongan_val = (potongan/100)*harga;
+            harga = harga-potongan_val;
+            harga_potongan.val(harga);
+            subtotal_val = (harga*qty_dikirim);
+            subtotal =  $(this).closest('.gradeX').find('.subtotal');
+            subtotal.html(subtotal_val);
+        };
+        subtotal.val(subtotal_val); 
+        var total_val = 0; 
+        var all_sub_total = $('.subtotal');
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        total.val(total_val);
 
-    $('#btnsimpan').removeAttr('disabled');
-});
+        $('#btnsimpan').removeAttr('disabled');
+    });
 
-</script>
+    </script>
