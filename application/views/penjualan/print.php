@@ -14,7 +14,7 @@
 <div class="pad margin no-print">
     <div class="alert alert-info" style="margin-bottom: 0!important;">
         <i class="fa fa-info"></i>
-        <b>Note:</b> This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+        <b>Note:</b> Cetak Faktur untuk penjualan <?php echo $kd_penjualan; ?>
     </div>
 </div>
 
@@ -24,49 +24,32 @@
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
-                Toko Onderdil Ci Santi
-                <small class="pull-right"><?php echo gmdate('d/m/Y - H:i:s', $tgl_penjualan); ?></small>
+                Faktur Penjualan 
             </h2>
         </div><!-- /.col -->
     </div>
     <!-- info row -->
     <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
-            From
-            <address>
-                <strong>Admin, Inc.</strong><br>
-                795 Folsom Ave, Suite 600<br>
-                San Francisco, CA 94107<br>
-                Phone: (804) 123-5432<br/>
-                Email: info@almasaeedstudio.com
-            </address>
+                <strong>Alvindo Motor Jakarta</strong><br>
+                Jl. Nirmala Raya No 3H<br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-            To
-            <address>
-                <strong>John Doe</strong><br>
-                795 Folsom Ave, Suite 600<br>
-                San Francisco, CA 94107<br>
-                Phone: (555) 539-1037<br/>
-                Email: john.doe@example.com
-            </address>
+                <strong>Kode    : </strong><?php echo $kd_penjualan; ?><br>
+                <strong>Tanggal : </strong><?php echo $tgl_cetak; ?><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-            <b>Invoice #007612</b><br/>
-            <br/>
-            <b>Order ID:</b> 4F3S8J<br/>
-            <b>Payment Due:</b> 2/22/2014<br/>
-            <b>Account:</b> 968-34567
+                <strong>Pelanggan : </strong><?php echo $nama_pelanggan; ?><br>
+                <strong>Alamat    : </strong><?php echo $alamat; ?><br>
         </div><!-- /.col -->
     </div><!-- /.row -->
-
+    <br>
     <!-- Table row -->
     <div class="row">
         <div class="col-xs-12 table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width:50px;">No</th>
                         <th style="width:120px;">Kode Barang</th>
                         <th>Nama Barang</th>
                         <th style="width:100px;">Quantity</th>
@@ -76,29 +59,24 @@
                     </thead>
                     <tbody>
                         <?php
-                        $i=1; $no=1;
-                        foreach ($this->cart->contents() as $items) {
-                            echo form_hidden('rowid[]', $items['rowid']);
+                        foreach ($data_penjualan_detail as $key => $value) {
                             ?>
                             <tr class="gradeX">
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $items['id']; ?></td>
-                                <td><?php echo $items['name']; ?></td>
-                                <td><?php echo $items['qty']; ?></td>
-                                <td>Rp. <?php echo $this->cart->format_number($items['price']); ?></td>
-                                <td><?php echo $dus[$i]; ?></td>
-                                <td>Rp. <?php echo $this->cart->format_number($items['subtotal']); ?></td>
+                                <td><?php echo $value->kd_barang; ?></td>
+                                <td><?php echo $value->nama_barang; ?></td>
+                                <td><?php echo $value->qty; ?></td>
+                                <td>Rp. <?php echo $value->harga_tersimpan ?></td>
+                                <td><?php echo $value->dus; ?></td>
+                                <td>Rp. <?php echo $value->qty*$value->harga_tersimpan ?></td>
                             </tr>
                             <?php
-                            $i++; $no++;
-                        }
+                        }   
                         ?>
-
                     </tbody>
                     <tfoot>
                         <tr class="gradeX">
-                            <td colspan="6">Total</td>
-                            <td>Rp. <?php echo $this->cart->format_number($this->cart->total()); ?></td>
+                            <td colspan="5">Total</td>
+                            <td>Rp. <?php echo $total; ?></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -109,8 +87,7 @@
         <div class="row no-print">
             <div class="col-xs-12">
                 <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                <a href="<?php echo base_url('penjualan');?>" class="btn btn-default flat">Close</a>
             </div>
         </div>
                 </section><!-- /.content -->

@@ -290,11 +290,11 @@ class Orderan extends CI_Controller {
 				}	
 
 				if ($result && $result2 && $result3) {
-					$pesan = 'confirm Orderan Sukses';
+					$pesan = 'Confirm Orderan Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
 					redirect(base_url('orderan'));
 				}else{
-					$data['pesan'] = 'confirm Orderan Gagal';
+					$data['pesan'] = 'Confirm Orderan Gagal';
 					$this->load->view('elements/header', $dt);
 					$this->load->view('orderan/confirm', $data);
 					$this->load->view('elements/footer');

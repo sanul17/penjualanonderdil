@@ -190,6 +190,16 @@ class App_model extends CI_Model {
 		return $nama_sales;
     }
 
+    function getNamaUser($id){
+        $q = $this->db->query ("SELECT nama_user from tbl_user where kd_user='".$id."'");
+		$nama_user = "";
+		foreach($q->result() as $d)
+		{
+			$nama_user = $d->nama_user;
+		}
+		return $nama_user;
+    }
+
 	//query login
 	public function getLoginData($tabel, $usr, $psw)
 	{

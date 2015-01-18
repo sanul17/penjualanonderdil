@@ -19,9 +19,15 @@
                 <div class="box-header">
                     <div class="box-button">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a href="<?php echo base_url('orderan');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
-                            </div>
+                                <div class="col-md-12">
+                                    <a href="<?php echo base_url('orderan');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
+                                    <?php if ($this->session->userdata('level') == 'sales') {
+                                        ?>
+                                        <a href="<?php echo base_url('orderan/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> New</a>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
                         </div>
                         <div class="cleaner_h3"></div>
                     </div>
@@ -147,7 +153,7 @@
             <tfoot>
                 <tr class="gradeX">
                     <td colspan="4">Total</td>
-                    <td><span id="total-label"></span><input type="hidden" class="form-control" id="total" nama="total" value="0" readonly></td>
+                    <td><span id="total-label"></span><input type="hidden" class="form-control" id="total" name="total"></td>
                     <td style="text-align:center;" colspan="4"> - </td>
                 </tr>
             </tfoot>

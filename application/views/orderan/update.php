@@ -21,6 +21,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <a href="<?php echo base_url('orderan');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
+                                    <?php if ($this->session->userdata('level') == 'sales') {
+                                        ?>
+                                        <a href="<?php echo base_url('orderan/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> New</a>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <div class="cleaner_h3"></div>
