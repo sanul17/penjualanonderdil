@@ -7,7 +7,7 @@ class Barang extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | Barang';
+		$dt['title']='Pasti Jaya Motor | Barang';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$data['data'] = $this->app_model->getAllData('tbl_barang')->result();
@@ -20,7 +20,7 @@ class Barang extends CI_Controller {
 	}
 
 	function create(){
-		$dt['title']='Toko Onderdil | Create Barang';
+		$dt['title']='Pasti Jaya Motor | Create Barang';
 		$data['kd_barang'] = $this->app_model->getMaxKodeBarang();
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -36,7 +36,15 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('harga', 'Harga', 'required');
 			$this->form_validation->set_rules('posisi', 'Posisi', 'required');
 			if ($this->form_validation->run()) {
-				$create['kd_barang'] = $this->input->post('kd_barang');
+				$id_cek['kd_barang'] = $this->input->post('kd_barang');
+				$cek_kd_barang = $data['data_barang'] = $this->app_model->getSelectedData("tbl_barang", $id_cek)->result();
+				$kd_barang = '';
+				if (count($cek_kd_barang > 0)) {
+					$kd_barang = $this->app_model->getMaxKodeBarang();
+				}else{
+					$kd_barang = $this->input->post('kd_barang');
+				}
+				$create['kd_barang'] = $kd_barang;
 				$create['nama_barang'] = $this->input->post('nama_barang');
 				$create['kategori'] = $this->input->post('kategori');
 				$create['brand'] = $this->input->post('brand');
@@ -68,7 +76,7 @@ class Barang extends CI_Controller {
 	}
 
 	function detail($id){
-		$dt['title']='Toko Onderdil | Update Barang';
+		$dt['title']='Pasti Jaya Motor | Update Barang';
 		$detail['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_barang', $detail)->result();
@@ -95,7 +103,7 @@ class Barang extends CI_Controller {
 	}
 
 	function update($id){
-		$dt['title']='Toko Onderdil | Update Barang';
+		$dt['title']='Pasti Jaya Motor | Update Barang';
 		$update['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_barang', $update)->result();
@@ -162,7 +170,7 @@ class Barang extends CI_Controller {
 	}
 
 	function addStok($id){
-		$dt['title']='Toko Onderdil | Tambah Barang';
+		$dt['title']='Pasti Jaya Motor | Tambah Barang';
 		$update['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_barang', $update)->result();
@@ -213,7 +221,7 @@ class Barang extends CI_Controller {
 	}
 
 	function delete($id){
-		$dt['title']='Toko Onderdil | Barang';
+		$dt['title']='Pasti Jaya Motor | Barang';
 		$delete['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {

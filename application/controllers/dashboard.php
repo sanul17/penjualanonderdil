@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | Dashboard';
+		$dt['title']='Pasti Jaya Motor | Home';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
 			$this->load->view('elements/header', $dt);

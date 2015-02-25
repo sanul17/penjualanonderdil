@@ -7,7 +7,7 @@ class Login extends CI_Controller {
 	 */
 
 	function index(){
-		$data['title']='Toko Onderdil Login';
+		$data['title']='Pasti Jaya Motor Login';
 		$cek = $this->session->userdata('logged_in');
 		if (empty($cek)) {
 			$this->load->view('login/index', $data);
@@ -17,7 +17,7 @@ class Login extends CI_Controller {
 	}
 
 	function in() {
-		$data['title']='Toko Onderdil Login';
+		$data['title']='Pasti Jaya Motor Login';
         //Field validation succeeded.  Validate against database
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');

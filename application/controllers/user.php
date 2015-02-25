@@ -7,7 +7,7 @@ class User extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | User';
+		$dt['title']='Pasti Jaya Motor | User';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$data['data'] = $this->app_model->getAllData('tbl_user')->result();
@@ -20,7 +20,7 @@ class User extends CI_Controller {
 	}
 
 	function create(){
-		$dt['title']='Toko Onderdil | Create User';
+		$dt['title']='Pasti Jaya Motor | Create User';
 		$data['kd_user'] = $this->app_model->getMaxKodeUser();
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -58,7 +58,7 @@ class User extends CI_Controller {
 	}
 
 	function detail($id){
-		$dt['title']='Toko Onderdil | Update User';
+		$dt['title']='Pasti Jaya Motor | Update User';
 		$detail['kd_user'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_user', $detail)->result();
@@ -80,7 +80,7 @@ class User extends CI_Controller {
 	}
 
 	function update($id){
-		$dt['title']='Toko Onderdil | Update User';
+		$dt['title']='Pasti Jaya Motor | Update User';
 		$update['kd_user'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_user', $update)->result();
@@ -132,7 +132,7 @@ class User extends CI_Controller {
 	}
 
 	function delete($id){
-		$dt['title']='Toko Onderdil | User';
+		$dt['title']='Pasti Jaya Motor | User';
 		$delete['kd_user'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {

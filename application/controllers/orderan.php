@@ -7,7 +7,7 @@ class Orderan extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | Orderan';
+		$dt['title']='Pasti Jaya Motor | Orderan';
 		$cek = $this->session->userdata('logged_in');
 		
 		
@@ -27,7 +27,7 @@ class Orderan extends CI_Controller {
 	}
 
 	function create(){
-		$dt['title']='Toko Onderdil | Create orderan';
+		$dt['title']='Pasti Jaya Motor | Create orderan';
 		$data['kd_order'] = $this->app_model->getMaxKodeOrder();
 		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
 		$data['kd_sales'] = $this->session->userdata('kd_sales');
@@ -37,7 +37,8 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
-				$cek_kd_order = $data['data_order'] = $this->app_model->getSelectedData("tbl_order", $detail)->result();
+				$id_cek['kd_order'] = $this->input->post('kd_order');
+				$cek_kd_order = $data['data_order'] = $this->app_model->getSelectedData("tbl_order", $id_cek)->result();
 				$kd_order = '';
 				if (count($cek_kd_order > 0)) {
 					$kd_order = $this->app_model->getMaxKodeOrder();
@@ -66,7 +67,7 @@ class Orderan extends CI_Controller {
 				if ($result && $result2) {
 					$pesan = 'Create Orderan Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
-					redirect(base_url('Orderan'));
+					redirect(base_url('orderan'));
 				}else{
 					$data['pesan'] = 'Create Orderan Gagal';
 					$this->load->view('elements/header', $dt);
@@ -95,7 +96,7 @@ class Orderan extends CI_Controller {
 
 	function detail($id){
 		$cek = $this->session->userdata('logged_in');
-		$dt['title']='Toko Onderdil | Update orderan';
+		$dt['title']='Pasti Jaya Motor | Update orderan';
 		$detail['kd_order'] = $id;
 		$data['kd_order'] = $detail['kd_order'];
 		$data['data_barang'] = $this->app_model->getBarangJual()->result();
@@ -129,7 +130,7 @@ class Orderan extends CI_Controller {
 	}
 
 	function update($id){
-		$dt['title']='Toko Onderdil | Update orderan';
+		$dt['title']='Pasti Jaya Motor | Update orderan';
 		$update['kd_order'] = $id;
 		$data['kd_order'] = $update['kd_order'];
 		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
@@ -200,7 +201,7 @@ class Orderan extends CI_Controller {
 	}
 
 	function delete($id){
-		$dt['title']='Toko Onderdil | orderan';
+		$dt['title']='Pasti Jaya Motor | orderan';
 		$delete['kd_order'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -223,7 +224,7 @@ class Orderan extends CI_Controller {
 
 	function confirm($id){
 		$cek = $this->session->userdata('logged_in');
-		$dt['title']='Toko Onderdil | Confirm Orderan';
+		$dt['title']='Pasti Jaya Motor | Confirm Orderan';
 		$id_confirm['kd_order'] = $id;
 		$data['kd_order'] = $id;
 		$data['kd_penjualan'] = $this->app_model->getMaxKodePenjualan();
@@ -250,65 +251,76 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
-				$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_confirm)->result();
-				$kd_penjualan = '';
-				if (count($cek_kd_penjualan > 0)) {
-					$kd_penjualan = $this->app_model->getMaxKodePenjualan();
-				}else{
-					$kd_penjualan = $this->input->post('kd_penjualan');
+				$cek_qty_array = $this->input->post('qty_dikirim');
+				$cek_qty = 0;
+				for ($i=0; $i < count($cek_qty_array); $i++) { 
+					$cek_qty+= $cek_qty_array[$i];
 				}
-				$confirm['kd_penjualan'] = $kd_penjualan;
-				$confirm['kd_order'] = $this->input->post('kd_order');
-				$confirm['nama_pelanggan'] = $this->input->post('nama_pelanggan');
-				$confirm['kd_user'] = $this->input->post('kd_user');
-				$confirm['total_harga'] = $this->input->post('total');
-				$confirm['alamat'] = $this->input->post('alamat');
-				$confirm['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
-				$confirm['jenis'] = 'Order';
-				$status['status'] = 'Confirm';
-				$result = $this->app_model->insertData('tbl_penjualan', $confirm);
-				$result2 = $this->app_model->updateData('tbl_order', $status, $id_confirm);
-				$result3 = 0;
+				if ($cek_qty >0) {
+					$id_cek['kd_penjualan'] = $this->input->post('kd_penjualan');
+					$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_cek)->result();
+					$kd_penjualan = '';
+					if (count($cek_kd_penjualan > 0)) {
+						$kd_penjualan = $this->app_model->getMaxKodePenjualan();
+					}else{
+						$kd_penjualan = $this->input->post('kd_penjualan');
+					}
+					$confirm['kd_penjualan'] = $kd_penjualan;
+					$confirm['kd_order'] = $this->input->post('kd_order');
+					$confirm['nama_pelanggan'] = $this->input->post('nama_pelanggan');
+					$confirm['kd_user'] = $this->input->post('kd_user');
+					$confirm['total_harga'] = $this->input->post('total');
+					$confirm['alamat'] = $this->input->post('alamat');
+					$confirm['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
+					$confirm['jenis'] = 'Order';
+					$status['status'] = 'Confirm';
+					$result = $this->app_model->insertData('tbl_penjualan', $confirm);
+					$result2 = $this->app_model->updateData('tbl_order', $status, $id_confirm);
+					$result3 = 0;
 
-				$kd_barang = $this->input->post('kd_barang');
-				$qty_dikirim = $this->input->post('qty_dikirim');
-				$potongan = $this->input->post('potongan');
-				$harga_potongan= $this->input->post('harga_potongan');
-				$dus = $this->input->post('dus');
+					$kd_barang = $this->input->post('kd_barang');
+					$qty_dikirim = $this->input->post('qty_dikirim');
+					$potongan = $this->input->post('potongan');
+					$harga_potongan= $this->input->post('harga_potongan');
+					$dus = $this->input->post('dus');
 
-				for ($i=0; $i < count($kd_barang); $i++) { 
-					$confirm_detail['kd_penjualan'] = $kd_penjualan;
-					$confirm_detail['kd_barang'] = $kd_barang[$i];
-					$confirm_detail['qty'] = $qty_dikirim[$i];
-					$confirm_detail['harga_tersimpan'] = $harga_potongan[$i];
-					$confirm_detail['potongan'] = $potongan[$i];
-					$confirm_detail['dus'] = $dus[$i];
-					$result3 = $this->app_model->insertData("tbl_penjualan_detail", $confirm_detail);
-					$stok['stok'] = $this->app_model->getBalancedStok($confirm_detail['kd_barang'], $confirm_detail['qty']);
-					$key = $confirm_detail['kd_barang'];
-					$this->app_model->updateStok($stok, $key);
-				}	
+					for ($i=0; $i < count($kd_barang); $i++) { 
+						if ($qty_dikirim[$i] > 0) {
+						$confirm_detail['kd_penjualan'] = $kd_penjualan;
+						$confirm_detail['kd_barang'] = $kd_barang[$i];
+						$confirm_detail['qty'] = $qty_dikirim[$i];
+						$confirm_detail['harga_tersimpan'] = $harga_potongan[$i];
+						$confirm_detail['potongan'] = $potongan[$i];
+						$confirm_detail['dus'] = $dus[$i];
+						$result3 = $this->app_model->insertData("tbl_penjualan_detail", $confirm_detail);
+						$stok['stok'] = $this->app_model->getBalancedStok($confirm_detail['kd_barang'], $confirm_detail['qty']);
+						$key = $confirm_detail['kd_barang'];
+						$this->app_model->updateStok($stok, $key);
+						}
+					}	
 
-				if ($result && $result2 && $result3) {
-					$pesan = 'Confirm Orderan Sukses';
-					$this->session->set_flashdata('pesan', $pesan);
+					if ($result && $result2 && $result3) {
+						$pesan = 'Confirm Orderan Sukses';
+						$this->session->set_flashdata('pesan', $pesan);
+						redirect(base_url('orderan'));
+					}else{
+						$data['pesan'] = 'Confirm Orderan Gagal';
+						$this->load->view('elements/header', $dt);
+						$this->load->view('orderan/confirm', $data);
+						$this->load->view('elements/footer');
+					}
+				}else{
 					redirect(base_url('orderan'));
-				}else{
-					$data['pesan'] = 'Confirm Orderan Gagal';
-					$this->load->view('elements/header', $dt);
-					$this->load->view('orderan/confirm', $data);
-					$this->load->view('elements/footer');
 				}
-
-			}else{
-				$this->load->view('elements/header', $dt);
-				$this->load->view('orderan/confirm', $data);
-				$this->load->view('elements/footer');				
-			}
 		}else{
-			redirect(base_url('login'));
+			$this->load->view('elements/header', $dt);
+			$this->load->view('orderan/confirm', $data);
+			$this->load->view('elements/footer');				
 		}
+	}else{
+		redirect(base_url('login'));
 	}
+}
 
 
 }

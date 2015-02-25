@@ -18,6 +18,13 @@ if(isset($detail_barang)){
         </div>
 
         <div class="form-group">
+            <label for="brand" class="col-md-3 control-label">Brand</label>
+            <div class="col-md-6">
+                <input name="brand" id="brand"  type="text" class="form-control flat" value="<?php echo $row->brand; ?>" readonly="readonly">
+            </div>
+        </div>
+
+        <div class="form-group">
             <label for="harga" class="col-md-3 control-label">Harga Barang</label>
             <div class="col-md-6">
                 <input name="harga" id="harga"  type="text" class="form-control flat" value="<?php echo $row->harga; ?>" readonly="readonly">

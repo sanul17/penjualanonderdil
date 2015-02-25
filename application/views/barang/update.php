@@ -65,7 +65,7 @@
                             }
                             ?>
                                 <label for="nama_barang" class="col-md-2 control-label">Nama Barang</label>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="nama_barang" name="nama_barang" value='<?php echo $nama_barang; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('nama_barang'); ?></div>
@@ -79,7 +79,7 @@
                             }
                             ?>
                                 <label for="kategori" class="col-md-2 control-label">Kategori</label>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="kategori" name="kategori" value='<?php echo $kategori; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('kategori'); ?></div>
@@ -93,7 +93,7 @@
                             }
                             ?>
                                 <label for="brand" class="col-md-2 control-label">Brand</label>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="brand" name="brand" value='<?php echo $brand; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('brand'); ?></div>
@@ -107,7 +107,7 @@
                             }
                             ?>
                                 <label for="type" class="col-md-2 control-label">Type</label>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="type" name="type" value='<?php echo $type; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('type'); ?></div>
@@ -121,7 +121,7 @@
                             }
                             ?>
                                 <label for="min_stok" class="col-md-2 control-label">Minimal Stok</label>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="min_stok" name="min_stok" value='<?php echo $min_stok; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('min_stok'); ?></div>
@@ -135,7 +135,7 @@
                             }
                             ?>
                                 <label for="stok" class="col-md-2 control-label">Stok</label>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="stok" name="stok" value='<?php echo $stok; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('stok'); ?></div>
@@ -175,7 +175,7 @@
                             }
                             ?>
                                 <label for="posisi" class="col-md-2 control-label">Posisi</label>
-                                <div class="col-md-1">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control flat" id="posisi" name="posisi" value='<?php echo $posisi; ?>'>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('posisi'); ?></div>

@@ -7,7 +7,7 @@ class Penjualan extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | Penjualan';
+		$dt['title']='Pasti Jaya Motor | Penjualan';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$this_user = $this->session->userdata('kd_user');
@@ -21,7 +21,7 @@ class Penjualan extends CI_Controller {
 	}
 
 	function create(){
-		$dt['title']='Toko Onderdil | Create penjualan';
+		$dt['title']='Pasti Jaya Motor | Create penjualan';
 		$data['kd_penjualan'] = $this->app_model->getMaxKodePenjualan();
 		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
 		$data['kd_user'] = $this->session->userdata('kd_user');
@@ -31,52 +31,64 @@ class Penjualan extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
-				$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_confirm)->result();
-				$kd_penjualan = '';
-				if (count($cek_kd_penjualan > 0)) {
-					$kd_penjualan = $this->app_model->getMaxKodePenjualan();
-				}else{
-					$kd_penjualan = $this->input->post('kd_penjualan');
+				$cek_qty_array = $this->input->post('qty');
+				$cek_qty = 0;
+				for ($i=0; $i < count($cek_qty_array); $i++) { 
+					$cek_qty+= $cek_qty_array[$i];
 				}
-				$create['kd_penjualan'] = $kd_penjualan;
-				$create['kd_order'] = "";
-				$create['nama_pelanggan'] = $this->input->post('nama_pelanggan');
-				$create['alamat'] = $this->input->post('alamat');
-				$create['kd_user'] = $this->input->post('kd_user');
-				$create['total_harga'] = $this->input->post('total');
-				$create['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
-				$create['jenis'] = 'Cash';
-				$result = $this->app_model->insertData('tbl_penjualan', $create);
-				$result2 = 0;
-				
-				$kd_barang = $this->input->post('kd_barang');
-				$qty = $this->input->post('qty');
-				$potongan = $this->input->post('potongan');
-				$harga_potongan= $this->input->post('harga_potongan');
-				$dus = $this->input->post('dus');
+				if ($cek_qty >0) {
+					$id_cek['kd_penjualan'] = $this->input->post('kd_penjualan');
+					$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_cek)->result();
+					$kd_penjualan = '';
+					if (count($cek_kd_penjualan > 0)) {
+						$kd_penjualan = $this->app_model->getMaxKodePenjualan();
+					}else{
+						$kd_penjualan = $this->input->post('kd_penjualan');
+					}
+					$create['kd_penjualan'] = $kd_penjualan;
+					$create['kd_order'] = "";
+					$create['nama_pelanggan'] = $this->input->post('nama_pelanggan');
+					$create['alamat'] = $this->input->post('alamat');
+					$create['kd_user'] = $this->input->post('kd_user');
+					$create['total_harga'] = $this->input->post('total');
+					$create['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
+					$create['jenis'] = 'Cash';
+					$result = $this->app_model->insertData('tbl_penjualan', $create);
+					$result2 = 0;
 
-				for ($i=0; $i < count($kd_barang); $i++) { 
-					$create_detail['kd_penjualan'] = $kd_penjualan;
-					$create_detail['kd_barang'] = $kd_barang[$i];
-					$create_detail['qty'] = $qty[$i];
-					$create_detail['harga_tersimpan'] = $harga_potongan[$i];
-					$create_detail['potongan'] = $potongan[$i];
-					$create_detail['dus'] = $dus[$i];
-					$result2 = $this->app_model->insertData("tbl_penjualan_detail", $create_detail);
-					$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty']);
-					$key = $create_detail['kd_barang'];
-					$this->app_model->updateStok($stok, $key);
-				}	
+					$kd_barang = $this->input->post('kd_barang');
+					$qty = $this->input->post('qty');
+					$potongan = $this->input->post('potongan');
+					$harga_potongan= $this->input->post('harga_potongan');
+					$dus = $this->input->post('dus');
 
-				if ($result && $result2) {
-					$pesan = 'Penjualan Cash Sukses';
-					$this->session->set_flashdata('pesan', $pesan);
-					redirect(base_url('penjualan'));
+					for ($i=0; $i < count($kd_barang); $i++) { 
+						if ($qty[$i] > 0) {
+							$create_detail['kd_penjualan'] = $kd_penjualan;
+							$create_detail['kd_barang'] = $kd_barang[$i];
+							$create_detail['qty'] = $qty[$i];
+							$create_detail['harga_tersimpan'] = $harga_potongan[$i];
+							$create_detail['potongan'] = $potongan[$i];
+							$create_detail['dus'] = $dus[$i];
+							$result2 = $this->app_model->insertData("tbl_penjualan_detail", $create_detail);
+							$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty']);
+							$key = $create_detail['kd_barang'];
+							$this->app_model->updateStok($stok, $key);
+						}
+					}	
+
+					if ($result && $result2) {
+						$pesan = 'Penjualan Cash Sukses';
+						$this->session->set_flashdata('pesan', $pesan);
+						redirect(base_url('penjualan'));
+					}else{
+						$data['pesan'] = 'Penjualan Cash Gagal';
+						$this->load->view('elements/header', $dt);
+						$this->load->view('penjualan/confirm', $data);
+						$this->load->view('elements/footer');
+					}
 				}else{
-					$data['pesan'] = 'Penjualan Cash Gagal';
-					$this->load->view('elements/header', $dt);
-					$this->load->view('penjualan/confirm', $data);
-					$this->load->view('elements/footer');
+					redirect(base_url('penjualan'));
 				}
 			}else{
 				$this->load->view('elements/header', $dt);
@@ -99,7 +111,7 @@ class Penjualan extends CI_Controller {
 
 	function cetak($id){
 		$cek = $this->session->userdata('logged_in');
-		$dt['title']='Toko Onderdil | Update penjualan';
+		$dt['title']='Pasti Jaya Motor | Update penjualan';
 		$detail['kd_penjualan'] = $id;
 		$data['kd_penjualan'] = $detail['kd_penjualan'];
 		$data['data_barang'] = $this->app_model->getBarangJual()->result();

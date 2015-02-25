@@ -9,15 +9,29 @@
             margin-left: 5px;
         }
         .span {
-            width: 220px;
+            width: 200px;
         }
         .sign{
-            height: 100px;
-            border-bottom: 1px solid #000000;
+            height: 30px;
         }
         .text-center{
             text-align: center
         }
+        .lead{
+        font-size: 18px;
+        font-weight:bold;
+        }
+        
+        h2.page-header{
+        	font-size: 18px;
+        	}
+        	h5{
+        	font-size: 14px;
+        	}
+        
+        .invoice{
+        	font-size: 12px;
+        	}
 
     </style>
 
@@ -53,12 +67,12 @@
     <!-- info row -->
     <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
-            <span class="lead">Alvindo Motor Jakarta</span class="lead"><br>
-            <small>Jl. Nirmala Raya No 3H</small><br>
+            <span class="lead">Alvindo Motor</span class="lead"><br>
+            <small>JAKARTA</small><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-            <strong>Kode    : </strong><?php echo $kd_penjualan; ?><br>
-            <strong>Tanggal : </strong><?php echo $tgl_cetak; ?><br>
+            <strong>No Faktur: </strong><?php echo $kd_penjualan; ?><br>
+            <strong>Tanggal  : </strong><?php echo $tgl_cetak; ?><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
             <strong>Pelanggan : </strong><?php echo $nama_pelanggan; ?><br>
@@ -69,7 +83,7 @@
     <!-- Table row -->
     <div class="row">
         <div class="col-xs-12 table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th style="width:120px;">Kode Barang</th>
@@ -87,9 +101,9 @@
                                 <td><?php echo $value->kd_barang; ?></td>
                                 <td><?php echo $value->nama_barang; ?></td>
                                 <td><?php echo $value->qty; ?></td>
-                                <td>Rp. <?php echo $value->harga_tersimpan ?></td>
+                                <td>Rp. <?php echo number_format($value->harga_tersimpan, 2, ",", "."); ?></td>
                                 <td><?php echo $value->dus; ?></td>
-                                <td>Rp. <?php echo $value->qty*$value->harga_tersimpan ?></td>
+                                <td>Rp. <?php echo number_format($value->qty*$value->harga_tersimpan, 2, ",", "."); ?></td>
                             </tr>
                             <?php
                         }   
@@ -98,13 +112,12 @@
                     <tfoot>
                         <tr class="gradeX">
                             <td colspan="5">Total</td>
-                            <td>Rp. <?php echo $total; ?></td>
+                            <td>Rp. <?php echo number_format($total, 2, ",", "."); ?></td>
                         </tr>
                     </tfoot>
                 </table>
             </div><!-- /.col -->
         </div><!-- /.row -->
-
 <div class="row">
         <div class="span center">
             <h5 class="text-center">Admin</h5>

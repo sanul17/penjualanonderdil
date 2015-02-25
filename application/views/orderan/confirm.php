@@ -194,7 +194,7 @@
                 <th style="width:100px;">Harga</th>
                 <th style="width:70px;">Pot %</th>
                 <th style="width:100px;">Har*Pot</th>
-                <th style="width:70px;">Dus/Coli</th>
+                <th style="width:100px;">Dus/Coli</th>
                 <th style="width:110px;">Sub Total</th></tr>
             </thead>
             <tbody>

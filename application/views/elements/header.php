@@ -132,11 +132,11 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <?php 
-                        if ($this->session->userdata('level') == 'owner' || $this->session->userdata('level') == 'admin') {
+                        if ($this->session->userdata('level') == 'owner') {
                             ?> 
-                            <li class="active">
+                            <li>
                                 <a href="<?php echo base_url('dashboard')?>">
-                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                    <i class="fa fa-home"></i> <span>Home</span>
                                 </a>
                             </li>
                             <li>
@@ -166,16 +166,50 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="pages/mailbox.html">
+                                <a href="#">
                                     <i class="fa fa-file-text"></i> <span>Laporan</span>
                                 </a>
+                            </li>
+                            <?php
+                        }else if($this->session->userdata('level') == 'admin') {
+                            ?> 
+                            <li>
+                                <a href="<?php echo base_url('dashboard')?>">
+                                    <i class="fa fa-home"></i> <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('barang')?>">
+                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span> <span class="barang_notification"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('sales')?>">
+                                    <i class="fa fa-users"></i> <span>Sales</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Transaksi</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
+                                    <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
+                                </ul>
                             </li>
                             <?php
                         }else if ($this->session->userdata('level') == 'sales') {
                             ?>
                             <li>
+                                <a href="<?php echo base_url('dashboard')?>">
+                                    <i class="fa fa-home"></i> <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url('barang')?>">
-                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span>
+                                    <i class="fa fa-cubes"></i> <span>List Barang</span>
                                 </a>
                             </li>
                             <li>
@@ -186,6 +220,11 @@
                             <?php
                         }elseif ($this->session->userdata('level') == 'gudang') {
                             ?>
+                            <li>
+                                <a href="<?php echo base_url('dashboard')?>">
+                                    <i class="fa fa-home"></i> <span>Home</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="<?php echo base_url('barang')?>">
                                     <i class="fa fa-cubes"></i> <span>Stok Barang</span>

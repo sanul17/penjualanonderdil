@@ -7,7 +7,7 @@ class Sales extends CI_Controller {
 	 */
 	
 	function index(){
-		$dt['title']='Toko Onderdil | Sales';
+		$dt['title']='Pasti Jaya Motor | Sales';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$data['data'] = $this->app_model->getAllData('tbl_sales')->result();
@@ -20,7 +20,7 @@ class Sales extends CI_Controller {
 	}
 
 	function create(){
-		$dt['title']='Toko Onderdil | Create Sales';
+		$dt['title']='Pasti Jaya Motor | Create Sales';
 		$data['kd_sales'] = $this->app_model->getMaxKodesales();
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -56,7 +56,7 @@ class Sales extends CI_Controller {
 	}
 
 	function detail($id){
-		$dt['title']='Toko Onderdil | Update Sales';
+		$dt['title']='Pasti Jaya Motor | Update Sales';
 		$detail['kd_sales'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_sales', $detail)->result();
@@ -77,7 +77,7 @@ class Sales extends CI_Controller {
 	}
 
 	function update($id){
-		$dt['title']='Toko Onderdil | Update Sales';
+		$dt['title']='Pasti Jaya Motor | Update Sales';
 		$update['kd_sales'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_sales', $update)->result();
@@ -123,7 +123,7 @@ class Sales extends CI_Controller {
 	}
 
 	function delete($id){
-		$dt['title']='Toko Onderdil | Sales';
+		$dt['title']='Pasti Jaya Motor | Sales';
 		$delete['kd_sales'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {

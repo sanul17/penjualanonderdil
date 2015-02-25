@@ -123,11 +123,12 @@
                         <tr>
                             <th style="width:120px;">Kode Barang</th>
                             <th>Nama Barang</th>
+                            <th>Brand</th>
                             <th style="width:100px;">Quantity</th>
                             <th style="width:100px;">Harga</th>
                             <th style="width:90px;">Potongan</th>
                             <th style="width:100px;">Har*Pot</th>
-                            <th style="width:90px;">Dus</th>
+                            <th style="width:100px;">Dus</th>
                             <th style="width:100px;">Sub Total</th>
                             <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
                         </tr>
@@ -137,7 +138,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="gradeX">
-                            <td colspan="7">Total</td>
+                            <td colspan="8">Total</td>
                             <td><span id="total-label"></span><input type="hidden" class="form-control" id="total" name="total"></td>
                             <td style="text-align:center;" colspan="2"> - </td>
                         </tr>
@@ -180,7 +181,7 @@
                                 if(count($data_barang) > 0){
                                     foreach($data_barang as $key => $value){
                                         ?>
-                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->nama_barang?></option>
+                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->nama_barang.' ('.$value->brand.')';?></option>
                                         <?php
                                     }
                                 }
@@ -229,6 +230,7 @@ $("#add").on('click', function(event) {
     event.preventDefault();
     var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
     var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
+    var brand = $(this).closest('#form-add-order').find('#brand').val();
     var harga = $(this).closest('#form-add-order').find('#harga').val();
     var qty = $(this).closest('#form-add-order').find('#qty').val();
     var stok = $(this).closest('#form-add-order').find('#stok').val();
@@ -240,6 +242,7 @@ $("#add").on('click', function(event) {
         $row = $('<tr class="gradeX"></tr>');
         $tdKode = $('<td>'+kd_barang+'<input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="'+kd_barang+'"></td>');
         $tdNama = $('<td>'+nama_barang+'</td>');
+        $tdBrand = $('<td>'+brand+'</td>');
         $tdHarga = $('<td>'+harga+'<input type="hidden" class="form-control flat harga" id="harga" name="harga[]" readonly value="'+harga+'"></td>');
         $tdSelectStok = $('<select class="form-control flat qty" id="qty" name="qty[]"></select>');
         for (var i = 0; i <= stok; i++) {
@@ -257,7 +260,7 @@ $("#add").on('click', function(event) {
         $tdSubtotal = $('<td><span class="subtotal-label">'+subtotal+'</span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value="'+subtotal+'"></td>');
         $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
 
-        $row.append($tdKode).append($tdNama).append($tdQty).append($tdHarga).append($tdPotongan).append($tdHargaPotongan).append($tdDus).append($tdSubtotal).append($tdDelbutton);
+        $row.append($tdKode).append($tdNama).append($tdBrand).append($tdQty).append($tdHarga).append($tdPotongan).append($tdHargaPotongan).append($tdDus).append($tdSubtotal).append($tdDelbutton);
         $row.appendTo('tbody');
         $('#total').val(total);
         $('#total-label').html(total);
@@ -265,6 +268,7 @@ $("#add").on('click', function(event) {
 
     $(this).closest('#form-add-order').find('#kd_barang').val('');
     $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#brand').val('');
     $(this).closest('#form-add-order').find('#harga').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
     $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
