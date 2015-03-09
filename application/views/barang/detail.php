@@ -66,7 +66,7 @@
                             ?>
                                 <label for="nama_barang" class="col-md-2 control-label">Nama Barang</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="nama_barang" name="nama_barang" value='<?php echo $nama_barang; ?>' readonly>
+                                    <input type="text" class="form-control flat" id="nama_barang" name="nama_barang" value='<?php echo $kategori." ".$type; ?>' readonly>
                                 </div>
                                 <div class="col-md-4"><?php echo form_error('nama_barang'); ?></div>
                             </div>
@@ -86,6 +86,20 @@
                             </div>
                             
                             <?php
+                            if (form_error('type')) {
+                                echo '<div class="form-group has-error">';
+                            }else{
+                                echo '<div class="form-group">';
+                            }
+                            ?>
+                                <label for="type" class="col-md-2 control-label">Type</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control flat" id="type" name="type" value='<?php echo $type; ?>' readonly>
+                                </div>
+                                <div class="col-md-4"><?php echo form_error('type'); ?></div>
+                            </div>
+                            
+                            <?php
                             if (form_error('brand')) {
                                 echo '<div class="form-group has-error">';
                             }else{
@@ -99,19 +113,6 @@
                                 <div class="col-md-4"><?php echo form_error('brand'); ?></div>
                             </div>
                             
-                            <?php
-                            if (form_error('type')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="type" class="col-md-2 control-label">Type</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="type" name="type" value='<?php echo $type; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('type'); ?></div>
-                            </div>
                             
                             <?php
                             if (form_error('min_stok')) {

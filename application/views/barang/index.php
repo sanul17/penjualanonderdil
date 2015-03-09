@@ -63,8 +63,8 @@
                                         <th width="80px">Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th width="80px">Kategori</th>
-                                        <th width="80px">Brand</th>
                                         <th width="80px">Type</th>
+                                        <th width="80px">Brand</th>
                                         <th width="50px">Minimum</th>
                                         <th width="60px">Stok</th>
                                         <th>Modal</th>
@@ -79,10 +79,10 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $value->kd_barang; ?></td>
-                                            <td><?php echo $value->nama_barang; ?></td>
+                                            <td><?php echo $value->kategori." ".$value->type; ?></td>
                                             <td><?php echo $value->kategori; ?></td>
-                                            <td><?php echo $value->brand; ?></td>
                                             <td><?php echo $value->type; ?></td>
+                                            <td><?php echo $value->brand; ?></td>
                                             <td><?php echo $value->min_stok; ?></td>
                                             <td><?php echo $value->stok; if ($value->stok <= $value->min_stok) {echo " <span class='label label-danger'>Kurang</span>";}?></td>
                                             <td><?php echo $value->modal; ?></td>
@@ -120,8 +120,8 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori</th>
-                                        <th>Brand</th>
                                         <th>Type</th>
+                                        <th>Brand</th>
                                         <th>Minimum</th>
                                         <th>Stok</th>
                                         <th>Modal</th>
@@ -137,25 +137,19 @@
                            <table id="dataTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="80px">Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    <th width="100px">Kategori</th>
-                                    <th width="100px">Brand</th>
-                                    <th width="100px">Type</th>
-                                    <th width="100px">Harga</th>
+                                    <th >Kategori</th>
+                                    <th >Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($data as $key => $value) {
+                                foreach ($data_for_sales as $key => $value) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $value->kd_barang; ?></td>
-                                        <td><?php echo $value->nama_barang; ?></td>
+                                        <td><?php echo $value->kategori." ".$value->type; ?></td>
                                         <td><?php echo $value->kategori; ?></td>
-                                        <td><?php echo $value->brand; ?></td>
                                         <td><?php echo $value->type; ?></td>
-                                        <td><?php echo $value->harga; ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -163,12 +157,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Kategori</th>
-                                    <th>Brand</th>
                                     <th>Type</th>
-                                    <th>Harga</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -189,7 +180,7 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $value->kd_barang; ?></td>
-                                    <td><?php echo $value->nama_barang; ?></td>
+                                    <td><?php echo $value->kategori." ".$value->type; ?></td>
                                     <td><?php echo $value->posisi; ?></td>
                                 </tr>
                                 <?php

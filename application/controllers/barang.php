@@ -10,7 +10,8 @@ class Barang extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Barang';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
-			$data['data'] = $this->app_model->getAllData('tbl_barang')->result();
+			$data['data'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
+			$data['data_for_sales'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 			$this->load->view('elements/header', $dt);
 			$this->load->view('barang/index', $data);
 			$this->load->view('elements/footer');
@@ -22,14 +23,13 @@ class Barang extends CI_Controller {
 	function create(){
 		$dt['title']='Pasti Jaya Motor | Create Barang';
 		$data['kd_barang'] = $this->app_model->getMaxKodeBarang();
+		$data['list_tipe_kategori'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
 			$this->form_validation->set_rules('kd_barang', 'kd_barang', 'required');
-			$this->form_validation->set_rules('nama_barang', 'Nama Barang', 'required');
-			$this->form_validation->set_rules('kategori', 'Kategori Barang', 'required');
+			$this->form_validation->set_rules('tipe_kategori', 'Kategori Barang', 'required');
 			$this->form_validation->set_rules('brand', 'Brand', 'required');
-			$this->form_validation->set_rules('type', 'Type', 'required');
 			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
 			$this->form_validation->set_rules('modal', 'Modal', 'required');
@@ -45,10 +45,8 @@ class Barang extends CI_Controller {
 					$kd_barang = $this->input->post('kd_barang');
 				}
 				$create['kd_barang'] = $kd_barang;
-				$create['nama_barang'] = $this->input->post('nama_barang');
-				$create['kategori'] = $this->input->post('kategori');
+				$create['id_tipe_kategori'] = $this->input->post('tipe_kategori');
 				$create['brand'] = $this->input->post('brand');
-				$create['type'] = $this->input->post('type');
 				$create['min_stok'] = $this->input->post('min_stok');
 				$create['stok'] = $this->input->post('stok');
 				$create['modal'] = $this->input->post('modal');
@@ -79,13 +77,12 @@ class Barang extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Update Barang';
 		$detail['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
-		$result = $this->app_model->getSelectedData('tbl_barang', $detail)->result();
+		$result = $this->app_model->manualQuery("select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori where a.kd_barang='".$detail['kd_barang']."'")->result();
 		foreach ($result as $key => $value) {
 			$data['kd_barang'] = $value->kd_barang;
-			$data['nama_barang'] = $value->nama_barang;
 			$data['kategori'] = $value->kategori;
+			$data['type'] = $value->type;
 			$data['brand'] = $value->brand; 
-			$data['type'] = $value->type; 
 			$data['min_stok'] = $value->min_stok; 
 			$data['stok'] = $value->stok; 
 			$data['modal'] = $value->modal; 
@@ -107,12 +104,11 @@ class Barang extends CI_Controller {
 		$update['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$result = $this->app_model->getSelectedData('tbl_barang', $update)->result();
+		$data['list_tipe_kategori'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 		foreach ($result as $key => $value) {
 			$data['kd_barang'] = $value->kd_barang;
-			$data['nama_barang'] = $value->nama_barang;
-			$data['kategori'] = $value->kategori;
+			$data['id_tipe_kategori'] = $value->id_tipe_kategori;
 			$data['brand'] = $value->brand; 
-			$data['type'] = $value->type; 
 			$data['min_stok'] = $value->min_stok; 
 			$data['stok'] = $value->stok; 
 			$data['modal'] = $value->modal; 
@@ -122,10 +118,8 @@ class Barang extends CI_Controller {
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
 			$this->form_validation->set_rules('kd_barang', 'kd_barang', 'required');
-			$this->form_validation->set_rules('nama_barang', 'Nama Barang', 'required');
-			$this->form_validation->set_rules('kategori', 'Kategori Barang', 'required');
+			$this->form_validation->set_rules('tipe_kategori', 'Kategori Barang', 'required');
 			$this->form_validation->set_rules('brand', 'Brand', 'required');
-			$this->form_validation->set_rules('type', 'Type', 'required');
 			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
 			$this->form_validation->set_rules('modal', 'Modal', 'required');
@@ -134,10 +128,8 @@ class Barang extends CI_Controller {
 			if(isset($id)){
 				if ($this->form_validation->run()) {
 					$id_update['kd_barang'] = $id;
-					$update['nama_barang'] = $this->input->post('nama_barang');
-					$update['kategori'] = $this->input->post('kategori');
+					$update['id_tipe_kategori'] = $this->input->post('tipe_kategori');
 					$update['brand'] = $this->input->post('brand'); 
-					$update['type'] = $this->input->post('type'); 
 					$update['min_stok'] = $this->input->post('min_stok'); 
 					$update['stok'] = $this->input->post('stok'); 
 					if ($update['stok'] < 0) {
@@ -173,24 +165,23 @@ class Barang extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Tambah Barang';
 		$update['kd_barang'] = $id;
 		$cek = $this->session->userdata('logged_in');
-		$result = $this->app_model->getSelectedData('tbl_barang', $update)->result();
+		$result = $this->app_model->manualQuery("select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori where a.kd_barang='".$update['kd_barang']."'")->result();
 		foreach ($result as $key => $value) {
 			$data['kd_barang'] = $value->kd_barang;
-			$data['nama_barang'] = $value->nama_barang; 
+			$data['kategori'] = $value->kategori; 
+			$data['type'] = $value->type; 
 			$data['min_stok'] = $value->min_stok; 
 			$data['stok'] = $value->stok; 
 		}
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
 			$this->form_validation->set_rules('kd_barang', 'kd_barang', 'required');
-			$this->form_validation->set_rules('nama_barang', 'Nama Barang', 'required');
 			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
 			$this->form_validation->set_rules('qty', 'Quantity', 'required');
 			if(isset($id)){
 				if ($this->form_validation->run()) {
 					$id_update['kd_barang'] = $id;
-					$update['nama_barang'] = $this->input->post('nama_barang');
 					$update['min_stok'] = $this->input->post('min_stok'); 
 					$stok = $this->input->post('stok');
 					$update['stok'] = $stok+$this->input->post('qty');

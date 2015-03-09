@@ -187,23 +187,15 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th style="width:120px;">Kode Barang</th>
                 <th>Nama Barang</th>
-                <th style="width:50px;">Pesanan</th>
                 <th style="width:90px;">Quantity</th>
-                <th style="width:100px;">Harga</th>
-                <th style="width:70px;">Pot %</th>
-                <th style="width:100px;">Har*Pot</th>
-                <th style="width:100px;">Dus/Coli</th>
-                <th style="width:110px;">Sub Total</th></tr>
             </thead>
             <tbody>
                 <?php
                 foreach ($data_order_confirm as $key => $value) {
                     ?>
                     <tr class="gradeX">
-                        <td><?php echo $value->kd_barang; ?><input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
-                        <td><?php echo $value->nama_barang; ?></td>
+                        <td><?php echo $value->id_tipe_kategori; ?><input type="hidden" class="form-control flat" name="id_tipe_kategori[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
                         <td><?php echo $value->qty; ?></td>
                         <td width="60">
                             <select name="qty_dikirim[]" class="form-control flat qty-dikirim">
@@ -213,21 +205,12 @@
                                 ?>
                             </select>
                         </td>
-                        <td><input type="text" class="form-control flat harga" readonly name="harga[]" value="<?php echo $value->harga; ?>"/></td>
-                        <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="0"></td>
-                        <td><input type="text" class="form-control flat harga_potongan" readonly id="harga_potongan" name="harga_potongan[]"/></td>
-                        <td><input type="text" class="form-control flat" id="dus" name="dus[]"></td>
-                        <td><input type="text" class="form-control flat subtotal" id="subtotal" name="subtotal" readonly></td>
                     </tr>
                     <?php
                 }   
                 ?>
             </tbody>
             <tfoot>
-                <tr class="gradeX">
-                    <td colspan="8">Total</td>
-                    <td><input type="text" class="form-control flat" id="total" name="total" readonly></td>
-                </tr>
             </tfoot>
         </table>
         <div class="cleaner_h20"></div>

@@ -161,32 +161,22 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th style="width:120px;">Kode Barang</th>
                 <th>Nama Barang</th>
                 <th style="width:100px;">Quantity</th>
-                <th style="width:150px;">Harga</th>
-                <th style="width:150px;">Sub Total</th></tr>
             </thead>
             <tbody>
                 <?php
                 foreach ($data_order_detail as $key => $value) {
                     ?>
                     <tr class="gradeX">
-                        <td><?php echo $value->kd_barang; ?></td>
-                        <td><?php echo $value->nama_barang; ?></td>
+                        <td><?php echo $value->kategori.' '.$value->type; ?></td>
                         <td><?php echo $value->qty; ?></td>
-                        <td><?php echo $value->harga; ?></td>
-                        <td><?php echo ($value->qty*$value->harga); ?></td>
                     </tr>
                     <?php
                 }
                 ?>
             </tbody>
             <tfoot>
-                <tr class="gradeX">
-                    <td colspan="4">Total</td>
-                    <td>Rp. <?php echo $total; ?></td>
-                </tr>
             </tfoot>
         </table>
         <div class="cleaner_h20"></div>

@@ -29,7 +29,7 @@ class Orderan extends CI_Controller {
 	function create(){
 		$dt['title']='Pasti Jaya Motor | Create orderan';
 		$data['kd_order'] = $this->app_model->getMaxKodeOrder();
-		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
+		$data['data_barang'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 		$data['kd_sales'] = $this->session->userdata('kd_sales');
 		$data['nama_sales'] = $this->app_model->getNamaSales($this->session->userdata('kd_sales'));
 		$cek = $this->session->userdata('logged_in');
@@ -54,12 +54,12 @@ class Orderan extends CI_Controller {
 				$create['status'] = 'Pending';
 				$result = $this->app_model->insertData('tbl_order', $create);
 
-				$kd_barang = $this->input->post('kd_barang');
+				$id_tipe_kategori = $this->input->post('id_tipe_kategori');
 				$qty = $this->input->post('qty');
 
-				for ($i=0; $i < count($kd_barang); $i++) { 
+				for ($i=0; $i < count($id_tipe_kategori); $i++) { 
 					$create_detail['kd_order'] = $kd_order;
-					$create_detail['kd_barang'] = $kd_barang[$i];
+					$create_detail['id_tipe_kategori'] = $id_tipe_kategori[$i];
 					$create_detail['qty'] = $qty[$i];
 					$result2 = $this->app_model->insertData("tbl_order_detail",$create_detail);
 				}	
@@ -86,9 +86,9 @@ class Orderan extends CI_Controller {
 	}
 
 	function get_detail_barang(){
-		$id['kd_barang']=$this->input->post('kd_barang');
+		$id['id_tipe_kategori']=$this->input->post('barang');
 		$data=array(
-			'detail_barang'=>$this->app_model->getSelectedData('tbl_barang',$id)->result(),
+			'detail_barang'=>$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result(),
 			);
 		$this->load->view('orderan/ajax_detail_barang',$data);
 	}
@@ -99,10 +99,9 @@ class Orderan extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Update orderan';
 		$detail['kd_order'] = $id;
 		$data['kd_order'] = $detail['kd_order'];
-		$data['data_barang'] = $this->app_model->getBarangJual()->result();
 		$data['data_order'] = $this->app_model->getSelectedData("tbl_order", $detail)->result();
-		$data['data_order_detail'] = $this->app_model->manualQuery("select a.kd_order, a.kd_barang, a.qty, b.nama_barang, b.harga from tbl_order_detail a left join tbl_barang b 
-			on a.kd_barang=b.kd_barang where a.kd_order='".$detail['kd_order']."'")->result();
+		$data['data_order_detail'] = $this->app_model->manualQuery("select a.kd_order, a.id_tipe_kategori, a.qty, b.kategori, b.type from tbl_order_detail a left join tbl_tipe_kategori b 
+			on a.id_tipe_kategori=b.id_tipe_kategori where a.kd_order='".$detail['kd_order']."'")->result();
 
 		foreach ($data['data_order'] as $key => $value) {
 			$data['kd_order'] = $value->kd_order;
@@ -112,11 +111,6 @@ class Orderan extends CI_Controller {
 			$data['potongan'] = $value->potongan;
 			$data['alamat'] = $value->alamat;
 			$data['tgl_order'] = $value->tgl_order;
-		}
-
-		$data['total'] = 0;
-		foreach ($data['data_order_detail'] as $key => $value) {
-			$data['total'] += $value->harga*$value->qty;
 		}
 
 		if (!empty($cek)) {
@@ -133,10 +127,10 @@ class Orderan extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Update orderan';
 		$update['kd_order'] = $id;
 		$data['kd_order'] = $update['kd_order'];
-		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
+		$data['data_barang'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 		$data['data_order'] = $this->app_model->getSelectedData("tbl_order", $update)->result();
-		$data['data_order_detail'] = $this->app_model->manualQuery("select a.kd_order, a.kd_barang, a.qty, b.nama_barang, b.harga from tbl_order_detail a left join tbl_barang b 
-			on a.kd_barang=b.kd_barang where a.kd_order='".$update['kd_order']."'")->result();
+		$data['data_order_detail'] = $this->app_model->manualQuery("select a.kd_order, a.id_tipe_kategori, a.qty, b.kategori, b.type from tbl_order_detail a left join tbl_tipe_kategori b 
+			on a.id_tipe_kategori=b.id_tipe_kategori where a.kd_order='".$update['kd_order']."'")->result();
 
 		foreach ($data['data_order'] as $key => $value) {
 			$data['kd_order'] = $value->kd_order;
@@ -146,13 +140,6 @@ class Orderan extends CI_Controller {
 			$data['alamat'] = $value->alamat;
 			$data['potongan'] = $value->potongan;
 		}
-
-		$data['total'] = 0;
-		foreach ($data['data_order_detail'] as $key => $value) {
-			$data['total'] += $value->harga*$value->qty;
-		}
-
-		
 
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {
@@ -168,12 +155,12 @@ class Orderan extends CI_Controller {
 
 				$this->app_model->deleteData("tbl_order_detail", $id_update);
 
-				$kd_barang = $this->input->post('kd_barang');
+				$id_tipe_kategori = $this->input->post('id_tipe_kategori');
 				$qty = $this->input->post('qty');
 
-				for ($i=0; $i < count($kd_barang); $i++) { 
+				for ($i=0; $i < count($id_tipe_kategori); $i++) { 
 					$update_detail['kd_order'] = $id;
-					$update_detail['kd_barang'] = $kd_barang[$i];
+					$update_detail['id_tipe_kategori'] = $id_tipe_kategori[$i];
 					$update_detail['qty'] = $qty[$i];
 					$result2 = $this->app_model->insertData("tbl_order_detail",$update_detail);
 				}	
@@ -229,7 +216,7 @@ class Orderan extends CI_Controller {
 		$data['kd_order'] = $id;
 		$data['kd_penjualan'] = $this->app_model->getMaxKodePenjualan();
 		$data['data_order'] = $this->app_model->getSelectedData("tbl_order", $id_confirm)->result();
-		$data['data_order_confirm'] = $this->app_model->manualQuery("select a.kd_order, a.kd_barang, a.qty, b.nama_barang, b.harga, b.stok from tbl_order_detail a left join tbl_barang b 
+		$data['data_order_confirm'] = $this->app_model->manualQuery("select a.kd_order, a.id_tipe_kategori, a.qty, b.kategori, b.harga, b.stok from tbl_order_detail a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang where a.kd_order='".$id_confirm['kd_order']."'")->result();
 
 		foreach ($data['data_order'] as $key => $value) {
@@ -240,11 +227,6 @@ class Orderan extends CI_Controller {
 			$data['potongan'] = $value->potongan;
 			$data['alamat'] = $value->alamat;
 			$data['tgl_order'] = $value->tgl_order;
-		}
-
-		$data['total'] = 0;
-		foreach ($data['data_order_confirm'] as $key => $value) {
-			$data['total'] += $value->harga*$value->qty;
 		}
 
 		if (!empty($cek)) {

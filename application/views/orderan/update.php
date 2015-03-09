@@ -140,11 +140,8 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width:120px;">Kode Barang</th>
-                        <th>Nama Barang</th>
-                        <th style="width:100px;">Quantity</th>
-                        <th style="width:150px;">Harga</th>
-                        <th style="width:150px;">Sub Total</th>
+                        <th >Nama Barang</th>
+                        <th style="width:120px;">Quantity</th>
                         <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
                     </tr>
                 </thead>
@@ -153,11 +150,8 @@
                     foreach ($data_order_detail as $key => $value) {
                         ?>
                         <tr class="gradeX">
-                            <td><?php echo $value->kd_barang; ?><input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
-                            <td><?php echo $value->nama_barang; ?></td>
-                            <td><input type="text" class="form-control flat qty" name="qty[]" value="<?php echo $value->qty; ?>"></td>
-                            <td><?php echo $value->harga; ?><input type="hidden" class="form-control flat harga" name="harga[]" readonly value="<?php echo $value->harga; ?>"></td>
-                            <td><span class="subtotal-label"><?php echo ($value->qty*$value->harga); ?></span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value="<?php echo ($value->qty*$value->harga); ?>"></td>
+                            <td><?php echo $value->kategori.' '.$value->type; ?><input type="hidden" class="form-control flat" name="id_tipe_kategori[]" value="<?php echo $value->id_tipe_kategori; ?>"></td>
+                            <td><?php echo $value->qty; ?><input type="hidden" class="form-control flat" name="qty[]" value="<?php echo $value->qty; ?>"></td>
                             <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
                         </tr>
                         <?php
@@ -165,11 +159,7 @@
                     ?>
                 </tbody>
                 <tfoot>
-                    <tr class="gradeX">
-                        <td colspan="4">Total</td>
-                        <td><span id="total-label"><?php echo $total; ?></span><input type="hidden" class="form-control" id="total" nama="total" value="<?php echo $total; ?>" readonly></td>
-                        <td style="text-align:center;" colspan="4"> - </td>
-                    </tr>
+
                 </tfoot>
             </table>
             <div class="cleaner_h20"></div>
@@ -189,6 +179,7 @@
 </section><!-- /.content -->
 
 
+
 <!-- ============ MODAL ADD PENJUALAN BARANG =============== -->
 <div id="modalAddPenjualanBarang"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="false">
     <div class="modal-dialog">
@@ -197,20 +188,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title" id="addLabel">Tambah Barang</h3>
             </div>
-            <form class="form-horizontal" id="form-add-order" method="post" role="form"  action="<?php echo base_url ('orderan/add_to_cart')?>">
+            <form class="form-horizontal" id="form-add-order" method="post" role="form"  action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="kd_barang" class="col-md-3 control-label">List Barang</label>
+                        <label for="barang" class="col-md-3 control-label">List Barang</label>
                         <div class="col-md-6">
-                            <input type="hidden" name="create_or_update" value="update">
-                            <input type="hidden" name="kd_order" value="<?php echo $kd_order; ?>">
-                            <select id="kd_barang_add" class="chzn-select form-control flat" name="kd_barang" data-placeholder="Pilih Barang">
+                            <select id="barang_add" class="chzn-select form-control flat" name="barang" data-placeholder="Pilih Barang">
                                 <option value=""></option>
                                 <?php
                                 if(count($data_barang) > 0){
                                     foreach($data_barang as $key => $value){
                                         ?>
-                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->nama_barang?></option>
+                                        <option value="<?php echo $value->id_tipe_kategori?>"><?php echo $value->kategori." ".$value->type?></option>
                                         <?php
                                     }
                                 }
@@ -222,32 +211,29 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" disabled="disabled" id="add" name="add">Simpan</button>
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn" data-dismiss="modal" id="closemodal"  aria-hidden="true">Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-
 <script>
 $('#closemodal').on('click', function(event) {
     event.preventDefault();
-    $(this).closest('#form-add-order').find('#kd_barang').val('');
     $(this).closest('#form-add-order').find('#nama_barang').val('');
-    $(this).closest('#form-add-order').find('#harga').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
-    $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
+    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
     $('#detail_barang').html('');
     $('#form-add-order').find('#add').attr('disabled', 'disabled');
 });
 
-$("#kd_barang_add").change(function(){
-    var kd_barang = $("#kd_barang_add").val();
+$("#barang_add").change(function(){
+    var barang = $("#barang_add").val();
     $.ajax({
         type: "POST",
         url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
-        data: "kd_barang="+kd_barang,
+        data: "barang="+barang,
         cache:false,
         success: function(data){
             $('#detail_barang').html(data);
@@ -258,34 +244,23 @@ $("#kd_barang_add").change(function(){
 
 $("#add").on('click', function(event) {
     event.preventDefault();
-    var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
+    var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
     var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
-    var harga = $(this).closest('#form-add-order').find('#harga').val();
     var qty = $(this).closest('#form-add-order').find('#qty').val();
-    var subtotal = Number(harga)*Number(qty);
-    var total = $('#total').val();
-    total = Number(total)+Number(subtotal);
 
     if (qty) {
         $row = $('<tr class="gradeX"></tr>');
-        $tdKode = $('<td>'+kd_barang+'<input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="'+kd_barang+'"></td>');
-        $tdNama = $('<td>'+nama_barang+'</td>');
-        $tdHarga = $('<td>'+harga+'<input type="hidden" class="form-control flat harga" name="harga[]" readonly value="'+harga+'"></td>');
-        $tdQty = $('<td><input type="text" class="form-control flat qty" name="qty[]" value="'+qty+'"></td>');
-        $tdSubtotal = $('<td><span class="subtotal-label">'+subtotal+'</span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value="'+subtotal+'"></td>');
+        $tdNama = $('<td><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
+        $tdQty = $('<td><input type="hidden" readonly class="form-control flat qty" name="qty[]" value="'+qty+'">'+qty+'</td>');
         $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
 
-        $row.append($tdKode).append($tdNama).append($tdQty).append($tdHarga).append($tdSubtotal).append($tdDelbutton);
+        $row.append($tdNama).append($tdQty).append($tdDelbutton);
         $row.appendTo('tbody');
-        $('#total').val(total);
-        $('#total-label').html(total);
     };
 
-    $(this).closest('#form-add-order').find('#kd_barang').val('');
     $(this).closest('#form-add-order').find('#nama_barang').val('');
-    $(this).closest('#form-add-order').find('#harga').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
-    $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
+    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
     $('#detail_barang').html('');
     $('#form-add-order').find('#add').attr('disabled', 'disabled');
     $(this).closest('#modalAddPenjualanBarang').modal('hide');
@@ -294,112 +269,14 @@ $("#add").on('click', function(event) {
     $(".delbutton").on('click', function(event) {
         event.preventDefault();
         $(this).closest('tr.gradeX').remove();
-        var all_sub_total = $('.subtotal');
-        var total_val = 0;
-        for (var i = 0; i < all_sub_total.length; i++) {
-            total_val += Number(all_sub_total[i].value);
-        };
-        $('#total').val(total_val);
-        $('#total-label').html(total_val);
-
-        if (qty == '' || qty == 0) {
-            $('#submit').attr('disabled', 'disabled');
-        }else{
-            $('#submit').removeAttr('disabled');
-        }
-
     });
-
-    $('.gradeX').find('.qty').on('change keyup keydown', function(event) {
-        var qty = $(this).val();
-        var harga = $(this).closest('.gradeX').find('.harga').val();
-        var subtotal=Number(harga)*Number(qty);
-        $(this).closest('.gradeX').find('.subtotal').val(subtotal);
-        $(this).closest('.gradeX').find('.subtotal-label').html(subtotal);
-        var all_sub_total = $('.subtotal');
-        var total_val = 0;
-        for (var i = 0; i < all_sub_total.length; i++) {
-            total_val += Number(all_sub_total[i].value);
-        };
-        $('#total').val(total_val);
-        $('#total-label').html(total_val);
-
-        if (qty == '' || qty == 0) {
-            $('#submit').attr('disabled', 'disabled');
-        }else{
-            $('#submit').removeAttr('disabled');
-        }
-    });
-
 });
 
+    
     $(".delbutton").on('click', function(event) {
         event.preventDefault();
         $(this).closest('tr.gradeX').remove();
-        var all_sub_total = $('.subtotal');
-        var total_val = 0;
-        for (var i = 0; i < all_sub_total.length; i++) {
-            total_val += Number(all_sub_total[i].value);
-        };
-        $('#total').val(total_val);
-        $('#total-label').html(total_val);
-
-        if ($(this).closest('.gradeX').find('.qty').val() == '' || $(this).closest('.gradeX').find('.qty').val() == 0) {
-            $('#submit').attr('disabled', 'disabled');
-        }else{
-            $('#submit').removeAttr('disabled');
-        }
-
-    });
-
-    $('.gradeX').find('.qty').on('change keyup keydown', function(event) {
-        var qty = $(this).val();
-        var harga = $(this).closest('.gradeX').find('.harga').val();
-        var subtotal=Number(harga)*Number(qty);
-        $(this).closest('.gradeX').find('.subtotal').val(subtotal);
-        $(this).closest('.gradeX').find('.subtotal-label').html(subtotal);
-        var all_sub_total = $('.subtotal');
-        var total_val = 0;
-        for (var i = 0; i < all_sub_total.length; i++) {
-            total_val += Number(all_sub_total[i].value);
-        };
-        $('#total').val(total_val);
-        $('#total-label').html(total_val);
-
-        if (qty == '' || qty == 0) {
-            $('#submit').attr('disabled', 'disabled');
-        }else{
-            $('#submit').removeAttr('disabled');
-        }
     });
 
 
-    $("#form-add-order").validate({
-        rules: {
-            qty: {
-                required: true,
-                digits: true
-            }
-        }
-    });
-
-    $("#update-order").validate({
-        rules: {
-            nama_pelanggan: {
-                required: true,
-                minlength: 2
-            },
-
-            potongan: {
-                required : true,
-                digits: true
-            },
-
-
-        }
-
-
-    });
-
-
-    </script>
+</script>
