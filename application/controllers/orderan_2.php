@@ -216,10 +216,9 @@ class Orderan extends CI_Controller {
 		$data['kd_order'] = $id;
 		$data['kd_penjualan'] = $this->app_model->getMaxKodePenjualan();
 		$data['data_order'] = $this->app_model->getSelectedData("tbl_order", $id_confirm)->result();
-		$data['data_orderan'] = $this->app_model->manualQuery("select a.id_tipe_kategori, a.qty, b.kategori, b.type from tbl_order_detail a left join tbl_tipe_kategori b 
+		$data['data_order_confirm'] = $this->app_model->manualQuery("select a.id_tipe_kategori, a.qty, b.kategori, b.type from tbl_order_detail a left join tbl_tipe_kategori b 
 			on a.id_tipe_kategori=b.id_tipe_kategori where a.kd_order='".$id_confirm['kd_order']."'")->result();
-		$data['data_order_confirm'] = $this->app_model->manualQuery("select a.kd_order, a.id_tipe_kategori, a.qty, b.kategori, b.type, c.kd_barang, c.brand, c.stok, c.harga from tbl_order_detail a left join tbl_tipe_kategori b 
-			on a.id_tipe_kategori=b.id_tipe_kategori left join tbl_barang c on a.id_tipe_kategori = c.id_tipe_kategori where a.kd_order='".$id_confirm['kd_order']."'")->result();
+		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
 
 		foreach ($data['data_order'] as $key => $value) {
 			$data['kd_order'] = $value->kd_order;

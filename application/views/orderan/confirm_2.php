@@ -192,16 +192,64 @@
                         <th>Nama Barang</th>
                         <th style="width:90px;">Orderan</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($data_orderan as $key => $value) {
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data_order_confirm as $key => $value) {
                         ?>
                         <tr>
                             <td><?php echo $value->kategori.' '.$value->type; ?></td>
                             <td><?php echo $value->qty; ?></td>
                         </tr>
                         <?php
+                    }
+                    ?>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box-body table-responsive">
+            <div class="cleaner_h3"></div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Brand</th>
+                        <th>Kode Barang</th>
+                        <th style="width:90px;">Quantity</th>
+                        <th>Harga</th>
+                        <th>Potongan</th>
+                        <th>Dus</th>
+                        <th>Check</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($data_order_confirm as $key => $value) {
+                            ?>
+                            <tr>
+                                <td><?php echo $value->kategori.' '.$value->type; ?></td>
+                                <td>
+                                    <select class="form-control flat" name="brand">
+                                        <?php
+                                        foreach($data_barang as $key2 => $value_2) {
+                                            if ($value->id_tipe_kategori == $value_2->id_tipe_kategori) {
+                                                echo "<option value='".$value_2->kd_barang."'>".$value_2->brand."</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                            </tr>
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -210,62 +258,15 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-9">
-
-                        <?php
-                        foreach ($data_orderan as $key => $value) {
-                        ?>
-            <div class="box-body table-responsive">
-                <div class="cleaner_h3"></div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
-                            <th>Brand</th>
-                            <th style="width:90px;">Quantity</th>
-                            <th>Harga</th>
-                            <th>Potongan</th>
-                            <th>Dus</th>
-                            <th>Check</th>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach ($data_order_confirm as $key_2 => $value_2) {
-                            if ($value->id_tipe_kategori == $value_2->id_tipe_kategori) {
-                        ?>
-                        <tr>
-                            <td><?php echo $value_2->kd_barang ?></td>
-                            <td><?php echo $value_2->kategori.' '.$value_2->type; ?></td>
-                            <td><?php echo $value_2->brand; ?></td>
-                            <td><?php echo $value_2->stok; ?></td>
-                            <td><?php echo $value_2->harga; ?></td>
-                            <td> - </td>
-                            <td> - </td>
-                            <td> - </td>
-                        </tr>
-                        <?php
-                    }
-                        }
-                        ?>
-                        </tbody>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </div>
-                        <?php
-                        }
-                        ?>
-            </div>
-        </div>
-        <div class="cleaner_h20"></div>
-        <div class="form-group">
-            <div class="col-sm-7">
-                <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
-            </div>
-        </div>
-    </form>
+    </div>
     <div class="cleaner_h20"></div>
+    <div class="form-group">
+        <div class="col-sm-7">
+            <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
+        </div>
+    </div>
+</form>
+<div class="cleaner_h20"></div>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 </div>
