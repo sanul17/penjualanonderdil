@@ -177,13 +177,13 @@
 <div class="box-button">
     <div class="row">
         <div class="col-md-12">
-            <h4>Detail Penjualan</h4>
+            <h4>Detail Orderan</h4>
         </div>
     </div>
     <div class="cleaner_h3"></div>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="box-body table-responsive">
             <div class="cleaner_h3"></div>
             <table class="table table-bordered table-striped">
@@ -192,16 +192,75 @@
                         <th>Nama Barang</th>
                         <th style="width:90px;">Orderan</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($data_orderan as $key => $value) {
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data_order_confirm as $key => $value) {
                         ?>
                         <tr>
                             <td><?php echo $value->kategori.' '.$value->type; ?></td>
                             <td><?php echo $value->qty; ?></td>
                         </tr>
                         <?php
+                    }
+                    ?>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>     
+<div class="box-button">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Detail Penjualan</h4>
+        </div>
+    </div>
+    <div class="cleaner_h3"></div>
+</div>
+<div class="row>"
+    <div class="col-md-12">
+        <div class="box-body table-responsive">
+            <div class="cleaner_h3"></div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Brand</th>
+                        <th>Kode Barang</th>
+                        <th style="width:60px;">Qty</th>
+                        <th>Harga</th>
+                        <th>Potongan</th>
+                        <th>Dus</th> 
+                        <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
+
+                    </thead>
+                    <tbody class="barang-confirm">
+                        <?php
+                        foreach ($data_order_confirm as $key => $value) {
+                            ?>
+                            <tr class="gradeX">
+                                <td><?php echo $value->kategori.' '.$value->type; ?></td>
+                                <td>
+                                    <select class="form-control flat" id="brand" name="brand">
+                                        <?php
+                                        foreach($data_barang as $key2 => $value_2) {
+                                            if ($value->id_tipe_kategori == $value_2->id_tipe_kategori) {
+                                                echo "<option value='".$value_2->kd_barang."'>".$value_2->brand."</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
+                            </tr>
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -210,62 +269,15 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-9">
-
-                        <?php
-                        foreach ($data_orderan as $key => $value) {
-                        ?>
-            <div class="box-body table-responsive">
-                <div class="cleaner_h3"></div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
-                            <th>Brand</th>
-                            <th style="width:90px;">Quantity</th>
-                            <th>Harga</th>
-                            <th>Potongan</th>
-                            <th>Dus</th>
-                            <th>Check</th>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach ($data_order_confirm as $key_2 => $value_2) {
-                            if ($value->id_tipe_kategori == $value_2->id_tipe_kategori) {
-                        ?>
-                        <tr>
-                            <td><?php echo $value_2->kd_barang ?></td>
-                            <td><?php echo $value_2->kategori.' '.$value_2->type; ?></td>
-                            <td><?php echo $value_2->brand; ?></td>
-                            <td><?php echo $value_2->stok; ?></td>
-                            <td><?php echo $value_2->harga; ?></td>
-                            <td> - </td>
-                            <td> - </td>
-                            <td> - </td>
-                        </tr>
-                        <?php
-                    }
-                        }
-                        ?>
-                        </tbody>
-                        <tfoot>
-                        </tfoot>
-                    </table>
-                </div>
-                        <?php
-                        }
-                        ?>
-            </div>
-        </div>
-        <div class="cleaner_h20"></div>
-        <div class="form-group">
-            <div class="col-sm-7">
-                <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
-            </div>
-        </div>
-    </form>
+    </div>
     <div class="cleaner_h20"></div>
+    <div class="form-group">
+        <div class="col-sm-7">
+            <button type="submit" class="btn btn-primary flat" disabled="disabled" id="btnsimpan">Confirm</button>
+        </div>
+    </div>
+</form>
+<div class="cleaner_h20"></div>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 </div>
@@ -273,40 +285,158 @@
 
 </section><!-- /.content -->
 
+
+<!-- ============ MODAL ADD PENJUALAN BARANG =============== -->
+<div id="modalAddPenjualanBarang"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="addLabel">Tambah Barang</h3>
+            </div>
+            <form class="form-horizontal" id="form-add-order" method="post" role="form"  action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="barang" class="col-md-3 control-label">List Barang</label>
+                        <div class="col-md-6">
+                            <select id="barang_add" class="chzn-select form-control flat" name="barang" data-placeholder="Pilih Barang">
+                                <option value=""></option>
+                                <?php
+                                if(count($data_barang_kategori) > 0){
+                                    foreach($data_barang_kategori as $key => $value){
+                                        ?>
+                                        <option value="<?php echo $value->id_tipe_kategori?>"><?php echo $value->kategori." ".$value->type?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="detail_barang"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" disabled="disabled" id="add" name="add">Simpan</button>
+                    <button class="btn" data-dismiss="modal" id="closemodal"  aria-hidden="true">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 function bolehUbah()
 {
     document.getElementById("hargabarang").readOnly=false;
 }
 
-$('.qty-dikirim').on('keyup keydown change', function(event) {
-    var qty_dikirim = $(this).val();
-    var harga = $(this).closest('.gradeX').find('.harga').val();
-    var potongan = $(this).closest('.gradeX').find('.potongan').val();
-    var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
-    var potongan_val = 0;
-    var subtotal_val = 0;
-    var subtotal =  $(this).closest('.gradeX').find('.subtotal');
-    var total = $('#total');
-    if (qty_dikirim != 0) {
-        potongan_val = (potongan/100)*harga;
-        harga = harga-potongan_val;
-        harga_potongan.val(harga);
-        subtotal_val = (harga*qty_dikirim);
-        subtotal =  $(this).closest('.gradeX').find('.subtotal');
-        subtotal.val(subtotal_val);
-    };
-    subtotal.val(subtotal_val); 
-    var total_val = 0; 
-    var all_sub_total = $('.subtotal');
-    for (var i = 0; i < all_sub_total.length; i++) {
-        total_val += Number(all_sub_total[i].value);
-    };
-    total.val(total_val);
-
-    $('#btnsimpan').removeAttr('disabled');
-
+$('#closemodal').on('click', function(event) {
+    event.preventDefault();
+    $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
+    $('#detail_barang').html('');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
 });
+
+$("#barang_add").change(function(){
+    var barang = $("#barang_add").val();
+    $.ajax({
+        type: "POST",
+        url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
+        data: "barang="+barang,
+        cache:false,
+        success: function(data){
+            $('#detail_barang').html(data);
+            $('#form-add-order').find('#add').removeAttr('disabled');
+        }
+    });
+});
+
+$("#add").on('click', function(event) {
+    event.preventDefault();
+    var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
+    var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
+    var qty = $(this).closest('#form-add-order').find('#qty').val();
+    var brand;
+    $.ajax({
+        url: '<?php echo base_url("orderan/get_brand"); ?>',
+        type: 'POST',
+        async: false,
+        dataType: 'json',
+        data: "id_tipe_kategori="+id_tipe_kategori,
+    })
+    .done(function(data) {
+        brand = data;
+        console.log("success");
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+        console.log(brand);
+
+    if (qty) {
+        $row = $('<tr class="gradeX"></tr>');
+        $tdNama = $('<td><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
+        $tdQty = $('<td><input type="hidden" readonly class="form-control flat qty" name="qty[]" value="'+qty+'">'+qty+'</td>');
+        
+
+        $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
+
+        $row.append($tdNama).append($tdDelbutton);
+        $row.appendTo('tbody.barang-confirm');
+    };
+
+    $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
+    $('#detail_barang').html('');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
+    $(this).closest('#modalAddPenjualanBarang').modal('hide');
+    $('#submit').removeAttr('disabled');
+
+    $(".delbutton").on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('tr.gradeX').remove();
+    });
+});
+
+    $(".delbutton").on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('tr.gradeX').remove();
+    });
+
+    $('.qty-dikirim').on('keyup keydown change', function(event) {
+        var qty_dikirim = $(this).val();
+        var harga = $(this).closest('.gradeX').find('.harga').val();
+        var potongan = $(this).closest('.gradeX').find('.potongan').val();
+        var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
+        var potongan_val = 0;
+        var subtotal_val = 0;
+        var subtotal =  $(this).closest('.gradeX').find('.subtotal');
+        var total = $('#total');
+        if (qty_dikirim != 0) {
+            potongan_val = (potongan/100)*harga;
+            harga = harga-potongan_val;
+            harga_potongan.val(harga);
+            subtotal_val = (harga*qty_dikirim);
+            subtotal =  $(this).closest('.gradeX').find('.subtotal');
+            subtotal.val(subtotal_val);
+        };
+        subtotal.val(subtotal_val); 
+        var total_val = 0; 
+        var all_sub_total = $('.subtotal');
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        total.val(total_val);
+
+        $('#btnsimpan').removeAttr('disabled');
+
+    });
 
     $('.potongan').on('keyup keydown change', function(event) {
         var potongan = $(this).val();
