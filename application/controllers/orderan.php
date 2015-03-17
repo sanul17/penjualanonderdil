@@ -85,14 +85,6 @@ class Orderan extends CI_Controller {
 		}
 	}
 
-	function get_detail_barang(){
-		$id['id_tipe_kategori']=$this->input->post('barang');
-		$data=array(
-			'detail_barang'=>$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result(),
-			);
-		$this->load->view('orderan/ajax_detail_barang',$data);
-	}
-
 
 	function detail($id){
 		$cek = $this->session->userdata('logged_in');
@@ -306,9 +298,24 @@ class Orderan extends CI_Controller {
 	}
 }
 
+function get_detail_barang(){
+		$id['id_tipe_kategori']=$this->input->post('barang');
+		$data=array(
+			'detail_barang'=>$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result(),
+			);
+		$this->load->view('orderan/ajax_detail_barang',$data);
+	}
+
+
 function get_brand(){
 	$id['id_tipe_kategori']=$this->input->post('id_tipe_kategori');
 		$result=$this->app_model->getSelectedData('tbl_barang', $id)->result_array();
+		echo json_encode($result);
+}
+
+function get_detail_brand(){
+	$id['kd_barang']=$this->input->post('kd_barang');
+		$result=$this->app_model->getSelectedData('tbl_barang', $id)->row_array();
 		echo json_encode($result);
 }
 

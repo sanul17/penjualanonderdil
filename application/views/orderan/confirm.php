@@ -226,14 +226,14 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Nama Barang</th>
-                        <th>Brand</th>
-                        <th>Kode Barang</th>
-                        <th style="width:60px;">Qty</th>
-                        <th>Harga</th>
-                        <th>Potongan</th>
-                        <th>Dus</th> 
-                        <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
+                        <th style="width:20%;">Nama Barang</th>
+                        <th style="width:20%;">Brand</th>
+                        <th style="width:10%;">Kode Barang</th>
+                        <th style="width:10%;">Qty</th>
+                        <th style="width:15%;">Harga</th>
+                        <th style="width:7%;">Potongan</th>
+                        <th style="width:8%;">Dus</th> 
+                        <th style="text-align:center; width:10%;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
 
                     </thead>
                     <tbody class="barang-confirm">
@@ -241,9 +241,10 @@
                         foreach ($data_order_confirm as $key => $value) {
                             ?>
                             <tr class="gradeX">
-                                <td><?php echo $value->kategori.' '.$value->type; ?></td>
-                                <td>
-                                    <select class="form-control flat" id="brand" name="brand">
+                                <td class="nama-barang-col"><?php echo $value->kategori.' '.$value->type; ?></td>
+                                <td class="brand-col">
+                                    <select class="form-control flat brand" id="brand" name="brand[]">
+                                        <option value="none">--- SELECT ---</option>
                                         <?php
                                         foreach($data_barang as $key2 => $value_2) {
                                             if ($value->id_tipe_kategori == $value_2->id_tipe_kategori) {
@@ -253,12 +254,12 @@
                                         ?>
                                     </select>
                                 </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
+                                <td class="kd-barang-col"> - </td>
+                                <td class="qty-col"> - </td>
+                                <td class="harga-col"> - </td>
+                                <td class="potongan-col"> - </td>
+                                <td class="dus-col"> - </td>
+                                <td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
                             </tr>
                             <?php
                         }
@@ -328,67 +329,132 @@
 function bolehUbah()
 {
     document.getElementById("hargabarang").readOnly=false;
-}
+} 
 
-$('#closemodal').on('click', function(event) {
+$(document).on("click", ".delbutton", function(event) {
     event.preventDefault();
-    $(this).closest('#form-add-order').find('#nama_barang').val('');
-    $(this).closest('#form-add-order').find('#qty').val('');
-    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
-    $('#detail_barang').html('');
-    $('#form-add-order').find('#add').attr('disabled', 'disabled');
+    $(this).closest('tr.gradeX').remove();
 });
 
-$("#barang_add").change(function(){
-    var barang = $("#barang_add").val();
-    $.ajax({
-        type: "POST",
-        url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
-        data: "barang="+barang,
-        cache:false,
-        success: function(data){
-            $('#detail_barang').html(data);
-            $('#form-add-order').find('#add').removeAttr('disabled');
-        }
+$(document).on("change", ".brand", function(event) {
+    event.preventDefault();
+    var kd_barang = $(this).val();
+    var $kd_barang_col = $(this).closest('.gradeX').find(".kd-barang-col");
+    var $qty_col = $(this).closest('.gradeX').find(".qty-col");
+    var $harga_col = $(this).closest('.gradeX').find(".harga-col");
+    var $potongan_col = $(this).closest('.gradeX').find(".potongan-col");
+    var $dus_col = $(this).closest('.gradeX').find(".dus-col");
+
+
+    if (kd_barang != "none") {
+
+        var $kd_input = $('<input type="text" readonly class="form-control kd_barang" id="kd_barang" name="kd_barang[]">');
+        var $tdQtySelect = $('<select class="form-control flat qty-dikirim" id="qty-dikirim" name="qty-dikirim[]"></select>');
+        var $harga_input = $('<input type="text" class="form-control harga" id="harga" name="harga[]">');
+        var $pot_input = $('<input type="text" class="form-control potongan" id="potongan" name="potongan[]">');
+        var $dus_input = $('<input type="text" class="form-control dus" id="dus" name="dus[]">');
+
+        $.ajax({
+            url: "<?php echo base_url('orderan/get_detail_brand'); ?>",
+            type: 'POST',
+            dataType: 'json',
+            data: "kd_barang="+kd_barang,
+        })
+        .done(function(data) {
+            console.log("get detail brand success");
+            $kd_input.val(data.kd_barang);
+            for (var i = 1; i <= data.stok; i++) {
+                $tdQtySelect.append('<option value="'+i+'">' + i + '</option>');
+            };
+            $harga_input.val(data.harga);
+
+            $kd_barang_col.html($kd_input);
+            $qty_col.html($tdQtySelect);
+            $harga_col.html($harga_input);
+            $potongan_col.html($pot_input);
+            $dus_col.html($dus_input);
+        })
+        .fail(function() {
+            console.log("get detail brand error");
+        })
+        .always(function() {
+            console.log("get detail brand complete");
+        });
+    } else{
+        $kd_barang_col.html(' - ');
+        $qty_col.html(' - ');
+        $harga_col.html(' - ');
+        $potongan_col.html(' - ');
+        $dus_col.html(' - ');
+    }
+
+});
+
+    $('#closemodal').on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('#form-add-order').find('#nama_barang').val('');
+        $(this).closest('#form-add-order').find('#qty').val('');
+        $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
+        $('#detail_barang').html('');
+        $('#form-add-order').find('#add').attr('disabled', 'disabled');
     });
-});
 
-$("#add").on('click', function(event) {
-    event.preventDefault();
-    var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
-    var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
-    var qty = $(this).closest('#form-add-order').find('#qty').val();
-    var brand;
-    $.ajax({
-        url: '<?php echo base_url("orderan/get_brand"); ?>',
-        type: 'POST',
-        async: false,
-        dataType: 'json',
-        data: "id_tipe_kategori="+id_tipe_kategori,
-    })
-    .done(function(data) {
-        brand = data;
-        console.log("success");
-    })
+    $("#barang_add").change(function(){
+        var barang = $("#barang_add").val();
+        $.ajax({
+            type: "POST",
+            url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
+            data: "barang="+barang,
+            cache:false,
+            success: function(data){
+                $('#detail_barang').html(data);
+                $('#form-add-order').find('#add').removeAttr('disabled');
+            }
+        });
+    });
+
+    $("#add").on('click', function(event) {
+        event.preventDefault();
+        var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
+        var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
+        var qty = $(this).closest('#form-add-order').find('#qty').val();
+        $.ajax({
+            url: '<?php echo base_url("orderan/get_brand"); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: "id_tipe_kategori="+id_tipe_kategori,
+        })
+        .done(function(data) {
+            $tdBrandSelect = $('<select class="form-control flat brand" id="brand" name="brand[]"><option value="none">--- SELECT ---</option></select>');
+
+            $.each(data, function(index, val) {
+                $tdBrandSelect.append($("<option value="+val.kd_barang+">" + val.brand  + "</option>"));
+            });
+
+            if (qty) {
+                $row = $('<tr class="gradeX"></tr>');
+                $tdNama = $('<td class="nama-barang-col"><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
+                $tdQty = $('<td class="qty-col"><input type="text" class="form-control flat qty" name="qty[]" value="'+qty+'"></td>');
+                $tdDelbutton = $('<td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
+                $tdBrand = $('<td class="brand-col"></td>');
+                $tdBrandSelect.appendTo($tdBrand);
+                $tdKdBarang = $('<td class="kd-barang-col"> - </td>');
+                $tdHarga = $('<td class="harga-col"> - </td>');
+                $tdPotongan = $('<td class="potongan-col"> - </td>');
+                $tdDus = $('<td class="dus-col"> - </td>');
+
+                $row.append($tdNama).append($tdBrand).append($tdKdBarang).append($tdQty).append($tdHarga).append($tdPotongan).append($tdDus).append($tdDelbutton);
+                $row.appendTo('tbody.barang-confirm');
+            };
+            console.log("add row success");
+        })
     .fail(function() {
-        console.log("error");
+        console.log("add row error");
     })
     .always(function() {
-        console.log("complete");
+        console.log("add row complete");
     });
-        console.log(brand);
 
-    if (qty) {
-        $row = $('<tr class="gradeX"></tr>');
-        $tdNama = $('<td><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
-        $tdQty = $('<td><input type="hidden" readonly class="form-control flat qty" name="qty[]" value="'+qty+'">'+qty+'</td>');
-        
-
-        $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
-
-        $row.append($tdNama).append($tdDelbutton);
-        $row.appendTo('tbody.barang-confirm');
-    };
 
     $(this).closest('#form-add-order').find('#nama_barang').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
@@ -398,16 +464,9 @@ $("#add").on('click', function(event) {
     $(this).closest('#modalAddPenjualanBarang').modal('hide');
     $('#submit').removeAttr('disabled');
 
-    $(".delbutton").on('click', function(event) {
-        event.preventDefault();
-        $(this).closest('tr.gradeX').remove();
-    });
 });
 
-    $(".delbutton").on('click', function(event) {
-        event.preventDefault();
-        $(this).closest('tr.gradeX').remove();
-    });
+
 
     $('.qty-dikirim').on('keyup keydown change', function(event) {
         var qty_dikirim = $(this).val();
