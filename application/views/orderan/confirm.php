@@ -401,10 +401,11 @@ $(document).on("change", ".brand", function(event) {
 
     $("#barang_add").change(function(){
         var barang = $("#barang_add").val();
+        var req = "confirm";
         $.ajax({
             type: "POST",
             url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
-            data: "barang="+barang,
+            data: {"barang":barang, "req":req},
             cache:false,
             success: function(data){
                 $('#detail_barang').html(data);
@@ -417,7 +418,7 @@ $(document).on("change", ".brand", function(event) {
         event.preventDefault();
         var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
         var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
-        var qty = $(this).closest('#form-add-order').find('#qty').val();
+
         $.ajax({
             url: '<?php echo base_url("orderan/get_brand"); ?>',
             type: 'POST',
@@ -431,15 +432,15 @@ $(document).on("change", ".brand", function(event) {
                 $tdBrandSelect.append($("<option value="+val.kd_barang+">" + val.brand  + "</option>"));
             });
 
-            if (qty) {
+            if (id_tipe_kategori) {
                 $row = $('<tr class="gradeX"></tr>');
                 $tdNama = $('<td class="nama-barang-col"><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
-                $tdQty = $('<td class="qty-col"><input type="text" class="form-control flat qty" name="qty[]" value="'+qty+'"></td>');
                 $tdDelbutton = $('<td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
                 $tdBrand = $('<td class="brand-col"></td>');
                 $tdBrandSelect.appendTo($tdBrand);
                 $tdKdBarang = $('<td class="kd-barang-col"> - </td>');
                 $tdHarga = $('<td class="harga-col"> - </td>');
+                $tdQty = $('<td class="qty-col"> - </td>');
                 $tdPotongan = $('<td class="potongan-col"> - </td>');
                 $tdDus = $('<td class="dus-col"> - </td>');
 

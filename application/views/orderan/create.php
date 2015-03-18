@@ -217,10 +217,12 @@ $('#closemodal').on('click', function(event) {
 
 $("#barang_add").change(function(){
     var barang = $("#barang_add").val();
+    var req = "create";
     $.ajax({
         type: "POST",
         url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
-        data: "barang="+barang,
+        data: {"barang":barang, "req":req},
+
         cache:false,
         success: function(data){
             $('#detail_barang').html(data);

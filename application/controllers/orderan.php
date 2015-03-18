@@ -300,9 +300,8 @@ class Orderan extends CI_Controller {
 
 function get_detail_barang(){
 		$id['id_tipe_kategori']=$this->input->post('barang');
-		$data=array(
-			'detail_barang'=>$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result(),
-			);
+		$data['req']=$this->input->post('req');
+		$data['detail_barang']=$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result();
 		$this->load->view('orderan/ajax_detail_barang',$data);
 	}
 
