@@ -57,12 +57,12 @@ display: block;
 /*right side - contins main content*/
 .right-side {
 background-color: #f9f9f9;
-margin-left: 220px;
+margin-left: 200px;
 }
 /*left side - contains sidebar*/
 .left-side {
 position: absolute;
-width: 220px;
+width: 200px;
 top: 0;
 }
 @media screen and (min-width: 992px) {
@@ -78,7 +78,7 @@ margin-top: 0px;
 }
 /* Left side collapse */
 .left-side.collapse-left {
-left: -220px;
+left: -200px;
 }
 }
 /*Give content full width on xs screens*/
@@ -469,7 +469,7 @@ z-index: 1030;
 body > .header .navbar {
 height: 50px;
 margin-bottom: 0;
-margin-left: 220px;
+margin-left: 200px;
 }
 body > .header .navbar .sidebar-toggle {
 float: left;
@@ -531,7 +531,7 @@ font-size: 20px;
 line-height: 50px;
 text-align: center;
 padding: 0 10px;
-width: 220px;
+width: 200px;
 font-family: 'Kaushan Script', cursive;
 font-weight: 500;
 height: 50px;
@@ -725,26 +725,26 @@ margin-right: 3px;
 position: relative;
 }
 .row-offcanvas-right .sidebar-offcanvas {
-right: -220px;
+right: -200px;
 }
 .row-offcanvas-left .sidebar-offcanvas {
-left: -220px;
+left: -200px;
 }
 .row-offcanvas-right.active {
-right: 220px;
+right: 200px;
 }
 .row-offcanvas-left.active {
-left: 220px;
+left: 200px;
 }
 .sidebar-offcanvas {
 left: 0;
 }
 body.fixed .sidebar-offcanvas {
 margin-top: 50px;
-left: -220px;
+left: -200px;
 }
 body.fixed .row-offcanvas-left.active .navbar {
-left: 220px !important;
+left: 200px !important;
 right: 0;
 }
 body.fixed .row-offcanvas-left.active .sidebar-offcanvas {
@@ -3559,3 +3559,6 @@ padding: 10px;
 float: none;
 }
 
+.detail-penjualan *{
+	font-size: 12px;
+}
