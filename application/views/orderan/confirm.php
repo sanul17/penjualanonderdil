@@ -226,13 +226,14 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width:20%;">Nama Barang</th>
-                        <th style="width:20%;">Brand</th>
+                        <th style="width:17%;">Nama Barang</th>
+                        <th style="width:17%;">Brand</th>
                         <th style="width:10%;">Kode Barang</th>
                         <th style="width:10%;">Qty</th>
-                        <th style="width:15%;">Harga</th>
-                        <th style="width:7%;">Potongan</th>
-                        <th style="width:8%;">Dus</th> 
+                        <th style="width:13%;">Harga</th>
+                        <th style="width:5%;">Potongan</th>
+                        <th style="width:13%;">Sub Total</th>
+                        <th style="width:5%;">Dus</th> 
                         <th style="text-align:center; width:10%;"  class="action"><a href="#modalAddPenjualanBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
 
                     </thead>
@@ -258,6 +259,7 @@
                                 <td class="qty-col"> - </td>
                                 <td class="harga-col"> - </td>
                                 <td class="potongan-col"> - </td>
+                                <td class="subtotal-col"> - </td>
                                 <td class="dus-col"> - </td>
                                 <td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
                             </tr>
@@ -343,6 +345,7 @@ $(document).on("change", ".brand", function(event) {
     var $qty_col = $(this).closest('.gradeX').find(".qty-col");
     var $harga_col = $(this).closest('.gradeX').find(".harga-col");
     var $potongan_col = $(this).closest('.gradeX').find(".potongan-col");
+    var $subtotal_col = $(this).closest('.gradeX').find(".subtotal-col");
     var $dus_col = $(this).closest('.gradeX').find(".dus-col");
 
 
@@ -372,6 +375,7 @@ $(document).on("change", ".brand", function(event) {
             $qty_col.html($tdQtySelect);
             $harga_col.html($harga_input);
             $potongan_col.html($pot_input);
+            $subtotal_col.html(data.harga);
             $dus_col.html($dus_input);
         })
         .fail(function() {
@@ -442,9 +446,10 @@ $(document).on("change", ".brand", function(event) {
                 $tdHarga = $('<td class="harga-col"> - </td>');
                 $tdQty = $('<td class="qty-col"> - </td>');
                 $tdPotongan = $('<td class="potongan-col"> - </td>');
+                $tdSubTotal = $('<td class="subtotal-col"> - </td>');
                 $tdDus = $('<td class="dus-col"> - </td>');
 
-                $row.append($tdNama).append($tdBrand).append($tdKdBarang).append($tdQty).append($tdHarga).append($tdPotongan).append($tdDus).append($tdDelbutton);
+                $row.append($tdNama).append($tdBrand).append($tdKdBarang).append($tdQty).append($tdHarga).append($tdPotongan).append($tdSubTotal).append($tdDus).append($tdDelbutton);
                 $row.appendTo('tbody.barang-confirm');
             };
             console.log("add row success");
