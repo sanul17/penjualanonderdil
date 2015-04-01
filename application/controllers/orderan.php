@@ -229,10 +229,7 @@ class Orderan extends CI_Controller {
 			if ($this->form_validation->run()) {
 				$cek_qty_array = $this->input->post('qty_dikirim');
 				$cek_qty = 0;
-				for ($i=0; $i < count($cek_qty_array); $i++) { 
-					$cek_qty+= $cek_qty_array[$i];
-				}
-				if ($cek_qty >0) {
+				if ($cek_qty > 0) {
 					$id_cek['kd_penjualan'] = $this->input->post('kd_penjualan');
 					$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_cek)->result();
 					$kd_penjualan = '';
@@ -286,6 +283,8 @@ class Orderan extends CI_Controller {
 						$this->load->view('elements/footer');
 					}
 				}else{
+					$pesan = 'Tidak Ada Barang Yang di Confirm';
+					$this->session->set_flashdata('pesan', $pesan);
 					redirect(base_url('orderan'));
 				}
 		}else{
@@ -302,7 +301,6 @@ function get_detail_barang(){
 		$id['id_tipe_kategori']=$this->input->post('barang');
 		$data['req']=$this->input->post('req');
 		$data['detail_barang']=$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result();
-		$data['list_brand']=$this->app_model->getSelectedData('tbl_barang',$id)->result();
 		$this->load->view('orderan/ajax_detail_barang',$data);
 	}
 
