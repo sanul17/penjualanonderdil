@@ -17,6 +17,21 @@ if(isset($detail_barang)){
                             <input name="qty" id="qty" type="text" class="form-control flat">
                         </div>
                     </div>
+                        <?php
+}else if ($req == 'confirm') {
+   ?>
+                    <div class="form-group">
+                        <label for="qty" class="col-md-3 control-label">List Brand</label>
+                        <div class="col-md-3">
+                            <?php foreach ($list_brand as $key => $value) {
+                        ?>  
+                            <input readonly type="text" class="form-control flat" value="<?php echo $value->brand; ?>">
+                            <div class="cleaner_h5"></div>
+                            <?php
+                        }
+                            ?>
+                        </div>
+                    </div>
 
     <?php
 }

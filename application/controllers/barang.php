@@ -229,13 +229,13 @@ class Barang extends CI_Controller {
 
 	}
 
-	function uploadexcel(){
+	function importexcel(){
 		$dt['title']='Pasti Jaya Motor | PHPExcel';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
-			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
-			$this->form_validation->set_rules('coba', 'coba', 'required');
-			if ($this->form_validation->run()) {
+			
+			if(isset($_FILES["import"]))
+			{
 				//generate name
 				$random_secure = md5(date('Y-m-d H:i:s:u'));
 				$namefile_generate = "FILE_EXCEL_". $random_secure;
@@ -243,15 +243,13 @@ class Barang extends CI_Controller {
 				$info = pathinfo($_FILES['import']['name']);
 				$ext = $info['extension'];
 				$namefile_generate = $namefile_generate.".".$ext;
+
+				$path_upload = "assets/files/";
 				
-				$path_move = "/assets/files/";
-				$path_upload = "/assets/files/";
+				$path_upload = $path_upload . basename( $namefile_generate);
+				move_uploaded_file($_FILES['import']['tmp_name'], $path_upload);
 
-				$path_file = $path_upload . basename( $namefile_generate) ;
-				$path_move = $path_move . basename( $namefile_generate) ;
-				move_uploaded_file($_FILES['import']['tmp_name'], $path_move);
-
-				$file = $path_file;
+				$file = $path_upload;
 
 //load the excel library
 				$this->load->library('excel');
@@ -324,18 +322,24 @@ class Barang extends CI_Controller {
 					}
 				}
 
+				$create['user'] = $this->session->userdata('username');
+				$create['date'] = date('Y-m-d H:i:s');
+				$create['file_name'] = $namefile_generate;
+				$create['file_path'] = $path_upload;
+				$this->app_model->insertData('tbl_import', $create);
+
 				if ($result) {
 					$pesan = 'Import Excel Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
-					redirect(base_url('barang/uploadexcel'));
+					redirect(base_url('barang/importexcel'));
 				}else{
 					$pesan = 'Import Excel Gagal';
 					$this->session->set_flashdata('pesan', $pesan);
-					redirect(base_url('barang/uploadexcel'));
+					redirect(base_url('barang/importexcel'));
 				}
 			}else{
 				$this->load->view('elements/header', $dt);
-				$this->load->view('barang/uploadexcel');
+				$this->load->view('barang/importexcel');
 				$this->load->view('elements/footer');
 			}
 		}else{

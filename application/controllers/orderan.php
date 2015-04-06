@@ -228,7 +228,11 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
 				$cek_qty_array = $this->input->post('qty_dikirim');
+<<<<<<< HEAD
+				$cek_qty = 0;
+=======
 				$cek_qty = count($cek_qty_array);
+>>>>>>> ef1493483f948f60c8ea3be0fd8d072a3eed7ca5
 				if ($cek_qty > 0) {
 					$id_cek['kd_penjualan'] = $this->input->post('kd_penjualan');
 					$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_cek)->result();
@@ -301,6 +305,7 @@ function get_detail_barang(){
 		$id['id_tipe_kategori']=$this->input->post('barang');
 		$data['req']=$this->input->post('req');
 		$data['detail_barang']=$this->app_model->getSelectedData('tbl_tipe_kategori',$id)->result();
+		$data['list_brand'] = $this->app_model->manualQuery('select brand from tbl_barang where id_tipe_kategori = '.$id['id_tipe_kategori'])->result();
 		$this->load->view('orderan/ajax_detail_barang',$data);
 	}
 
