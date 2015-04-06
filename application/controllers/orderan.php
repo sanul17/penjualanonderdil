@@ -228,12 +228,12 @@ class Orderan extends CI_Controller {
 			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
 			if ($this->form_validation->run()) {
 				$cek_qty_array = $this->input->post('qty_dikirim');
-				$cek_qty = 0;
+				$cek_qty = count($cek_qty_array);
 				if ($cek_qty > 0) {
 					$id_cek['kd_penjualan'] = $this->input->post('kd_penjualan');
 					$cek_kd_penjualan = $data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $id_cek)->result();
 					$kd_penjualan = '';
-					if (count($cek_kd_penjualan > 0)) {
+					if (count($cek_kd_penjualan) > 0) {
 						$kd_penjualan = $this->app_model->getMaxKodePenjualan();
 					}else{
 						$kd_penjualan = $this->input->post('kd_penjualan');

@@ -48,7 +48,7 @@
                             </div>
                             <div class="cleaner_h3"></div>
                         </div>
-                        <form class="form-horizontal" method="post" name="form-confirm" role="form" enctype="multipart/form-data" action="<?php echo base_url('orderan/confirm/'.$kd_order) ?>">
+                        <form class="form-horizontal" method="post" name="form-confirm" role="form" action="<?php echo base_url('orderan/confirm/'.$kd_order); ?>">
                             <div class="row">
                                 <div class="col-md-5">
                                     <?php
@@ -172,7 +172,6 @@
     </div>
 </div>
 </div>
-</div>
 <hr>        
 <div class="box-button">
     <div class="row">
@@ -219,7 +218,7 @@
     </div>
     <div class="cleaner_h3"></div>
 </div>
-<div class="row>"
+<div class="row">
     <div class="col-md-12">
         <div class="box-body table-responsive detail-penjualan">
             <div class="cleaner_h3"></div>
@@ -335,7 +334,6 @@
 </div>
 
 <script>
-$(document).ready(function() {
    
 function bolehUbah()
 {
@@ -358,6 +356,88 @@ $(document).on("click", ".delbutton", function(event) {
     event.preventDefault();
     $(this).closest('tr.gradeX').remove();
 });
+
+
+    $('#closemodal').on('click', function(event) {
+        event.preventDefault();
+        $(this).closest('#form-add-order').find('#nama_barang').val('');
+        $(this).closest('#form-add-order').find('#qty').val('');
+        $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
+        $('#detail_barang').html('');
+        $('#form-add-order').find('#add').attr('disabled', 'disabled');
+    });
+
+    $("#barang_add").change(function(){
+        var barang = $("#barang_add").val();
+        var req = "confirm";
+        $.ajax({
+            type: "POST",
+            url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
+            data: {"barang":barang, "req":req},
+            cache:false,
+            success: function(data){
+                $('#detail_barang').html(data);
+                $('#form-add-order').find('#add').removeAttr('disabled');
+            }
+        });
+    });
+
+    $("#add").on('click', function(event) {
+        event.preventDefault();
+        var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
+        var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
+
+        $.ajax({
+            url: '<?php echo base_url("orderan/get_brand"); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: "id_tipe_kategori="+id_tipe_kategori,
+        })
+        .done(function(data) {
+            $tdBrandSelect = $('<select class="form-control flat brand" id="brand" name="brand[]"><option value="none">--- SELECT ---</option></select>');
+
+            $.each(data, function(index, val) {
+                $tdBrandSelect.append($("<option value="+val.kd_barang+">" + val.brand  + "</option>"));
+            });
+
+            if (id_tipe_kategori) {
+                $row = $('<tr class="gradeX"></tr>');
+                $tdNama = $('<td class="nama-barang-col"><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
+                $tdDelbutton = $('<td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
+                $tdBrand = $('<td class="brand-col"></td>');
+                $tdBrandSelect.appendTo($tdBrand);
+                $tdKdBarang = $('<td class="kd-barang-col"> - </td>');
+                $tdHarga = $('<td class="harga-col"> - </td>');
+                $tdQty = $('<td class="qty-col"> - </td>');
+                $tdPotongan = $('<td class="potongan-col"> - </td>');
+                $tdHargaPotongan = $('<td class="harga-potongan-col"> - </td>');
+                $tdSubTotal = $('<td class="subtotal-col"> - </td>');
+                $tdDus = $('<td class="dus-col"> - </td>');
+
+                $row.append($tdNama).append($tdBrand).append($tdKdBarang).append($tdQty).append($tdHarga).append($tdPotongan).append($tdHargaPotongan).append($tdSubTotal).append($tdDus).append($tdDelbutton);
+                $row.appendTo('tbody.barang-confirm');
+            };
+            console.log("add row success");
+        })
+    .fail(function() {
+        console.log("add row error");
+    })
+    .always(function() {
+        console.log("add row complete");
+    });
+
+
+    $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
+    $('#detail_barang').html('');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
+    $(this).closest('#modalAddPenjualanBarang').modal('hide');
+    $('#submit').removeAttr('disabled');
+
+});
+
+
 
 $(document).on("change", ".brand", function(event) {
     event.preventDefault();
@@ -516,85 +596,4 @@ $(document).on("change", ".brand", function(event) {
     });
 
 
-    $('#closemodal').on('click', function(event) {
-        event.preventDefault();
-        $(this).closest('#form-add-order').find('#nama_barang').val('');
-        $(this).closest('#form-add-order').find('#qty').val('');
-        $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
-        $('#detail_barang').html('');
-        $('#form-add-order').find('#add').attr('disabled', 'disabled');
-    });
-
-    $("#barang_add").change(function(){
-        var barang = $("#barang_add").val();
-        var req = "confirm";
-        $.ajax({
-            type: "POST",
-            url : "<?php echo base_url('orderan/get_detail_barang'); ?>",
-            data: {"barang":barang, "req":req},
-            cache:false,
-            success: function(data){
-                $('#detail_barang').html(data);
-                $('#form-add-order').find('#add').removeAttr('disabled');
-            }
-        });
-    });
-
-    $("#add").on('click', function(event) {
-        event.preventDefault();
-        var id_tipe_kategori = $(this).closest('#form-add-order').find('#id_tipe_kategori').val();
-        var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
-
-        $.ajax({
-            url: '<?php echo base_url("orderan/get_brand"); ?>',
-            type: 'POST',
-            dataType: 'json',
-            data: "id_tipe_kategori="+id_tipe_kategori,
-        })
-        .done(function(data) {
-            $tdBrandSelect = $('<select class="form-control flat brand" id="brand" name="brand[]"><option value="none">--- SELECT ---</option></select>');
-
-            $.each(data, function(index, val) {
-                $tdBrandSelect.append($("<option value="+val.kd_barang+">" + val.brand  + "</option>"));
-            });
-
-            if (id_tipe_kategori) {
-                $row = $('<tr class="gradeX"></tr>');
-                $tdNama = $('<td class="nama-barang-col"><input type="hidden" readonly class="form-control flat id_tipe_kategori" name="id_tipe_kategori[]" value="'+id_tipe_kategori+'">'+nama_barang+'</td>');
-                $tdDelbutton = $('<td class="delbutton-col" style="text-align:center;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
-                $tdBrand = $('<td class="brand-col"></td>');
-                $tdBrandSelect.appendTo($tdBrand);
-                $tdKdBarang = $('<td class="kd-barang-col"> - </td>');
-                $tdHarga = $('<td class="harga-col"> - </td>');
-                $tdQty = $('<td class="qty-col"> - </td>');
-                $tdPotongan = $('<td class="potongan-col"> - </td>');
-                $tdHargaPotongan = $('<td class="harga-potongan-col"> - </td>');
-                $tdSubTotal = $('<td class="subtotal-col"> - </td>');
-                $tdDus = $('<td class="dus-col"> - </td>');
-
-                $row.append($tdNama).append($tdBrand).append($tdKdBarang).append($tdQty).append($tdHarga).append($tdPotongan).append($tdHargaPotongan).append($tdSubTotal).append($tdDus).append($tdDelbutton);
-                $row.appendTo('tbody.barang-confirm');
-            };
-            console.log("add row success");
-        })
-    .fail(function() {
-        console.log("add row error");
-    })
-    .always(function() {
-        console.log("add row complete");
-    });
-
-
-    $(this).closest('#form-add-order').find('#nama_barang').val('');
-    $(this).closest('#form-add-order').find('#qty').val('');
-    $(this).closest('#form-add-order').find('#barang_add').val('').trigger("chosen:updated");
-    $('#detail_barang').html('');
-    $('#form-add-order').find('#add').attr('disabled', 'disabled');
-    $(this).closest('#modalAddPenjualanBarang').modal('hide');
-    $('#submit').removeAttr('disabled');
-
-});
-
- 
-});
     </script>

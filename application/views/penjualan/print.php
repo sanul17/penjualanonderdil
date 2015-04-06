@@ -99,7 +99,7 @@
                             ?>
                             <tr class="gradeX">
                                 <td><?php echo $value->kd_barang; ?></td>
-                                <td><?php echo $value->nama_barang; ?></td>
+                                <td><?php echo $value->kategori." ".$value->type." ".$value->brand; ?></td>
                                 <td><?php echo $value->qty; ?></td>
                                 <td>Rp. <?php echo number_format($value->harga_tersimpan, 2, ",", "."); ?></td>
                                 <td><?php echo $value->dus; ?></td>
