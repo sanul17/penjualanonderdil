@@ -6,11 +6,12 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.css')?>"> 
     <link rel="stylesheet" type="text/css"  href="<?php echo base_url('assets/css/chosen.css')?>"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css')?>"/>   
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/fileinput.css')?>"/>  
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css')?>"/>
     <!-- Custom Fonts -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>">    
     <!-- Theme style -->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/AdminLTE.css')?>"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/AdminLTE.css')?>"/> 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,6 +22,7 @@
 
           <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-1.10.2.min.js')?>"></script>
           <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/validation/jquery.validate.js')?>" ></script>
+          <script type="text/javascript" src="<?php echo base_url('assets/js/fileinput.js')?>" ></script>
           <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.min.js')?>"></script> 
           <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-ui.min.js')?>" ></script>
       </head>
@@ -148,6 +150,7 @@
                                 <ul class="treeview-menu">
                                     <li><a href="<?php echo base_url('tipe_kategori')?>"><i class="fa fa-angle-double-right"></i>Tipe Kategori</a></li>
                                     <li><a href="<?php echo base_url('barang')?>"><i class="fa fa-angle-double-right"></i><span>Stok Barang</span> <span class="barang_notification"></span></a></li>
+                                    <li><a href="<?php echo base_url('barang/importexcel')?>"><i class="fa fa-angle-double-right"></i>Import Excel</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -184,10 +187,17 @@
                                     <i class="fa fa-home"></i> <span>Home</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?php echo base_url('barang')?>">
-                                    <i class="fa fa-cubes"></i> <span>Stok Barang</span> <span class="barang_notification"></span>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-cubes"></i>
+                                    <span>Barang</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('tipe_kategori')?>"><i class="fa fa-angle-double-right"></i>Tipe Kategori</a></li>
+                                    <li><a href="<?php echo base_url('barang')?>"><i class="fa fa-angle-double-right"></i><span>Stok Barang</span> <span class="barang_notification"></span></a></li>
+                                    <li><a href="<?php echo base_url('barang/importexcel')?>"><i class="fa fa-angle-double-right"></i>Import Excel</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="<?php echo base_url('sales')?>">

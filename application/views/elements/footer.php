@@ -18,10 +18,10 @@ $(function() {
     $('.chzn-select-deselect').chosen({allow_single_deselect:true});
 
     $("#dataTable").DataTable({
-       "aoColumnDefs": [
-       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
-       ],
-   });
+     "aoColumnDefs": [
+     { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+     ],
+ });
 
     $.ajax({
         url: '<?php echo base_url(); ?>dashboard/barangNotification',
@@ -50,6 +50,23 @@ $(function() {
 });
 
 
- </script>
+$("#import-excel").fileinput({
+    showPreview: false,
+    previewSettings : {image: {width : "240px", height : "auto" }},
+    allowedFileExtensions : ['xls', 'xlsx'],
+    overwriteInitial: false,
+    maxFileCount: 1
+});
+
+$("#import-excel").change(function (){
+    var fileName = $(this).val();
+    if (fileName != '') {
+        $('#import-submit').removeAttr('disabled');
+    }else{
+        $('#import-submit').attr('disabled', 'disabled');
+    }
+});
+
+</script>
 </body>
 </html>
