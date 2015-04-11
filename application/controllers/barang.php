@@ -275,11 +275,12 @@ class Barang extends CI_Controller {
 				}
 
 				$tipe_kategori = $this->app_model->getAllData('tbl_tipe_kategori')->result();
+				$total_tipe_kategori = count($tipe_kategori);
 
 				for ($i=1; $i < $highestRow; $i++) { 
 				//SET KATEGORI AND TYPE
-					$kategori = $arraydata[$i][1];
-					$type = $arraydata[$i][2];
+					$kategori = ($arraydata[$i][1]) ? $arraydata[$i][1] : "No Category" ;
+					$type = ($arraydata[$i][2]) ? $arraydata[$i][2] : "No Type" ;
 				//SET CREATE DATA
 					$create_barang['kd_barang'] = $arraydata[$i][0];
 
@@ -295,28 +296,37 @@ class Barang extends CI_Controller {
 
 					$create_barang['posisi'] = ($arraydata[$i][8]) ? $arraydata[$i][8] : "-" ;
 
+					$create_barang['keterangan'] = ($arraydata[$i][8]) ? $arraydata[$i][8] : "-" ;
+
 				//KATEGORI EXIST ARE FALSE DEFAULT
 					$kategori_exist = false;
 
+
+				//IF TOTAL TIPE KATEGORI != 0
+					if ($total_tipe_kategori > 0) {
 				//CHECKING IF KATEGORI AND TIPE ALREADY EXIST OR NOT
-					foreach ($tipe_kategori as $key => $value) {
-						if (strtolower(trim($value->kategori)) != strtolower(trim($kategori)) || strtolower(trim($value->type)) != strtolower(trim($type))) {
+						foreach ($tipe_kategori as $key => $value) {
+							if (strtolower(trim($value->kategori)) != strtolower(trim($kategori)) || strtolower(trim($value->type)) != strtolower(trim($type))) {
 						//KATEGORI NOT EXIST, SET CREATE KATEGORI
-							$kategori_exist = false;
-							$create_kategori['kategori'] = $kategori;
-							$create_kategori['type'] = $type;
-						}else{
+								$kategori_exist = false;
+								$create_kategori['kategori'] = $kategori;
+								$create_kategori['type'] = $type;
+							}else{
 						//KATEGORI EXIST, BREAK FROM LOOP
-							$kategori_exist = true;
-							break;
+								$kategori_exist = true;
+								break;
+							}
 						}
+					}else{
+						$kategori_exist = false;
+						$create_kategori['kategori'] = $kategori;
+						$create_kategori['type'] = $type;
 					}
 
 				//IF KATEGORI NOT EXIST, CREATE NEW TIPE KATEGORI AND INSERT BARANG BY LAST ID
 					if (!$kategori_exist) {
 						$this->app_model->insertData('tbl_tipe_kategori', $create_kategori);
 						$create_barang['id_tipe_kategori'] = $this->db->insert_id();
-						$this->app_model->insertData('tbl_barang', $create_barang);
 					}else{
 				//IF KATEGORI EXIST, CHECK THE MATCH ID TIPE KATEGORI
 						foreach ($tipe_kategori as $key => $value) {
@@ -325,6 +335,12 @@ class Barang extends CI_Controller {
 								break;
 							}
 						}
+					}
+					$check_barang_list = $this->app_model->manualQuery('select * from tbl_barang where kd_barang = "'.$create_barang['kd_barang'].'"')->result_array();
+					if (count($check_barang_list) > 0) {
+						$id_update['kd_barang'] = $create_barang['kd_barang'];
+						$result = $this->app_model->updateData('tbl_barang', $create_barang, $id_update);
+					}else{
 						$result = $this->app_model->insertData('tbl_barang', $create_barang);
 					}
 				}
