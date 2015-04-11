@@ -48,11 +48,7 @@
                             </div>
                             <div class="cleaner_h3"></div>
                         </div>
-<<<<<<< HEAD
-                        <form class="form-horizontal" method="post" id="form-brengsek" role="form" enctype="multipart/form-data" action="<?php echo base_url('orderan/confirm/'.$kd_order) ?>">
-=======
                         <form class="form-horizontal" method="post" name="form-confirm" role="form" action="<?php echo base_url('orderan/confirm/'.$kd_order); ?>">
->>>>>>> ef1493483f948f60c8ea3be0fd8d072a3eed7ca5
                             <div class="row">
                                 <div class="col-md-5">
                                     <?php
@@ -286,11 +282,7 @@
     <div class="cleaner_h20"></div>
     <div class="form-group">
         <div class="col-sm-7">
-<<<<<<< HEAD
-            <button type="submit" class="btn btn-primary flat"  disabled="disabled" id="btnsimpan">Confirm</button>
-=======
             <button type="submit" class="btn btn-primary flat"  disabled="disabled" id="btnsimpan" name="submit" >Confirm</button>
->>>>>>> ef1493483f948f60c8ea3be0fd8d072a3eed7ca5
         </div>
     </div>
 </form>
@@ -364,84 +356,6 @@ $(document).on("click", ".delbutton", function(event) {
     event.preventDefault();
     $(this).closest('tr.gradeX').remove();
 });
-
-<<<<<<< HEAD
-$(document).on("change", ".brand", function(event) {
-    event.preventDefault();
-    var kd_barang = $(this).val();
-    var $kd_barang_col = $(this).closest('.gradeX').find(".kd-barang-col");
-    var $qty_col = $(this).closest('.gradeX').find(".qty-col");
-    var $harga_col = $(this).closest('.gradeX').find(".harga-col");
-    var $potongan_col = $(this).closest('.gradeX').find(".potongan-col");
-    var $harga_potongan_col = $(this).closest('.gradeX').find(".harga-potongan-col");
-    var $subtotal_col = $(this).closest('.gradeX').find(".subtotal-col");
-    var $dus_col = $(this).closest('.gradeX').find(".dus-col");
-    var total = $("#total");
-
-    if (kd_barang != "none") {
-
-        var $kd_input = $('<input type="text" readonly class="form-control kd_barang" name="kd_barang[]">');
-        var $tdQtySelect = $('<select class="form-control flat qty-dikirim" name="qty_dikirim[]"></select>');
-        var $harga_input = $('<input type="text" class="form-control harga" name="harga[]">');
-        var $harga_potongan_input = $('<input type="text" readonly class="form-control harga-potongan" name="harga_potongan[]">');
-        var $pot_input = $('<input type="text" class="form-control potongan" name="potongan[]" value="0">');
-        var $subtotal_input = $('<input type="text" readonly class="form-control subtotal" name="subtotal[]">');
-        var $dus_input = $('<input type="text" class="form-control dus" name="dus[]">');
-
-        $.ajax({
-            url: "<?php echo base_url('orderan/get_detail_brand'); ?>",
-            type: 'POST',
-            dataType: 'json',
-            data: "kd_barang="+kd_barang,
-        })
-        .done(function(data) {
-            console.log("get detail brand success");
-            $kd_input.val(data.kd_barang);
-            for (var i = 1; i <= data.stok; i++) {
-                $tdQtySelect.append('<option value="'+i+'">' + i + '</option>');
-            };
-            $harga_input.val(data.harga);
-            $harga_potongan_input.val(data.harga);
-            $subtotal_input.val(data.harga);
-
-            $kd_barang_col.html($kd_input);
-            $qty_col.html($tdQtySelect);
-            $harga_col.html($harga_input);
-            $potongan_col.html($pot_input);
-            $harga_potongan_col.html($harga_potongan_input);
-            $subtotal_col.html($subtotal_input);
-            $dus_col.html($dus_input);
-        })
-        .fail(function() {
-            console.log("get detail brand error");
-        })
-        .always(function() {
-            console.log("get detail brand complete");
-
-            var total_val = 0; 
-            var all_sub_total = $('.subtotal');
-            for (var i = 0; i < all_sub_total.length; i++) {
-                total_val += Number(all_sub_total[i].value);
-            };
-            total.val(total_val);
-            $(document).cekBarangExist();
-        });
-    } else{
-        $kd_barang_col.html(' - ');
-        $qty_col.html(' - ');
-        $harga_col.html(' - ');
-        $potongan_col.html(' - ');
-        $harga_potongan_col.html(' - ');
-        $subtotal_col.html(' - ');
-        $dus_col.html(' - ');
-        $(document).cekBarangExist();
-    }
-
-});
-=======
->>>>>>> ef1493483f948f60c8ea3be0fd8d072a3eed7ca5
-
-
 
     $(document).on('keyup keydown change', '.qty-dikirim', function(event) {
         var qty_dikirim = $(this).val();
@@ -604,10 +518,6 @@ $(document).on("change", ".brand", function(event) {
 
 });
 
-
-<<<<<<< HEAD
-=======
-
 $(document).on("change", ".brand", function(event) {
     event.preventDefault();
     var kd_barang = $(this).val();
@@ -764,6 +674,4 @@ $(document).on("change", ".brand", function(event) {
 
     });
 
-
->>>>>>> ef1493483f948f60c8ea3be0fd8d072a3eed7ca5
     </script>

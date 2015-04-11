@@ -278,16 +278,23 @@ class Barang extends CI_Controller {
 
 				for ($i=1; $i < $highestRow; $i++) { 
 				//SET KATEGORI AND TYPE
-					$kategori = $arraydata[$i][0];
-					$type = $arraydata[$i][1];
+					$kategori = $arraydata[$i][1];
+					$type = $arraydata[$i][2];
 				//SET CREATE DATA
-					$create_barang['kd_barang'] = $this->app_model->getMaxKodeBarang();
-					$create_barang['brand'] = $arraydata[$i][2];
-					$create_barang['min_stok'] = $arraydata[$i][3];
-					$create_barang['stok'] = $arraydata[$i][4];
-					$create_barang['modal'] = $arraydata[$i][5];
-					$create_barang['harga'] = $arraydata[$i][6];
-					$create_barang['posisi'] = $arraydata[$i][7];
+					$create_barang['kd_barang'] = $arraydata[$i][0];
+
+					$create_barang['brand'] = ($arraydata[$i][3]) ? $arraydata[$i][3] : "No Brand" ;
+
+					$create_barang['min_stok'] = ($arraydata[$i][4]) ? $arraydata[$i][4] : 0 ;
+
+					$create_barang['stok'] = ($arraydata[$i][5]) ? $arraydata[$i][5] : 0 ;
+
+					$create_barang['modal'] = ($arraydata[$i][6]) ? $arraydata[$i][6] : 0 ;
+
+					$create_barang['harga'] = ($arraydata[$i][7]) ? $arraydata[$i][7] : 0 ;
+
+					$create_barang['posisi'] = ($arraydata[$i][8]) ? $arraydata[$i][8] : "-" ;
+
 				//KATEGORI EXIST ARE FALSE DEFAULT
 					$kategori_exist = false;
 

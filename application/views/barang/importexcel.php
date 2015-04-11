@@ -41,7 +41,7 @@
                         <div class="cleaner_h3"></div>
                         <form class="form-horizontal" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url('barang/importexcel') ?>">
                             <div class="form-group">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                 <input type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="form-control flat" id="import-excel" name="import" data-show-upload="false">
                             </div>
                             </div>
