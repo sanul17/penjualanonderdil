@@ -12,12 +12,64 @@ class Barang extends CI_Controller {
 		if (!empty($cek)) {	
 			$data['data'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
 			$data['data_for_sales'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
+			$data['total_stok'] = $this->app_model->manualQuery('select  SUM(stok) as total_stok from tbl_barang')->row_array();
 			$this->load->view('elements/header', $dt);
 			$this->load->view('barang/index', $data);
 			$this->load->view('elements/footer');
 		}else{
 			redirect(base_url('login'));
 		}
+	}
+
+	function getBarang(){
+		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(type, kategori) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
+		foreach($arrayBarang['data'] as $i => $data) {
+			$data['action'] = "                                                <div class=\"btn-group\">
+                                                    <a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
+                                                        Action
+                                                        <span class=\"caret\"></span>
+                                                    </a>
+                                                    <ul class=\"dropdown-menu\">
+                                                        <li>
+                                                            <a href=\"".base_url('barang/addStok/'.$data['kd_barang'])."\">Tambah Stok</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href=\"".base_url('barang/update/'.$data['kd_barang'])."\">Update</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href=\"".base_url('barang/detail/'.$data['kd_barang'])."\">Detail</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['kd_barang']."')\">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>";
+
+			$arrayBarang['data'][$i] = $data;
+		}
+		echo json_encode($arrayBarang);
+	}
+
+	function getTipeKategori(){
+		$arrayBarang['data'] = $this->app_model->getAllData('tbl_tipe_kategori')->result_array();
+		foreach($arrayBarang['data'] as $i => $data) {
+			$data['action'] = "                                                <div class=\"btn-group\"><a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
+                                                    Action
+                                                    <span class=\"caret\"></span>
+                                                </a>
+                                                <ul class=\"dropdown-menu\">
+                                                    <li>
+                                                        <a href=\"".base_url('tipe_kategori/update/'.$data['id_tipe_kategori'])."\">Update</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['id_tipe_kategori']."')\">Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>";
+
+			$arrayBarang['data'][$i] = $data;
+		}
+		echo json_encode($arrayBarang);
 	}
 
 	function create(){
@@ -282,7 +334,12 @@ class Barang extends CI_Controller {
 					$kategori = ($arraydata[$i][1]) ? $arraydata[$i][1] : "No Category" ;
 					$type = ($arraydata[$i][2]) ? $arraydata[$i][2] : "No Type" ;
 				//SET CREATE DATA
-					$create_barang['kd_barang'] = $arraydata[$i][0];
+					
+					if ($arraydata[$i][0]) {
+						$create_barang['kd_barang'] = $arraydata[$i][0];
+					}else{
+						continue;
+					}
 
 					$create_barang['brand'] = ($arraydata[$i][3]) ? $arraydata[$i][3] : "No Brand" ;
 

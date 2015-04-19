@@ -13,7 +13,7 @@ if(isset($detail_barang)){
         <div class="form-group">
             <label for="nama_barang" class="col-md-3 control-label">Nama Barang</label>
             <div class="col-md-6">
-                <input name="nama_barang" id="nama_barang"  type="text" class="form-control flat" value="<?php echo $row->nama_barang; ?>" readonly="readonly">
+                <input name="nama_barang" id="nama_barang"  type="text" class="form-control flat" value="<?php echo $row->type.' '.$row->kategori; ?>" readonly="readonly">
             </div>
         </div>
 

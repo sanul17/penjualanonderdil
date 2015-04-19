@@ -23,7 +23,7 @@ class Penjualan extends CI_Controller {
 	function create(){
 		$dt['title']='Pasti Jaya Motor | Create penjualan';
 		$data['kd_penjualan'] = $this->app_model->getMaxKodePenjualan();
-		$data['data_barang'] = $this->app_model->getAllData('tbl_barang')->result();
+		$data['data_barang'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
 		$data['kd_user'] = $this->session->userdata('kd_user');
 		$data['nama_user'] = $this->app_model->getNamaUser($this->session->userdata('kd_user'));
 		$cek = $this->session->userdata('logged_in');
@@ -103,7 +103,7 @@ class Penjualan extends CI_Controller {
 	function get_detail_barang(){
 		$id['kd_barang']=$this->input->post('kd_barang');
 		$data=array(
-			'detail_barang'=>$this->app_model->getSelectedData('tbl_barang',$id)->result(),
+			'detail_barang'=>$this->app_model->manualQuery("select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori where kd_barang = '".$id['kd_barang']."'")->result(),
 			'stok'=>$this->app_model->getSisaStok($id['kd_barang']),
 			);
 		$this->load->view('penjualan/ajax_detail_barang',$data);

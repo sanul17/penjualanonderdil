@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="cleaner_h3"></div>
-                        <table id="dataTable" class="table table-bordered table-striped">
+                        <table id="dataTableTipeKategori" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Kategori</th>
@@ -47,34 +47,6 @@
                                     <th style="text-align:center;"  class="action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                foreach ($data as $key => $value) {
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $value->kategori; ?></td>
-                                        <td><?php echo $value->type; ?></td>
-                                        <td style="text-align:center;">
-                                            <div class="btn-group">
-                                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                                                    Action
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="<?php echo base_url('tipe_kategori/update/'.$value->id_tipe_kategori);?>">Update</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#deleteModal" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $value->id_tipe_kategori; ?>')">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Kategori</th>

@@ -55,66 +55,30 @@
                             </div>
                         </div>
                         <div class="cleaner_h3"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Total Stok Barang : <?php echo $total_stok['total_stok']; ?></h3>
+                            </div>
+                        </div>
+                        <div class="cleaner_h3"></div>
                         <?php if ($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'owner') {
                             ?>
-                            <table id="dataTable" class="table table-bordered table-striped">
+                            <table id="dataTableBarang" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th width="80px">Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th width="80px">Kategori</th>
-                                        <th width="80px">Type</th>
-                                        <th width="80px">Brand</th>
-                                        <th width="50px">Minimum</th>
-                                        <th width="60px">Stok</th>
-                                        <th>Modal</th>
-                                        <th>Harga</th>
-                                        <th>Posisi</th>
-                                        <th style="text-align:center;"  class="action">Action</th>
+                                        <th width="8%">Kode Barang</th>
+                                        <th width="20%">Nama Barang</th>
+                                        <th width="10%">Kategori</th>
+                                        <th width="10%">Type</th>
+                                        <th width="10%">Brand</th>
+                                        <th width="5%">Minimum</th>
+                                        <th width="5%">Stok</th>
+                                        <th width="10%">Modal</th>
+                                        <th width="10%">Harga</th>
+                                        <th width="5%">Posisi</th>
+                                        <th width="10%" style="text-align:center;"  class="action">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($data as $key => $value) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $value->kd_barang; ?></td>
-                                            <td><?php echo $value->kategori." ".$value->type; ?></td>
-                                            <td><?php echo $value->kategori; ?></td>
-                                            <td><?php echo $value->type; ?></td>
-                                            <td><?php echo $value->brand; ?></td>
-                                            <td><?php echo $value->min_stok; ?></td>
-                                            <td><?php echo $value->stok; if ($value->stok <= $value->min_stok) {echo " <span class='label label-danger'>Kurang</span>";}?></td>
-                                            <td><?php echo $value->modal; ?></td>
-                                            <td><?php echo $value->harga; ?></td>
-                                            <td><?php echo $value->posisi; ?></td>
-                                            <td style="text-align:center;">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                                                        Action
-                                                        <span class="caret"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="<?php echo base_url('barang/addStok/'.$value->kd_barang);?>">Tambah Stok</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="<?php echo base_url('barang/update/'.$value->kd_barang);?>">Update</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="<?php echo base_url('barang/detail/'.$value->kd_barang);?>">Detail</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#deleteModal" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $value->kd_barang; ?>')">Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Kode Barang</th>

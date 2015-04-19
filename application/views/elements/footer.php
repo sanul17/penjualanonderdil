@@ -18,10 +18,44 @@ $(function() {
     $('.chzn-select-deselect').chosen({allow_single_deselect:true});
 
     $("#dataTable").DataTable({
-     "aoColumnDefs": [
-     { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
-     ],
- });
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ]
+   });    
+
+    $("#dataTableBarang").DataTable({
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ], 
+       "ajax": "<?php echo base_url('barang/getBarang')?>",
+       "deferRender": true,
+       "columns": [
+       { "data": "kd_barang" },
+       { "data": "nama_barang" },
+       { "data": "kategori" },
+       { "data": "type" },
+       { "data": "brand" },
+       { "data": "min_stok" },
+       { "data": "stok" },
+       { "data": "modal" },
+       { "data": "harga" },
+       { "data": "posisi" },
+       { "data": "action" }
+       ]
+   });
+
+    $("#dataTableTipeKategori").DataTable({
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ], 
+       "ajax": "<?php echo base_url('barang/getTipeKategori')?>",
+       "deferRender": true,
+       "columns": [
+       { "data": "kategori" },
+       { "data": "type" },
+       { "data": "action" }
+       ]
+   });
 
     $.ajax({
         url: '<?php echo base_url(); ?>dashboard/barangNotification',
@@ -50,7 +84,7 @@ $(function() {
 });
 
 
-$("#import-excel").fileinput({
+ $("#import-excel").fileinput({
     showPreview: false,
     previewSettings : {image: {width : "240px", height : "auto" }},
     allowedFileExtensions : ['xls', 'xlsx'],
@@ -58,7 +92,7 @@ $("#import-excel").fileinput({
     maxFileCount: 1
 });
 
-$("#import-excel").change(function (){
+ $("#import-excel").change(function (){
     var fileName = $(this).val();
     if (fileName != '') {
         $('#import-submit').removeAttr('disabled');
@@ -67,6 +101,6 @@ $("#import-excel").change(function (){
     }
 });
 
-</script>
+ </script>
 </body>
 </html>
