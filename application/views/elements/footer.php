@@ -29,6 +29,21 @@ $(function() {
        ], 
        "ajax": "<?php echo base_url('barang/getBarang')?>",
        "deferRender": true,
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td class="bg-light-blue" colspan="11">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        },
        "columns": [
        { "data": "kd_barang" },
        { "data": "nama_barang" },
@@ -56,6 +71,8 @@ $(function() {
        { "data": "action" }
        ]
    });
+
+    $(".dataTableReport").DataTable();
 
     $.ajax({
         url: '<?php echo base_url(); ?>dashboard/barangNotification',

@@ -175,7 +175,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="<?php echo base_url('report')?>">
                                     <i class="fa fa-file-text"></i> <span>Laporan</span>
                                 </a>
                             </li>

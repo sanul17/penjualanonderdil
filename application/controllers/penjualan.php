@@ -116,8 +116,14 @@ class Penjualan extends CI_Controller {
 		$data['kd_penjualan'] = $detail['kd_penjualan'];
 		$data['data_barang'] = $this->app_model->getBarangJual()->result();
 		$data['data_penjualan'] = $this->app_model->manualQuery("SELECT *, a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=kd_penjualan) as jumlah from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user")->result();
+		/*
+		per barang
 		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.kd_barang, a.qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan from tbl_penjualan_detail a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."'")->result();
+*/
+
+		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.qty, sum(a.qty) as total_qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan, sum(a.harga_tersimpan) as harga from tbl_penjualan_detail a left join tbl_barang b 
+			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."' group by b.id_tipe_kategori")->result();
 
 		foreach ($data['data_penjualan'] as $key => $value) {
 			$data['kd_penjualan'] = $value->kd_penjualan;

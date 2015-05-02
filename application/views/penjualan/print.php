@@ -86,11 +86,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width:120px;">Kode Barang</th>
                         <th>Nama Barang</th>
                         <th style="width:100px;">Quantity</th>
-                        <th style="width:150px;">Harga</th>
-                        <th style="width:80px;">Dus</th>
                         <th style="width:150px;">Sub Total</th></tr>
                     </thead>
                     <tbody>
@@ -98,12 +95,9 @@
                         foreach ($data_penjualan_detail as $key => $value) {
                             ?>
                             <tr class="gradeX">
-                                <td><?php echo $value->kd_barang; ?></td>
-                                <td><?php echo $value->kategori." ".$value->type." ".$value->brand; ?></td>
-                                <td><?php echo $value->qty; ?></td>
-                                <td>Rp. <?php echo number_format($value->harga_tersimpan, 2, ",", "."); ?></td>
-                                <td><?php echo $value->dus; ?></td>
-                                <td>Rp. <?php echo number_format($value->qty*$value->harga_tersimpan, 2, ",", "."); ?></td>
+                                <td><?php echo $value->kategori." ".$value->type; ?></td>
+                                <td><?php echo $value->total_qty; ?></td>
+                                <td>Rp. <?php echo number_format($value->qty*$value->harga, 2, ",", "."); ?></td>
                             </tr>
                             <?php
                         }   
@@ -111,7 +105,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="gradeX">
-                            <td colspan="5">Total</td>
+                            <td colspan="2">Total</td>
                             <td>Rp. <?php echo number_format($total, 2, ",", "."); ?></td>
                         </tr>
                     </tfoot>

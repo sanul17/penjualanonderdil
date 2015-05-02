@@ -22,7 +22,7 @@ class Barang extends CI_Controller {
 	}
 
 	function getBarang(){
-		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(type, kategori) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
+		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		foreach($arrayBarang['data'] as $i => $data) {
 			$data['action'] = "                                                <div class=\"btn-group\">
                                                     <a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
@@ -326,10 +326,11 @@ class Barang extends CI_Controller {
 
 				}
 
-				$tipe_kategori = $this->app_model->getAllData('tbl_tipe_kategori')->result();
-				$total_tipe_kategori = count($tipe_kategori);
 
 				for ($i=1; $i < $highestRow; $i++) { 
+					
+				$tipe_kategori = $this->app_model->getAllData('tbl_tipe_kategori')->result();
+				$total_tipe_kategori = count($tipe_kategori);
 				//SET KATEGORI AND TYPE
 					$kategori = ($arraydata[$i][1]) ? $arraydata[$i][1] : "No Category" ;
 					$type = ($arraydata[$i][2]) ? $arraydata[$i][2] : "No Type" ;
@@ -353,11 +354,10 @@ class Barang extends CI_Controller {
 
 					$create_barang['posisi'] = ($arraydata[$i][8]) ? $arraydata[$i][8] : "-" ;
 
-					$create_barang['keterangan'] = ($arraydata[$i][8]) ? $arraydata[$i][8] : "-" ;
+					$create_barang['keterangan'] = ($arraydata[$i][9]) ? $arraydata[$i][9] : "-" ;
 
 				//KATEGORI EXIST ARE FALSE DEFAULT
 					$kategori_exist = false;
-
 
 				//IF TOTAL TIPE KATEGORI != 0
 					if ($total_tipe_kategori > 0) {
@@ -373,6 +373,7 @@ class Barang extends CI_Controller {
 								$kategori_exist = true;
 								break;
 							}
+
 						}
 					}else{
 						$kategori_exist = false;
@@ -381,7 +382,7 @@ class Barang extends CI_Controller {
 					}
 
 				//IF KATEGORI NOT EXIST, CREATE NEW TIPE KATEGORI AND INSERT BARANG BY LAST ID
-					if (!$kategori_exist) {
+					if ($kategori_exist == false) {
 						$this->app_model->insertData('tbl_tipe_kategori', $create_kategori);
 						$create_barang['id_tipe_kategori'] = $this->db->insert_id();
 					}else{
