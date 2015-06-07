@@ -8,6 +8,7 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/iCheck/icheck.min.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+<script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/app.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/demo.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/chosen.jquery.js');?>"></script>
@@ -18,17 +19,20 @@ $(function() {
     $('.chzn-select-deselect').chosen({allow_single_deselect:true});
 
     $("#dataTable").DataTable({
+        responsive: true,
        "aoColumnDefs": [
        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
        ]
    });    
 
     $("#dataTableBarang").DataTable({
+        responsive: true,
        "aoColumnDefs": [
        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
        ], 
        "ajax": "<?php echo base_url('barang/getBarang')?>",
        "deferRender": true,
+       /*
         "drawCallback": function ( settings ) {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
@@ -44,6 +48,7 @@ $(function() {
                 }
             } );
         },
+        */
        "columns": [
        { "data": "kd_barang" },
        { "data": "nama_barang" },
@@ -59,7 +64,36 @@ $(function() {
        ]
    });
 
+    $("#dataTableBarangSales").DataTable({
+        responsive: true,
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ], 
+       "ajax": "<?php echo base_url('barang/getBarangSales')?>",
+       "deferRender": true,
+       "columns": [
+       { "data": "nama_barang" },
+       { "data": "kategori" },
+       { "data": "type" }
+       ]
+   });
+
+    $("#dataTableBarangGudang").DataTable({
+        responsive: true,
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ], 
+       "ajax": "<?php echo base_url('barang/getBarangGudang')?>",
+       "deferRender": true,
+       "columns": [
+       { "data": "kd_barang" },
+       { "data": "nama_barang" },
+       { "data": "posisi" }
+       ]
+   });
+
     $("#dataTableTipeKategori").DataTable({
+        responsive: true,
        "aoColumnDefs": [
        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
        ], 
@@ -72,7 +106,8 @@ $(function() {
        ]
    });
 
-    $(".dataTableReport").DataTable();
+    $(".dataTableReport").DataTable({
+        responsive: true});
 
     $.ajax({
         url: '<?php echo base_url(); ?>dashboard/barangNotification',

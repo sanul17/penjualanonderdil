@@ -1,0 +1,7 @@
+[12-May-2015 23:21:17 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/tipe_kategori/index.php on line 35
+[12-May-2015 23:21:17 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/barang/index.php on line 51
+[12-May-2015 23:21:27 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/tipe_kategori/index.php on line 35
+[12-May-2015 23:21:28 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/barang/index.php on line 51
+[12-May-2015 23:21:59 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/tipe_kategori/index.php on line 35
+[12-May-2015 23:22:33 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/sales/index.php on line 35
+[12-May-2015 23:22:35 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/adamsyuf/public_html/application/views/user/index.php on line 35

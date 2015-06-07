@@ -181,7 +181,7 @@
                                 if(count($data_barang) > 0){
                                     foreach($data_barang as $key => $value){
                                         ?>
-                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->type.' '.$value->kategori;?></option>
+                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->kategori.' '.$value->type.' '.$value->brand;?></option>
                                         <?php
                                     }
                                 }

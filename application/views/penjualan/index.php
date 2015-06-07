@@ -3,7 +3,7 @@
         <?php if ($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'owner') {
             ?>
             <h1>
-                Master Penjualan
+                Transaksi Penjualan
                 <small>List Penjualan</small>
             </h1>
             <?php
@@ -100,26 +100,3 @@
     </div>
 
 </section><!-- /.content -->
-
-<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title" id="deleteLabel">Delete</h3>
-            </div>
-            <div class="modal-body">
-                <h4>penjualan ini akan dihapus, Anda Yakin?</h4>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" href="javascript:;">Tidak</a>
-                <a class="btn btn-primary" id="deleteModalFunction" href="javascript:;">Ya</a>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-function deleteModalFunction(temp_id){
-    $("#deleteModalFunction").attr("href","<?php echo base_url();?>penjualan/delete/"+temp_id);
-}
-</script>

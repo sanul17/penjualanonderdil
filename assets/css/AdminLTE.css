@@ -3562,3 +3562,13 @@ float: none;
 .detail-penjualan *{
 	font-size: 12px;
 }
+
+@media screen and (max-width: 480px) {
+table{
+font-size: 8px;
+}
+
+@media screen and (max-width: 768px) {
+table{
+font-size: 8px;
+}

@@ -55,28 +55,28 @@
                             </div>
                         </div>
                         <div class="cleaner_h3"></div>
+                        <?php if ($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'owner') {
+                            ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>Total Stok Barang : <?php echo $total_stok['total_stok']; ?></h3>
                             </div>
                         </div>
                         <div class="cleaner_h3"></div>
-                        <?php if ($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'owner') {
-                            ?>
                             <table id="dataTableBarang" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th width="8%">Kode Barang</th>
-                                        <th width="20%">Nama Barang</th>
-                                        <th width="10%">Kategori</th>
-                                        <th width="10%">Type</th>
-                                        <th width="10%">Brand</th>
-                                        <th width="5%">Minimum</th>
-                                        <th width="5%">Stok</th>
-                                        <th width="10%">Modal</th>
-                                        <th width="10%">Harga</th>
-                                        <th width="5%">Posisi</th>
-                                        <th width="10%" style="text-align:center;"  class="action">Action</th>
+                                        <th class="desktop">Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th class="min-tablet-l">Kategori</th>
+                                        <th class="min-tablet-l">Type</th>
+                                        <th class="desktop">Brand</th>
+                                        <th class="none">Minimum</th>
+                                        <th class="none">Stok</th>
+                                        <th class="none">Modal</th>
+                                        <th class="none">Harga</th>
+                                        <th class="none">Posisi</th>
+                                        <th style="text-align:center;"  class="action desktop">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -98,27 +98,14 @@
                             <?php
                         }elseif ($this->session->userdata('level') == 'sales') {
                            ?>
-                           <table id="dataTable" class="table table-bordered table-striped">
+                           <table id="dataTableBarangSales" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>
-                                    <th >Kategori</th>
-                                    <th >Type</th>
+                                    <th>Kategori</th>
+                                    <th>Type</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                foreach ($data_for_sales as $key => $value) {
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $value->kategori." ".$value->type; ?></td>
-                                        <td><?php echo $value->kategori; ?></td>
-                                        <td><?php echo $value->type; ?></td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Nama Barang</th>
@@ -130,27 +117,14 @@
                         <?php
                     }else if ($this->session->userdata('level') == 'gudang') {
                       ?>
-                      <table id="dataTable" class="table table-bordered table-striped">
+                      <table id="dataTableBarangGudang" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="80px">Kode Barang</th>
+                                <th>Kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th width="80px">Posisi</th>
+                                <th>Posisi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-                            foreach ($data as $key => $value) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $value->kd_barang; ?></td>
-                                    <td><?php echo $value->kategori." ".$value->type; ?></td>
-                                    <td><?php echo $value->posisi; ?></td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                        </tbody>
                         <tfoot>
                             <tr>
                                 <th>Kode Barang</th>

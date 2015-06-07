@@ -10,7 +10,7 @@ if(isset($detail_barang)){
                             <input name="id_tipe_kategori" id="id_tipe_kategori" type="hidden" class="form-control flat" value="<?php echo $row->id_tipe_kategori; ?>">
                         </div>
                     </div>
-                                        <?php if ($req == 'create'){ ?>
+                                        <?php if ($req == 'create' || $req == 'update' ){ ?>
                     <div class="form-group">
                         <label for="qty" class="col-md-3 control-label">Jumlah Orderan</label>
                         <div class="col-md-3">

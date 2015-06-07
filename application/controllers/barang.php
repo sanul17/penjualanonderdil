@@ -10,8 +10,6 @@ class Barang extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Barang';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
-			$data['data'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
-			$data['data_for_sales'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
 			$data['total_stok'] = $this->app_model->manualQuery('select  SUM(stok) as total_stok from tbl_barang')->row_array();
 			$this->load->view('elements/header', $dt);
 			$this->load->view('barang/index', $data);
@@ -21,7 +19,12 @@ class Barang extends CI_Controller {
 		}
 	}
 
-	function getBarang(){
+	function getBarangSales(){
+		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type) as nama_barang from tbl_tipe_kategori')->result_array();
+		echo json_encode($arrayBarang);
+	}
+
+		function getBarang(){
 		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		foreach($arrayBarang['data'] as $i => $data) {
 			$data['action'] = "                                                <div class=\"btn-group\">
@@ -47,6 +50,11 @@ class Barang extends CI_Controller {
 
 			$arrayBarang['data'][$i] = $data;
 		}
+		echo json_encode($arrayBarang);
+	}
+
+		function getBarangGudang(){
+		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		echo json_encode($arrayBarang);
 	}
 

@@ -2,7 +2,7 @@
     <section class="content-header">
         <h1>
             Master User
-            <small>Update User</small>
+            <small>Create User</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>

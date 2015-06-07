@@ -25,24 +25,9 @@ if(isset($detail_barang)){
         </div>
 
         <div class="form-group">
-            <label for="harga" class="col-md-3 control-label">Harga Barang</label>
-            <div class="col-md-6">
-                <input name="harga" id="harga"  type="text" class="form-control flat" value="<?php echo $row->harga; ?>" readonly="readonly">
-            </div>
-        </div>
-
-        <div class="form-group">
             <label for="qty" class="col-md-3 control-label">Quantity</label>
             <div class="col-md-3">
-                <select name="qty" id="qty" class="form-control flat">
-                    <?php
-                    for($j=0;$j<=$stok;$j++)
-                    {
-                        echo "<option value='".$j."'>".$j."</option>";
-                    }   
-                    ?>
-                </select>
-                <input name="stok" id="stok"  type="hidden" class="form-control flat" value="<?php echo $stok; ?>">
+                <input name="qty" id="qty"  type="text" class="form-control flat">
             </div>
         </div>
 

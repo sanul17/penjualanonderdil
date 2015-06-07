@@ -66,7 +66,7 @@
                         ?>
                         <label for="tipe_kategori" class="col-md-2 control-label">Tipe Kategori</label>
                         <div class="col-md-3">
-                            <select class="form-control flat" name="tipe_kategori">
+                            <select class="chzn-select form-control flat" name="tipe_kategori" data-placeholder="Pilih Tipe Kategori">
                                 <?php
                                 foreach($list_tipe_kategori as $key => $value) {
                                     $selected = "";

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css"  href="<?php echo base_url('assets/css/chosen.css')?>"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/fileinput.css')?>"/>  
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css')?>"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css"/>
     <!-- Custom Fonts -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>">    
     <!-- Theme style -->
@@ -154,6 +155,11 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="<?php echo base_url('supplier')?>">
+                                    <i class="fa fa-users"></i> <span>Supplier</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url('sales')?>">
                                     <i class="fa fa-users"></i> <span>Sales</span>
                                 </a>
@@ -165,6 +171,7 @@
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Pembelian</span></a></li>
                                     <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
                                     <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
                                 </ul>
@@ -200,6 +207,11 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="<?php echo base_url('supplier')?>">
+                                    <i class="fa fa-users"></i> <span>Supplier</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?php echo base_url('sales')?>">
                                     <i class="fa fa-users"></i> <span>Sales</span>
                                 </a>
@@ -211,6 +223,7 @@
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Pembelian</span></a></li>
                                     <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
                                     <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
                                 </ul>
