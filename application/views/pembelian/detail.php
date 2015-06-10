@@ -1,13 +1,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Master Orderan
-            <small>Update Orderan</small>
+            Transaksi Pembelian
+            <small>Detail Pembelian</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>
-            <li class="active"><a href="<?php echo base_url('pembelian')?>">Orderan</a></li>
-            <li class="active"><a href="<?php echo base_url('pembelian/update/')?>">Update Orderan</a></li>
+            <li class="active"><a href="<?php echo base_url('pembelian')?>">Pembelian</a></li>
+            <li class="active"><a href="<?php echo base_url('pembelian/detail/'.$kd_pembelian)?>">Detail Pembelian</a></li>
         </ol>
     </section>
     
@@ -34,18 +34,7 @@
                     </div><!-- /.box-header -->
 
                     <hr>
-                    <div class="box-body table-responsive">
-                        <div class="cleaner_h3"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?php
-                                if(isset($pesan)){
-                                    echo '<div class="alert alert-info alert-dismissable"><i class="fa fa-info"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> '.$this->session->flashdata('pesan').'</div>';
-                                };
-                                ?>
-                            </div>
-                        </div>
-                        <div class="cleaner_h3"></div>                        
+                    <div class="box-body table-responsive">                     
                         <div class="box-button">
                             <div class="row">
                                 <div class="col-md-12">
@@ -104,7 +93,7 @@
         <div class="box-button">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Data Orderan</h4>
+                    <h4>Data Pembelian</h4>
                 </div>
             </div>
             <div class="cleaner_h3"></div>

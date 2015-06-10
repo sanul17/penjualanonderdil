@@ -3,21 +3,21 @@
         <?php if ($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'owner') {
             ?>
             <h1>
-                Transaksi Pembelian
-                <small>List Pembelian</small>
+                Retur Pembelian
+                <small>List Retur Pembelian</small>
             </h1>
             <?php
         }else{
             ?>
             <h1>
-                List Pembelian
+                List Retur Pembelian
             </h1>
             <?php
         }
         ?>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboard')?>"><i class="fa fa-home"></i> Home</a></li>
-            <li class="active"><a href="<?php echo base_url('pembelian')?>">Pembelian</a></li>
+            <li class="active"><a href="<?php echo base_url('retur_pembelian')?>">Retur Pembelian</a></li>
         </ol>
     </section>
     
@@ -30,8 +30,8 @@
                         <div class="box-button">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="<?php echo base_url('pembelian');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
-                                    <a href="<?php echo base_url('pembelian/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Pembelian</a>
+                                    <a href="<?php echo base_url('retur_pembelian');?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> List</a>
+                                    <a href="<?php echo base_url('retur_pembelian/list_pembelian')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Retur Pembelian</a>
                                 </div>
                             </div>
                             <div class="cleaner_h3"></div>
@@ -53,10 +53,12 @@
                         <table id="dataTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Kode Pembelian</th>
+                                    <th>Kode Retur Pembelian</th>
+                                    <th width="120">Kode Pembelian</th>
                                     <th>Nama Supplier</th>
+                                    <th>Tanggal Retur Pembelian</th>
                                     <th>Tanggal Pembelian</th>
-                                    <th>User</th>
+                                    <th width="100">User</th>
                                     <th style="text-align:center; width:80px;"  class="action">Action</th>
                                 </tr>
                             </thead>
@@ -65,8 +67,10 @@
                                 foreach ($data as $key => $value) {
                                     ?>
                                     <tr>
+                                        <td><?php echo $value->kd_retur_pembelian; ?></td>
                                         <td><?php echo $value->kd_pembelian; ?></td>
                                         <td><?php echo $value->nama_supplier; ?></td>
+                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_retur_pembelian); ?></td>
                                         <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_pembelian); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td style="text-align:center;">
@@ -77,7 +81,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="<?php echo base_url('pembelian/detail/'.$value->kd_pembelian);?>">Detail</a>
+                                                        <a href="<?php echo base_url('retur_pembelian/detail/'.$value->kd_retur_pembelian);?>">Detail</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -89,10 +93,12 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Kode Pembelian</th>
+                                    <th>Kode Retur Pembelian</th>
+                                    <th width="120">Kode Pembelian</th>
                                     <th>Nama Supplier</th>
+                                    <th>Tanggal Retur Pembelian</th>
                                     <th>Tanggal Pembelian</th>
-                                    <th>User</th>
+                                    <th width="100">User</th>
                                     <th style="text-align:center; width:80px;"  class="action">Action</th>
                                 </tr>
                             </tfoot>

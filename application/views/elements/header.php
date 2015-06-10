@@ -176,6 +176,17 @@
                                     <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
                                 </ul>
                             </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Retur</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('retur_pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Retur Pembelian</span></a></li>
+                                    <li><a href="<?php echo base_url('retur_penjualan')?>"><i class="fa fa-angle-double-right"></i>Retur Penjualan</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="<?php echo base_url('user')?>">
                                     <i class="fa fa-user"></i> <span>Users</span>
@@ -226,6 +237,17 @@
                                     <li><a href="<?php echo base_url('pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Pembelian</span></a></li>
                                     <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
                                     <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Retur</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('retur_pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Retur Pembelian</span></a></li>
+                                    <li><a href="<?php echo base_url('retur_penjualan')?>"><i class="fa fa-angle-double-right"></i>Retur Penjualan</a></li>
                                 </ul>
                             </li>
                             <?php
