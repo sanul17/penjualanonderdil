@@ -24,6 +24,7 @@ class Pembelian extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Create pembelian';
 		$data['kd_pembelian'] = $this->app_model->getMaxKodePembelian();
 		$data['data_supplier'] = $this->app_model->getAllData("tbl_supplier")->result();
+		$data['data_barang'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
 		$data['kd_user'] = $this->session->userdata('kd_user');
 		$data['nama_user'] = $this->app_model->getNamaUser($this->session->userdata('kd_user'));
 		$cek = $this->session->userdata('logged_in');
@@ -48,23 +49,45 @@ class Pembelian extends CI_Controller {
 					$create['kd_pembelian'] = $kd_pembelian;
 					$create['kd_supplier'] = $this->input->post('kd_supplier');
 					$create['kd_user'] = $this->input->post('kd_user');
-					$create['total_harga'] = 0;
+					$create['total_harga'] = $this->input->post('total');
 					$create['tgl_pembelian'] = strtotime(date('Y-m-d H:i:s'));
 					$result = $this->app_model->insertData('tbl_pembelian', $create);
 					$result2 = 0;
 
 					$kd_barang = $this->input->post('kd_barang');
 					$qty = $this->input->post('qty');
+					$harga_beli = $this->input->post('harga_beli');
+					$update_harga = $this->input->post('update_harga');
 
 					for ($i=0; $i < count($kd_barang); $i++) { 
 						if ($qty[$i] > 0) {
 							$create_detail['kd_pembelian'] = $kd_pembelian;
 							$create_detail['kd_barang'] = $kd_barang[$i];
 							$create_detail['qty'] = $qty[$i];
+							$create_detail['harga_beli'] = $harga_beli[$i];
+
+							$create_history['kd_barang'] = $create_detail['kd_barang'];
+							$create_history['qty_masuk'] = $create_detail['qty'];
+							$create_history['qty_keluar'] = 0;
+							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
+							$create_history['tgl_history'] = $create['tgl_pembelian'];
+							$create_history['type_history'] = 1;
+
 							$result2 = $this->app_model->insertData("tbl_pembelian_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getSisaStok($create_detail['kd_barang']) + $qty[$i];
+
+							$create_history['qty_akhir'] = $stok['stok'];
+							$this->app_model->insertData('tbl_history', $create_history);
+
 							$key = $create_detail['kd_barang'];
 							$this->app_model->updateStok($stok, $key);
+
+
+							if($update_harga[$i]){
+								$update_harga_barang['modal'] = $harga_beli[$i];
+								$id_update_harga['kd_barang'] = $kd_barang[$i];
+								$this->app_model->updateData('tbl_barang', $update_harga_barang, $id_update_harga);
+							}
 						}
 					}	
 
@@ -90,12 +113,13 @@ class Pembelian extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
-
+/*
 	function get_barang_supplier(){
 		$id['kd_supplier']=$this->input->post('kd_supplier');
 		$result = $this->app_model->manualQuery("select *, c.type as tipe from tbl_supplier_barang a left join tbl_barang b on a.kd_barang = b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_supplier = '".$id['kd_supplier']."'")->result_array();
 		echo json_encode($result);
 	}
+	*/
 
 	function get_detail_supplier(){
 		$id['kd_supplier']=$this->input->post('kd_supplier');

@@ -95,6 +95,7 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('modal', 'Modal', 'required');
 			$this->form_validation->set_rules('harga', 'Harga', 'required');
 			$this->form_validation->set_rules('posisi', 'Posisi', 'required');
+			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 			if ($this->form_validation->run()) {
 				$id_cek['kd_barang'] = $this->input->post('kd_barang');
 				$cek_kd_barang = $data['data_barang'] = $this->app_model->getSelectedData("tbl_barang", $id_cek)->result();
@@ -112,6 +113,7 @@ class Barang extends CI_Controller {
 				$create['modal'] = $this->input->post('modal');
 				$create['harga'] = $this->input->post('harga');
 				$create['posisi'] = $this->input->post('posisi');
+				$create['keterangan'] = $this->input->post('keterangan');
 				
 				if ($this->app_model->insertData('tbl_barang', $create)) {
 					$pesan = 'Create Barang Sukses';
@@ -148,6 +150,7 @@ class Barang extends CI_Controller {
 			$data['modal'] = $value->modal; 
 			$data['harga'] = $value->harga; 
 			$data['posisi'] = $value->posisi; 
+			$data['keterangan'] = $value->keterangan; 
 		}
 		if (!empty($cek)) {
 			$this->load->view('elements/header', $dt);
@@ -174,6 +177,7 @@ class Barang extends CI_Controller {
 			$data['modal'] = $value->modal; 
 			$data['harga'] = $value->harga; 
 			$data['posisi'] = $value->posisi; 
+			$data['keterangan'] = $value->keterangan; 
 		}
 		if (!empty($cek)) {
 			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i>  ', ' </div>');
@@ -185,6 +189,7 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('modal', 'Modal', 'required');
 			$this->form_validation->set_rules('harga', 'Harga', 'required');
 			$this->form_validation->set_rules('posisi', 'Posisi', 'required');
+			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 			if(isset($id)){
 				if ($this->form_validation->run()) {
 					$id_update['kd_barang'] = $id;
@@ -198,6 +203,7 @@ class Barang extends CI_Controller {
 					$update['modal'] = $this->input->post('modal'); 
 					$update['harga'] = $this->input->post('harga'); 
 					$update['posisi'] = $this->input->post('posisi'); 
+					$update['keterangan'] = $this->input->post('keterangan'); 
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
 						$pesan = 'Update Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);

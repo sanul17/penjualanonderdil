@@ -87,6 +87,7 @@
                 <thead>
                     <tr>
                         <th>Nama Barang</th>
+                        <th style="width:150px;">Harga Satuan</th>
                         <th style="width:100px;">Quantity</th>
                         <th style="width:150px;">Sub Total</th></tr>
                     </thead>
@@ -96,6 +97,7 @@
                             ?>
                             <tr class="gradeX">
                                 <td><?php echo $value->kategori." ".$value->type; ?></td>
+                                <td><?php echo $value->harga_satuan; ?></td>
                                 <td><?php echo $value->total_qty; ?></td>
                                 <td>Rp. <?php echo number_format($value->qty*$value->harga, 2, ",", "."); ?></td>
                             </tr>
@@ -105,7 +107,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="gradeX">
-                            <td colspan="2">Total</td>
+                            <td colspan="3">Total</td>
                             <td>Rp. <?php echo number_format($total, 2, ",", "."); ?></td>
                         </tr>
                     </tfoot>

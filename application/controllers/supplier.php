@@ -36,7 +36,7 @@ class Supplier extends CI_Controller {
 				$create['kota'] = $this->input->post('kota');
 				$create['telepon'] = $this->input->post('telepon');
 				$result = $this->app_model->insertData('tbl_supplier', $create);
-
+/*
 				$create_br['kd_supplier'] = $this->input->post('kd_supplier');
 				$kd_barang= $this->input->post('kd_barang');
 
@@ -46,6 +46,12 @@ class Supplier extends CI_Controller {
 					$result2 = $this->app_model->insertData("tbl_supplier_barang", $create_br);
 				}
 				if ($result && $result2) {
+					$pesan = 'Create Supplier Sukses';
+					$this->session->set_flashdata('pesan', $pesan);
+					redirect(base_url('supplier'));
+				}
+				*/
+				if ($result) {
 					$pesan = 'Create Supplier Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
 					redirect(base_url('supplier'));
@@ -70,9 +76,10 @@ class Supplier extends CI_Controller {
 		$detail['kd_supplier'] = $id;
 		$cek = $this->session->userdata('logged_in');
 		$data['data_supplier'] = $this->app_model->getSelectedData("tbl_supplier", $detail)->result();
+		/*
 		$data['data_supplier_barang'] = $this->app_model->manualQuery("select b.kd_barang, b.brand, c.kategori, c.type from tbl_supplier_barang a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori=c.id_tipe_kategori where a.kd_supplier='".$detail['kd_supplier']."'")->result();
-
+*/
 		foreach ($data['data_supplier'] as $key => $value) {
 			$data['kd_supplier'] = $value->kd_supplier;
 			$data['nama_supplier'] = $value->nama_supplier;
@@ -96,9 +103,10 @@ class Supplier extends CI_Controller {
 		$data['kd_supplier'] = $this->app_model->getMaxKodeSupplier();
 		$data['data_barang'] = $this->app_model->manualQuery('select * from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result();
 		$data['data_supplier'] = $this->app_model->getSelectedData("tbl_supplier", $update)->result();
+		/*
 		$data['data_supplier_barang'] = $this->app_model->manualQuery("select b.kd_barang, b.brand, c.kategori, c.type from tbl_supplier_barang a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori=c.id_tipe_kategori where a.kd_supplier='".$update['kd_supplier']."'")->result();
-
+*/
 		foreach ($data['data_supplier'] as $key => $value) {
 			$data['kd_supplier'] = $value->kd_supplier;
 			$data['nama_supplier'] = $value->nama_supplier;
@@ -120,7 +128,7 @@ class Supplier extends CI_Controller {
 				$update['telepon'] = $this->input->post('telepon');
 				$result = $this->app_model->updateData('tbl_supplier', $update, $id_update);
 
-
+/*
 				$update_br['kd_supplier'] = $this->input->post('kd_supplier');
 				$kd_barang= $this->input->post('kd_barang');
 
@@ -131,7 +139,14 @@ class Supplier extends CI_Controller {
 					$update_br['kd_barang'] = $kd_barang[$i];
 					$result2 = $this->app_model->insertData("tbl_supplier_barang", $update_br);
 				}
+
 				if ($result && $result2) {
+					$pesan = 'Update Supplier Sukses';
+					$this->session->set_flashdata('pesan', $pesan);
+					redirect(base_url('supplier'));
+				}
+				*/
+				if ($result) {
 					$pesan = 'Update Supplier Sukses';
 					$this->session->set_flashdata('pesan', $pesan);
 					redirect(base_url('supplier'));

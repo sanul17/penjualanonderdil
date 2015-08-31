@@ -21,7 +21,6 @@ class Login extends CI_Controller {
         //Field validation succeeded.  Validate against database
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-		$remember = $this->input->post('remember');
 		$login_as_admin = $this->input->post('login-as-admin');
         //query the database
         if (!$login_as_admin) {
@@ -43,10 +42,6 @@ class Login extends CI_Controller {
 				$sess_data['nama'] = $value->nama_user;
 				$sess_data['level'] = $value->level;
 				$sess_data['kd_user'] = $value->kd_user;
-			}
-				if($remember){
-				$sess_data['new_expiration'] = 60*60*24*30;//30 days
-				$this->session->sess_expiration = $sess_data['new_expiration'];
 			}
 			$this->session->set_userdata($sess_data);
 			redirect(base_url('dashboard'));

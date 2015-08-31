@@ -193,7 +193,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url('report')?>">
+                                <a href="<?php echo base_url('history')?>">
                                     <i class="fa fa-file-text"></i> <span>Laporan</span>
                                 </a>
                             </li>
@@ -249,6 +249,11 @@
                                     <li><a href="<?php echo base_url('retur_pembelian')?>"><i class="fa fa-angle-double-right"></i> <span>Retur Pembelian</span></a></li>
                                     <li><a href="<?php echo base_url('retur_penjualan')?>"><i class="fa fa-angle-double-right"></i>Retur Penjualan</a></li>
                                 </ul>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('history')?>">
+                                    <i class="fa fa-file-text"></i> <span>Laporan</span>
+                                </a>
                             </li>
                             <?php
                         }else if ($this->session->userdata('level') == 'sales') {

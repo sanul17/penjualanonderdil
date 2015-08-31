@@ -124,8 +124,13 @@
                 <div class="cleaner_h20"></div>
                 <div class="form-group">
                     <div class="col-sm-8">
+                        <?php 
+                        /*
                         <a href="<?php echo base_url('pembelian/update/'.$kd_pembelian);?>" class="btn btn-default flat"><i class="fa fa-pencil fa-fw"></i> Update</a>
                         <a href="#deleteModal" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $kd_pembelian; ?>')" class="btn btn-default flat"><i class="fa fa-trash fa-fw"></i> Delete</a>
+                        
+                    */
+                        ?>
                         <a href="<?php echo base_url('pembelian');?>" class="btn btn-default flat">Close</a>
                     </div>
                 </div>

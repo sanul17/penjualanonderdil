@@ -112,7 +112,9 @@
             <div class="col-md-4"><?php echo form_error('telepon'); ?></div>
         </div>
 
-        <hr>                      
+        <hr> 
+        <?php 
+        /*                     
         <div class="row">
             <div class="col-md-12">  
                 <div class="box-button">
@@ -156,6 +158,8 @@
             </div>
         </div>
         <div class="cleaner_h20"></div>
+        */
+        ?>
         <div class="form-group">
             <div class="col-sm-8">
                 <button type="submit" class="btn btn-primary flat">Simpan</button>

@@ -113,7 +113,9 @@
             </div>
     </form>
     <div class="cleaner_h10"></div>
-        <hr>                      
+        <hr>    
+        <?php
+        /*                  
         <div class="row">
             <div class="col-md-12">  
                 <div class="box-button">
@@ -154,6 +156,8 @@
             </div>
         </div>
         <div class="cleaner_h20"></div>
+        */
+        ?>
     <div class="box-button">
         <div class="row">
             <div class="col-md-12">

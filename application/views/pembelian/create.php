@@ -133,13 +133,22 @@
                         <div class="col-md-6">
                             <select id="kd_barang_add" class="chzn-select form-control flat" name="kd_barang" data-placeholder="Pilih Barang">
                                 <option value=""></option>
+                                <?php
+                                if(count($data_barang) > 0){
+                                    foreach($data_barang as $key => $value){
+                                        ?>
+                                        <option value="<?php echo $value->kd_barang?>"><?php echo $value->kategori.' '.$value->type.' '.$value->brand;?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div id="detail_barang"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" disabled="disabled" id="add" name="add">Simpan</button>
+                    <button type="submit" disabled="disabled" class="btn btn-primary" disabled="disabled" id="add" name="add">Simpan</button>
                     <button class="btn" data-dismiss="modal" id="closemodal"  aria-hidden="true">Close</button>
                 </div>
             </form>
@@ -157,24 +166,7 @@ $("#kd_supplier").change(function(){
         cache:false,
         success: function(data){
             $('#detail_supplier').html(data);
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url : "<?php echo base_url('pembelian/get_barang_supplier'); ?>",
-        data: "kd_supplier="+kd_supplier,
-        dataType: 'json',
-        cache:false,
-        success: function(data){
-            $barangSelect = $('#kd_barang_add');
-            $barangSelect.html('');
-                $barangSelect.append($("<option value=''></option>"));
-
-            $.each(data, function(index, val) {
-                $barangSelect.append($("<option value="+val.kd_barang+">" + val.kategori +" "+ val.tipe +" "+ val.brand + "</option>"));
-            });
-            $barangSelect.trigger('chosen:updated');
+    $('#form-add-order').find('#add').attr('disabled', 'disabled');
         }
     });
 });
@@ -183,7 +175,9 @@ $('#closemodal').on('click', function(event) {
     event.preventDefault();
     $(this).closest('#form-add-order').find('#kd_barang').val('');
     $(this).closest('#form-add-order').find('#nama_barang').val('');
+    $(this).closest('#form-add-order').find('#brand').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#harga_beli').val('');
     $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
     $('#detail_barang').html('');
     $('#form-add-order').find('#add').attr('disabled', 'disabled');
@@ -208,24 +202,33 @@ $("#add").on('click', function(event) {
     var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
     var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
     var brand = $(this).closest('#form-add-order').find('#brand').val();
+    var harga_beli = $(this).closest('#form-add-order').find('#harga_beli').val();
     var qty = $(this).closest('#form-add-order').find('#qty').val();
+    var subtotal = harga_beli*qty;
+    var total = $('#total').val();
+    total = Number(total)+Number(subtotal);
 
     if (qty) {
         $row = $('<tr class="gradeX"></tr>');
         $tdKode = $('<td>'+kd_barang+'<input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="'+kd_barang+'"></td>');
         $tdNama = $('<td>'+nama_barang+'</td>');
         $tdBrand = $('<td>'+brand+'</td>');
-        $tdQty = $('<td>'+qty+'<input type="hidden" class="form-control flat" name="qty[]" readonly value="'+qty+'"></td>');
+        $tdQty = $('<td>'+qty+'<input type="hidden" class="form-control flat" name="qty[]" value="'+qty+'"></td>');
+        $tdHrgBeli = $('<td>'+harga_beli+'<input type="hidden" class="form-control flat" name="harga_beli[]" readonly value="'+harga_beli+'"> <input id="update_harga" type="checkbox" name="update_harga[]" value="1"> <small>Update Harga</small></td>');
+        $tdSubTotal = $('<td>'+subtotal+'<input type="hidden" class="form-control flat" name="subtotal[]" readonly value="'+subtotal+'"></td>');
         $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
 
-        $row.append($tdKode).append($tdNama).append($tdBrand).append($tdQty).append($tdDelbutton);
+        $row.append($tdKode).append($tdNama).append($tdBrand).append($tdQty).append($tdHrgBeli).append($tdSubTotal).append($tdDelbutton);
         $row.appendTo('tbody');
+        $('#total').val(total);
+        $('#total-label').html(total);
     };
 
     $(this).closest('#form-add-order').find('#kd_barang').val('');
     $(this).closest('#form-add-order').find('#nama_barang').val('');
     $(this).closest('#form-add-order').find('#brand').val('');
     $(this).closest('#form-add-order').find('#qty').val('');
+    $(this).closest('#form-add-order').find('#harga_beli').val('');
     $(this).closest('#form-add-order').find('#kd_barang_add').val('').trigger("chosen:updated");
     $('#detail_barang').html('');
     $('#form-add-order').find('#add').attr('disabled', 'disabled');
@@ -234,7 +237,13 @@ $("#add").on('click', function(event) {
 
     $(".delbutton").on('click', function(event) {
         event.preventDefault();
-        $(this).closest('tr.gradeX').remove();
+        $(this).closest('tr.gradeX').remove();var all_sub_total = $('.subtotal');
+        var total_val = 0;
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
 
         if (qty == '' || qty == 0) {
             $('#submit').attr('disabled', 'disabled');

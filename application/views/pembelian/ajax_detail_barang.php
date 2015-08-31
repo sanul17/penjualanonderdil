@@ -25,6 +25,13 @@ if(isset($detail_barang)){
         </div>
 
         <div class="form-group">
+            <label for="harga_beli" class="col-md-3 control-label">Harga Beli</label>
+            <div class="col-md-6">
+                <input name="harga_beli" id="harga_beli"  type="text" class="form-control flat" value="<?php echo $row->modal; ?>">
+            </div>
+        </div>
+
+        <div class="form-group">
             <label for="qty" class="col-md-3 control-label">Quantity</label>
             <div class="col-md-3">
                 <input name="qty" id="qty"  type="text" class="form-control flat">

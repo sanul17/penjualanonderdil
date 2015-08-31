@@ -39,12 +39,7 @@
              if (!empty($error)) {
                   echo '<p class="text-danger">'.$error.'</p>';
             }
-            ?>          
-            <div class="form-group">
-                       <label>
-                            <input id="login-remember" type="checkbox" name="remember" value="1"> <small>Remember me</small>
-                      </label>
-          </div>          
+            ?>             
             <div class="form-group">
                        <label>
                             <input id="login-as-admin" type="checkbox" name="login-as-admin" value="1"> <small>Login as Admin</small>

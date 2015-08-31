@@ -155,7 +155,7 @@
                                 <td>
                                     <select class="form-control flat" id="qty_retur" name="qty_retur[]">
                                         <?php
-                                        for ($i=1; $i <= $value->qty; $i++) { 
+                                        for ($i=0; $i <= $value->qty; $i++) { 
                                             ?>
                                         <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                         <?php

@@ -44,12 +44,21 @@
                             <th>Nama Barang</th>
                             <th>Brand</th>
                             <th style="width:150px;">Quantity</th>
+                            <th style="width:150px;">Harga</th>
+                            <th style="width:150px;">Sub Total</th>
                             <th style="text-align:center; width:150px;"  class="action"><a href="#modalAddPembelianBarang" data-toggle="modal" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Add Barang</a></th>
                         </tr>
                     </thead>
                     <tbody>
 
                     </tbody>
+                    <tfoot>
+                        <tr class="gradeX">
+                            <td colspan="5">Total</td>
+                            <td><span id="total-label"></span><input type="hidden" class="form-control" id="total" name="total"></td>
+                            <td style="text-align:center;" colspan="2"> - </td>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div class="cleaner_h20"></div>
                 <div class="form-group">

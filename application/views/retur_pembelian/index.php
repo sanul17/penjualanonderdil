@@ -109,3 +109,18 @@
         </div>
 
     </section><!-- /.content -->
+
+    
+<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+<script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
+<script type="text/javascript">
+    
+    $("#dataTable").DataTable({
+        responsive: true,
+       "aoColumnDefs": [
+       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+       ],
+        "order": [[ 3, "desc" ]]
+   });    
+</script>

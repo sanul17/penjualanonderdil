@@ -74,7 +74,7 @@
                                 ?>
                             </select>
                         </div>
-                            <div class="col-md-4"><?php echo form_error('tipe_kategori'); ?></div>
+                        <div class="col-md-4"><?php echo form_error('tipe_kategori'); ?></div>
                     </div>
 
                     <?php
@@ -157,6 +157,19 @@ if (form_error('posisi')) {
     <input type="text" class="form-control flat" id="posisi" name="posisi" value='<?php echo set_value('posisi'); ?>'>
 </div>
 <div class="col-md-4"><?php echo form_error('posisi'); ?></div>
+</div>
+<?php
+if (form_error('keterangan')) {
+    echo '<div class="form-group has-error">';
+}else{
+    echo '<div class="form-group">';
+}
+?>
+<label for="keterangan" class="col-md-2 control-label">Keterangan</label>
+<div class="col-md-3">
+    <textarea class="form-control flat" id="keterangan" name="keterangan"></textarea>
+</div>
+<div class="col-md-4"><?php echo form_error('keterangan'); ?></div>
 </div>
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-8">

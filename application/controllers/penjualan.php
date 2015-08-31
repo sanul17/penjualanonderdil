@@ -70,8 +70,20 @@ class Penjualan extends CI_Controller {
 							$create_detail['harga_tersimpan'] = $harga_potongan[$i];
 							$create_detail['potongan'] = $potongan[$i];
 							$create_detail['dus'] = $dus[$i];
+
+							$create_history['kd_barang'] = $create_detail['kd_barang'];
+							$create_history['qty_masuk'] = 0;
+							$create_history['qty_keluar'] = $create_detail['qty'];
+							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
+							$create_history['tgl_history'] = $create['tgl_penjualan'];
+							$create_history['type_history'] = 2;
+
 							$result2 = $this->app_model->insertData("tbl_penjualan_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty']);
+
+							$create_history['qty_akhir'] = $stok['stok'];
+							$this->app_model->insertData('tbl_history', $create_history);
+
 							$key = $create_detail['kd_barang'];
 							$this->app_model->updateStok($stok, $key);
 						}
@@ -122,7 +134,7 @@ class Penjualan extends CI_Controller {
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."'")->result();
 */
 
-		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.qty, sum(a.qty) as total_qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan, sum(a.harga_tersimpan) as harga from tbl_penjualan_detail a left join tbl_barang b 
+		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.qty, sum(a.qty) as total_qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan, max(a.harga_tersimpan) as harga_satuan, sum(a.harga_tersimpan) as harga from tbl_penjualan_detail a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."' group by b.id_tipe_kategori")->result();
 
 		foreach ($data['data_penjualan'] as $key => $value) {
@@ -138,6 +150,8 @@ class Penjualan extends CI_Controller {
 		}
 
 		$data['total'] = 0;
+		var_dump($data['data_penjualan_detail']);
+		exit();
 		foreach ($data['data_penjualan_detail'] as $key => $value) {
 			$data['total'] += $value->harga_tersimpan*$value->qty;
 		}

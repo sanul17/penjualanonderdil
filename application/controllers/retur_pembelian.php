@@ -82,8 +82,23 @@ class Retur_pembelian extends CI_Controller {
 							$create_detail['kd_barang'] = $kd_barang[$i];
 							$create_detail['qty_retur'] = $qty[$i];
 							$create_detail['keterangan'] = $keterangan[$i];
+
+							$create_history['kd_barang'] = $create_detail['kd_barang'];
+							$create_history['qty_masuk'] = 0;
+							$create_history['qty_keluar'] = $create_detail['qty_retur'];
+							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
+							$create_history['tgl_history'] = $create['tgl_retur_pembelian'];
+							$create_history['type_history'] = 3;
+
 							$result2 = $this->app_model->insertData("tbl_retur_pembelian_detail", $create_detail);
-							$this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty_retur']);
+							$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty_retur']);
+
+							$create_history['qty_akhir'] = $stok['stok'];
+							$this->app_model->insertData('tbl_history', $create_history);
+
+							$key = $create_detail['kd_barang'];
+							$this->app_model->updateStok($stok, $key);
+
 						}
 					}	
 

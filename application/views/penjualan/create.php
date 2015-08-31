@@ -243,7 +243,7 @@ $("#add").on('click', function(event) {
         $tdKode = $('<td>'+kd_barang+'<input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="'+kd_barang+'"></td>');
         $tdNama = $('<td>'+nama_barang+'</td>');
         $tdBrand = $('<td>'+brand+'</td>');
-        $tdHarga = $('<td>'+harga+'<input type="hidden" class="form-control flat harga" id="harga" name="harga[]" readonly value="'+harga+'"></td>');
+        $tdHarga = $('<td><input type="text" class="form-control flat harga" id="harga" name="harga[]" value="'+harga+'"></td>');
         $tdSelectStok = $('<select class="form-control flat qty" id="qty" name="qty[]"></select>');
         for (var i = 0; i <= stok; i++) {
             if (i == qty) {
@@ -357,6 +357,38 @@ $("#add").on('click', function(event) {
             $('#submit').removeAttr('disabled');
         }
     });
+
+    $('.harga').on('keyup keydown change', function(event) {
+        var harga = $(this).val();
+        var potongan = $(this).closest('.gradeX').find('.potongan').val();
+        var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
+        var qty = $(this).closest('.gradeX').find('.qty').val();
+        var potongan_val = 0;
+        var subtotal_val = 0;
+        var subtotal =  $(this).closest('.gradeX').find('.subtotal');
+        var total = $('#total');
+        potongan_val = (potongan/100)*harga;
+        harga = harga-potongan_val;
+        harga_potongan.val(harga);
+        subtotal_val = (harga*qty);
+        $(this).closest('.gradeX').find('.subtotal').val(subtotal_val);
+        $(this).closest('.gradeX').find('.subtotal-label').html(subtotal_val);
+        subtotal.val(subtotal_val); 
+        var total_val = 0; 
+        var all_sub_total = $('.subtotal');
+        for (var i = 0; i < all_sub_total.length; i++) {
+            total_val += Number(all_sub_total[i].value);
+        };
+        $('#total').val(total_val);
+        $('#total-label').html(total_val);
+
+        if (qty == '' || qty == 0) {
+            $('#submit').attr('disabled', 'disabled');
+        }else{
+            $('#submit').removeAttr('disabled');
+        }
+    });
+
 
 });
 
