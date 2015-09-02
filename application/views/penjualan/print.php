@@ -99,7 +99,7 @@
                                 <td><?php echo $value->kategori." ".$value->type; ?></td>
                                 <td><?php echo $value->harga_satuan; ?></td>
                                 <td><?php echo $value->total_qty; ?></td>
-                                <td>Rp. <?php echo number_format($value->qty*$value->harga, 2, ",", "."); ?></td>
+                                <td>Rp. <?php echo number_format($value->total_qty*$value->harga_tersimpan, 2, ",", "."); ?></td>
                             </tr>
                             <?php
                         }   

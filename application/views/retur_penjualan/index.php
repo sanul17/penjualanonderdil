@@ -70,8 +70,8 @@
                                         <td><?php echo $value->kd_retur_penjualan; ?></td>
                                         <td><?php echo $value->kd_penjualan; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
-                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_retur_penjualan); ?></td>
-                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_penjualan); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_retur_penjualan); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_penjualan); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td style="text-align:center;">
                                             <div class="btn-group">

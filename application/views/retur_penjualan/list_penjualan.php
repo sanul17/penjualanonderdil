@@ -45,7 +45,7 @@
                                     <tr>
                                         <td><?php echo $value->kd_penjualan; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
-                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_penjualan); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_penjualan); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td><a href="<?php echo base_url('retur_penjualan/create/'.$value->kd_penjualan)?>" class="btn btn-default flat"><i class="fa fa-shopping-cart fa-fw"></i> Retur</a>
                                     </tr>

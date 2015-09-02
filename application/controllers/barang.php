@@ -204,7 +204,24 @@ class Barang extends CI_Controller {
 					$update['harga'] = $this->input->post('harga'); 
 					$update['posisi'] = $this->input->post('posisi'); 
 					$update['keterangan'] = $this->input->post('keterangan'); 
+					$create_history['qty_awal'] = $this->app_model->getSisaStok($id_update['kd_barang']);
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
+							$create_history['kd_barang'] = $id_update['kd_barang'];
+							if ($update['stok'] != 0) {
+								if ($update['stok'] > $create_history['qty_awal']) {
+							$create_history['qty_masuk'] = $update['stok'] - $create_history['qty_awal'];
+							$create_history['qty_keluar'] = 0;
+								}else if ($update['stok'] < $create_history['qty_awal']) {
+							$create_history['qty_masuk'] = 0;
+							$create_history['qty_keluar'] = abs($create_history['qty_awal'] - $update['stok']);
+								}
+							$create_history['tgl_history'] = strtotime(date('Y-m-d H:i:s'));
+							$create_history['type_history'] = 6;
+							$create_history['qty_akhir'] = $update['stok'];
+							$create_history['kd_user'] = $this->session->userdata('kd_user');
+							$this->app_model->insertData('tbl_history', $create_history);
+							}
+
 						$pesan = 'Update Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);
 						redirect(base_url('barang'));
@@ -249,12 +266,30 @@ class Barang extends CI_Controller {
 				if ($this->form_validation->run()) {
 					$id_update['kd_barang'] = $id;
 					$update['min_stok'] = $this->input->post('min_stok'); 
-					$stok = $this->input->post('stok');
+					$stok = $this->app_model->getSisaStok($id_update['kd_barang']);
 					$update['stok'] = $stok+$this->input->post('qty');
 					if ($update['stok'] < 0) {
 						$update['stok'] = 0;
 					}
+					$create_history['qty_awal'] = $this->app_model->getSisaStok($id_update['kd_barang']);
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
+
+							$create_history['kd_barang'] = $id_update['kd_barang'];
+							if ($this->input->post('qty') != 0) {
+								if ($this->input->post('qty') > 0) {
+							$create_history['qty_masuk'] = $this->input->post('qty');
+							$create_history['qty_keluar'] = 0;
+								}else if ($this->input->post('qty') < 0) {
+							$create_history['qty_masuk'] = 0;
+							$create_history['qty_keluar'] = abs($this->input->post('qty'));
+								}
+							$create_history['tgl_history'] = strtotime(date('Y-m-d H:i:s'));
+							$create_history['type_history'] = 5;
+							$create_history['qty_akhir'] = $update['stok'];
+							$create_history['kd_user'] = $this->session->userdata('kd_user');
+							$this->app_model->insertData('tbl_history', $create_history);
+							}
+
 						$pesan = 'Tambah Stok Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);
 						redirect(base_url('barang'));

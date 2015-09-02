@@ -75,7 +75,7 @@
                                         <td><?php echo $value->nama_sales; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
                                         <td><?php echo $value->alamat; ?></td>
-                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_order); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_order); ?></td>
                                         <td style="text-align:center;">
                                             <div class="btn-group">
                                                 <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
@@ -163,6 +163,6 @@
        "aoColumnDefs": [
        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
        ],
-        "order": [[ 4, "desc" ]]
+        "order": [[ 3, "desc" ]]
    });    
 </script>

@@ -66,13 +66,14 @@
                             <tbody>
                                 <?php
                                 foreach ($data as $key => $value) {
+                                    $TGL = gmdate('d/m/Y - H:i:s', $value->tgl_penjualan);
                                     ?>
                                     <tr>
                                         <td><?php echo $value->kd_penjualan; ?></td>
                                         <td><?php echo $value->nama_pelanggan; ?></td>
                                         <td><?php echo $value->alamat; ?></td>
                                         <td><?php echo $value->nama_sales; ?></td>
-                                        <td><?php echo gmdate('d/m/Y - H:i:s', $value->tgl_penjualan); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_penjualan); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td><?php echo $value->jenis; ?></td>
                                         <td><a href="<?php echo base_url('penjualan/cetak/'.$value->kd_penjualan)?>" class="btn btn-default flat"><i class="fa fa-print fa-fw"></i> Cetak</a>

@@ -48,7 +48,7 @@ class Pembelian extends CI_Controller {
 					}
 					$create['kd_pembelian'] = $kd_pembelian;
 					$create['kd_supplier'] = $this->input->post('kd_supplier');
-					$create['kd_user'] = $this->input->post('kd_user');
+					$create['kd_user'] = $this->session->userdata('kd_user');
 					$create['total_harga'] = $this->input->post('total');
 					$create['tgl_pembelian'] = strtotime(date('Y-m-d H:i:s'));
 					$result = $this->app_model->insertData('tbl_pembelian', $create);
@@ -72,6 +72,7 @@ class Pembelian extends CI_Controller {
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
 							$create_history['tgl_history'] = $create['tgl_pembelian'];
 							$create_history['type_history'] = 1;
+							$create_history['kd_user'] = $this->session->userdata('kd_user');
 
 							$result2 = $this->app_model->insertData("tbl_pembelian_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getSisaStok($create_detail['kd_barang']) + $qty[$i];

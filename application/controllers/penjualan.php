@@ -49,7 +49,7 @@ class Penjualan extends CI_Controller {
 					$create['kd_order'] = "";
 					$create['nama_pelanggan'] = $this->input->post('nama_pelanggan');
 					$create['alamat'] = $this->input->post('alamat');
-					$create['kd_user'] = $this->input->post('kd_user');
+					$create['kd_user'] = $this->session->userdata('kd_user');
 					$create['total_harga'] = $this->input->post('total');
 					$create['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
 					$create['jenis'] = 'Cash';
@@ -77,6 +77,7 @@ class Penjualan extends CI_Controller {
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
 							$create_history['tgl_history'] = $create['tgl_penjualan'];
 							$create_history['type_history'] = 2;
+							$create_history['kd_user'] = $this->session->userdata('kd_user');
 
 							$result2 = $this->app_model->insertData("tbl_penjualan_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty']);
@@ -130,12 +131,15 @@ class Penjualan extends CI_Controller {
 		$data['data_penjualan'] = $this->app_model->manualQuery("SELECT *, a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=kd_penjualan) as jumlah from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user")->result();
 		/*
 		per barang
-		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.kd_barang, a.qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan from tbl_penjualan_detail a left join tbl_barang b 
-			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."'")->result();
-*/
-
+		*/
+		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.kd_barang, a.qty, sum(a.qty) as total_qty, a.potongan, a.dus, b.brand, c.kategori, c.type, max(a.harga_tersimpan) as harga_tersimpan, max(a.harga_tersimpan) as harga_satuan from tbl_penjualan_detail a left join tbl_barang b 
+			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."' group by b.id_tipe_kategori")->result();
+/*
+	per tipe kategori
 		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select a.kd_penjualan, a.qty, sum(a.qty) as total_qty, a.potongan, a.dus, b.brand, c.kategori, c.type, a.harga_tersimpan, max(a.harga_tersimpan) as harga_satuan, sum(a.harga_tersimpan) as harga from tbl_penjualan_detail a left join tbl_barang b 
 			on a.kd_barang=b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$detail['kd_penjualan']."' group by b.id_tipe_kategori")->result();
+
+*/
 
 		foreach ($data['data_penjualan'] as $key => $value) {
 			$data['kd_penjualan'] = $value->kd_penjualan;
@@ -150,10 +154,8 @@ class Penjualan extends CI_Controller {
 		}
 
 		$data['total'] = 0;
-		var_dump($data['data_penjualan_detail']);
-		exit();
 		foreach ($data['data_penjualan_detail'] as $key => $value) {
-			$data['total'] += $value->harga_tersimpan*$value->qty;
+			$data['total'] += $value->harga_tersimpan*$value->total_qty;
 		}
 
 

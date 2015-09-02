@@ -33,18 +33,51 @@
                                     <th>Tanggal</th>
                                     <th>Barang Masuk</th>
                                     <th>Barang Keluar</th>
+                                    <th>Type</th>
+                                    <th>User</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($data as $key => $value) {
+                                    switch ($value->type_history) {
+                                        case 1:
+                                            $type = 'Pembelian';
+                                            break;
+                                        
+                                        case 2:
+                                            $type = 'Penjualan';
+                                            break;
+                                        
+                                        case 3:
+                                            $type = 'Return Pembelian';
+                                            break;
+                                        
+                                        case 4:
+                                            $type = 'Return Penjualan';
+                                            break;
+                                        
+                                        case 5:
+                                            $type = 'Add Stock';
+                                            break;
+
+                                        case 6:
+                                            $type = 'Update Barang';
+                                            break;
+                                        
+                                        default:
+                                            $type = ' - ' ;
+                                            break;
+                                    }
                                     ?>
                                     <tr>
                                         <td><?php echo $value->kd_barang; ?></td>
                                         <td><?php echo $value->nama_barang; ?></td>
-                                        <td><?php echo gmdate('d - M - Y', $value->tgl_history); ?></td>
+                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_history); ?></td>
                                         <td><?php echo $value->qty_masuk; ?></td>
                                         <td><?php echo $value->qty_keluar; ?></td>
+                                        <td><?php echo $type; ?></td>
+                                        <td><?php echo $value->nama_user; ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -57,6 +90,8 @@
                                     <th>Tanggal</th>
                                     <th>Barang Masuk</th>
                                     <th>Barang Keluar</th>
+                                    <th>Type</th>
+                                    <th>User</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -75,6 +110,7 @@
 <script type="text/javascript">
     
     $(".dataTableReport").DataTable({
+        "order": [[ 2, "desc" ]],
         responsive: true});
 
 </script>
