@@ -24,14 +24,21 @@
         
         h2.page-header{
         	font-size: 18px;
+            padding-bottom: 0;
         	}
         	h5{
         	font-size: 14px;
         	}
         
         .invoice{
-        	font-size: 12px;
+        	font-size: 14px;
+    text-transform: uppercase;
+                letter-spacing: 2px;
         	}
+
+            .invoice table td{
+                padding: 5px !important;
+            }
 
     </style>
 
@@ -68,7 +75,7 @@
     <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
             <span class="lead">Alvindo Motor</span class="lead"><br>
-            <small>JAKARTA</small><br>
+            JAKARTA<br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
             <strong>No Faktur: </strong><?php echo $kd_penjualan; ?><br>
@@ -86,29 +93,37 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th style="width:40px;">No</th>
                         <th>Nama Barang</th>
                         <th style="width:150px;">Harga Satuan</th>
                         <th style="width:100px;">Quantity</th>
-                        <th style="width:150px;">Sub Total</th></tr>
+                        <th style="width:150px;">Sub Total</th>
+                        <th style="width:60px;">Dus</th>
+                    </tr>
                     </thead>
                     <tbody>
                         <?php
+                        $no_urut = 1;
                         foreach ($data_penjualan_detail as $key => $value) {
                             ?>
                             <tr class="gradeX">
+                                <td><?php echo $no_urut; ?></td>
                                 <td><?php echo $value->kategori." ".$value->type; ?></td>
                                 <td><?php echo $value->harga_satuan; ?></td>
                                 <td><?php echo $value->total_qty; ?></td>
                                 <td>Rp. <?php echo number_format($value->total_qty*$value->harga_tersimpan, 2, ",", "."); ?></td>
+                                <td><?php echo $value->dus; ?></td>
                             </tr>
                             <?php
+                            $no_urut++;
                         }   
                         ?>
                     </tbody>
                     <tfoot>
                         <tr class="gradeX">
-                            <td colspan="3">Total</td>
+                            <td colspan="4">Total</td>
                             <td>Rp. <?php echo number_format($total, 2, ",", "."); ?></td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
