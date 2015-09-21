@@ -245,6 +245,7 @@ class Orderan extends CI_Controller {
 					$confirm['total_harga'] = $this->input->post('total');
 					$confirm['alamat'] = $this->input->post('alamat');
 					$confirm['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
+					$confirm['tgl_pengiriman'] = strtotime($this->input->post('tgl_pengiriman'));
 					$confirm['jenis'] = 'Order';
 					$status['status'] = 'Confirm';
 					$result = $this->app_model->insertData('tbl_penjualan', $confirm);

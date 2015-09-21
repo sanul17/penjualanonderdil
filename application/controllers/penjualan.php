@@ -52,6 +52,7 @@ class Penjualan extends CI_Controller {
 					$create['kd_user'] = $this->session->userdata('kd_user');
 					$create['total_harga'] = $this->input->post('total');
 					$create['tgl_penjualan'] = strtotime(date('Y-m-d H:i:s'));
+					$create['tgl_pengiriman'] = strtotime($this->input->post('tgl_pengiriman'));
 					$create['jenis'] = 'Cash';
 					$result = $this->app_model->insertData('tbl_penjualan', $create);
 					$result2 = 0;
@@ -112,6 +113,69 @@ class Penjualan extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
+	function update($id){
+		$dt['title']='Pasti Jaya Motor | Update penjualan';
+		$update['kd_penjualan'] = $id;
+		$data['kd_penjualan'] = $update['kd_penjualan'];
+		$data['data_barang'] = $this->app_model->getAllData('tbl_tipe_kategori')->result();
+		$data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $update)->result();
+		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select c.type, c.kategori, b.brand, b.kd_barang, a.qty, a.harga_tersimpan, a.potongan, a.dus from tbl_penjualan_detail a left join tbl_barang b on a.kd_barang = b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$update['kd_penjualan']."'")->result();
+
+		foreach ($data['data_penjualan'] as $key => $value) {
+			$data['kd_penjualan'] = $value->kd_penjualan;
+			$data['kd_user'] = $this->session->userdata('kd_user');
+			$data['nama_user'] = $this->app_model->getNamaUser($this->session->userdata('kd_user'));
+			$data['nama_pelanggan'] = $value->nama_pelanggan;
+			$data['alamat'] = $value->alamat;
+			$data['tgl_pengiriman'] = gmdate('Y-m-d', $value->tgl_pengiriman);
+		}
+
+		$cek = $this->session->userdata('logged_in');
+		if (!empty($cek)) {
+			$this->form_validation->set_error_delimiters('<div class="text-red"> <i class="fa fa-ban"></i> ', ' </div>');
+			$this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
+			if ($this->form_validation->run()) {
+				$id_update['kd_penjualan'] = $id;
+				$update['nama_pelanggan'] = $this->input->post('nama_pelanggan');
+				$update['alamat'] = $this->input->post('alamat');
+				$update['kd_sales'] = $this->input->post('kd_sales');
+				$update['potongan'] = $this->input->post('potongan');
+				$result = $this->app_model->updateData('tbl_penjualan', $update, $id_update);
+
+				$this->app_model->deleteData("tbl_penjualan_detail", $id_update);
+
+				$id_tipe_kategori = $this->input->post('id_tipe_kategori');
+				$qty = $this->input->post('qty');
+
+				for ($i=0; $i < count($id_tipe_kategori); $i++) { 
+					$update_detail['kd_penjualan'] = $id;
+					$update_detail['id_tipe_kategori'] = $id_tipe_kategori[$i];
+					$update_detail['qty'] = $qty[$i];
+					$result2 = $this->app_model->insertData("tbl_penjualan_detail",$update_detail);
+				}	
+
+				if ($result && $result2) {
+					$pesan = 'Update Orderan Sukses';
+					$this->session->set_flashdata('pesan', $pesan);
+					redirect(base_url('Orderan'));
+				}else{
+					$data['pesan'] = 'Update Orderan Gagal';
+					$this->load->view('elements/header', $dt);
+					$this->load->view('penjualan/update', $data);
+					$this->load->view('elements/footer');
+				}		
+
+
+			}else{
+				$this->load->view('elements/header', $dt);
+				$this->load->view('penjualan/update', $data);
+				$this->load->view('elements/footer');				
+			}
+		}else{
+			redirect(base_url('login'));
+		}
+	}
+
 
 	function get_detail_barang(){
 		$id['kd_barang']=$this->input->post('kd_barang');
@@ -128,7 +192,7 @@ class Penjualan extends CI_Controller {
 		$detail['kd_penjualan'] = $id;
 		$data['kd_penjualan'] = $detail['kd_penjualan'];
 		$data['data_barang'] = $this->app_model->getBarangJual()->result();
-		$data['data_penjualan'] = $this->app_model->manualQuery("SELECT *, a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=kd_penjualan) as jumlah from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user")->result();
+		$data['data_penjualan'] = $this->app_model->manualQuery("SELECT *, a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=kd_penjualan) as jumlah from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user where a.kd_penjualan = '".$id."'")->result();
 		/*
 		per barang
 		*/

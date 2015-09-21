@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/fileinput.css')?>"/>  
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css')?>"/>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css"/>
+    <!-- Date Picker -->
+    <link href="<?php echo base_url('assets/datepicker/datepicker.css')?>" rel="stylesheet" type="text/css" />
     <!-- Custom Fonts -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>">    
     <!-- Theme style -->
@@ -25,7 +27,8 @@
           <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/validation/jquery.validate.js')?>" ></script>
           <script type="text/javascript" src="<?php echo base_url('assets/js/fileinput.js')?>" ></script>
           <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.min.js')?>"></script> 
-          <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-ui.min.js')?>" ></script>
+    <!--  <script type="text/javascript" src="<?php echo base_url('assets/js/jquery-ui.min.js')?>" ></script> -->
+    <script type="text/javascript" src="<?php echo base_url('assets/datepicker/bootstrap-datepicker.js')?>"></script>  
       </head>
       <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->

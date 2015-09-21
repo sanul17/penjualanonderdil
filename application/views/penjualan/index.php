@@ -75,43 +75,58 @@
                                         <td><?php echo $value->nama_sales; ?></td>
                                         <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_penjualan); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
-                                        <td><?php echo $value->jenis; ?></td>
-                                        <td><a href="<?php echo base_url('penjualan/cetak/'.$value->kd_penjualan)?>" class="btn btn-default flat"><i class="fa fa-print fa-fw"></i> Cetak</a>
+                                        <td><?php echo $value->jenis; ?></td>                                           
+                                        <td style="text-align:center;">
+                                            <div class="btn-group">
+                                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                                                    Action
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="<?php echo base_url('penjualan/cetak/'.$value->kd_penjualan)?>">Cetak</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?php echo base_url('penjualan/update/'.$value->kd_penjualan);?>">Update</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Kode Penjualan</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Alamat</th>
+                                    <th>Sales</th>
+                                    <th>Tanggal Jual</th>
+                                    <th>User</th>
+                                    <th>Jenis</th>
+                                    <th style="text-align:center;"  class="action">Action</th>
                                 </tr>
-                                <?php
-                            }
-                            ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Kode Penjualan</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Alamat</th>
-                                <th>Sales</th>
-                                <th>Tanggal Jual</th>
-                                <th>User</th>
-                                <th>Jenis</th>
-                                <th style="text-align:center;"  class="action">Action</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
+                            </tfoot>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
         </div>
-    </div>
 
-</section><!-- /.content -->
+    </section><!-- /.content -->
 
-<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
-<script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
-<script type="text/javascript">
-    
+    <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
+    <script type="text/javascript">
+
     $("#dataTable").DataTable({
         responsive: true,
-       "aoColumnDefs": [
-       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
-       ],
+        "aoColumnDefs": [
+        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+        ],
         "order": [[ 4, "desc" ]]
-   });    
-</script>
+    });    
+    </script>

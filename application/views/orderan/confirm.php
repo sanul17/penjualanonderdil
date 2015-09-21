@@ -93,6 +93,15 @@
                             <div class="col-md-4"><?php echo form_error('tgl_order'); ?></div>
                         </div>
 
+            <div class="form-group">
+                <label for="tgl_pengiriman" class="col-md-6 control-label">Tgl Pengiriman</label>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control btn-flat datepicker" id="tgl_pengiriman" name="tgl_pengiriman" value='<?php echo set_value('tgl_pengiriman'); ?>'><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+
                         <?php
                         if (form_error('potongan')) {
                             echo '<div class="form-group has-error">';
@@ -334,6 +343,9 @@
 </div>
 
 <script>
+$('.datepicker').datepicker({
+    format: 'yyyy-mm-dd'
+});
    
 function bolehUbah()
 {

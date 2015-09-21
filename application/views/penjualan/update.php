@@ -90,7 +90,7 @@
                     ?>
                     <label for="nama_pelanggan" class="col-md-2 control-label">Nama Pelanggan</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo set_value('nama_pelanggan'); ?>'>
+                        <input type="text" class="form-control flat" id="nama_pelanggan" name="nama_pelanggan" value='<?php echo $nama_pelanggan; ?>'>
                     </div>
                     <div class="col-md-4"><?php echo form_error('nama_pelanggan'); ?></div>
                 </div>
@@ -103,7 +103,7 @@
                 ?>
                 <label for="alamat" class="col-md-2 control-label">Alamat Pelanggan</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control flat" id="alamat" name="alamat" value='<?php echo set_value('alamat'); ?>'>
+                    <input type="text" class="form-control flat" id="alamat" name="alamat" value='<?php echo $alamat; ?>'>
                 </div>
                 <div class="col-md-4"><?php echo form_error('alamat'); ?></div>
             </div>
@@ -111,7 +111,7 @@
                 <label for="tgl_pengiriman" class="col-md-2 control-label">Tgl Pengiriman</label>
                 <div class="col-md-2">
                   <div class="input-group">
-                    <input type="text" class="form-control btn-flat datepicker" id="tgl_pengiriman" name="tgl_pengiriman" value='<?php echo set_value('tgl_pengiriman'); ?>'><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control btn-flat datepicker" id="tgl_pengiriman" name="tgl_pengiriman" value='<?php echo $tgl_pengiriman; ?>'><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
 
@@ -144,6 +144,24 @@
                 </thead>
                 <tbody>
 
+                <?php
+                foreach ($data_penjualan_detail as $key => $value) {
+                    ?>
+                    <tr class="gradeX">
+                        <td><?php echo $value->kd_barang; ?></td>
+                        <td><?php echo $value->kategori.' '.$value->type; ?></td>
+                        <td><?php echo $value->brand; ?></td>
+                        <td><input type="text" class="form-control flat qty" id="qty" name="qty[]" value="<?php echo $value->qty; ?>"></td>
+                        <td><input type="text" class="form-control flat harga" id="harga" name="harga[]" value="<?php echo $value->harga_tersimpan; ?>"></td>
+                        <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="<?php echo $value->potongan; ?>"></td>
+                        <td><input type="text" readonly class="form-control flat harga_potongan" id="harga_potongan" name="harga_potongan[]" value="<?php echo $value->potongan * $value->harga_tersimpan; ?>"></td>
+                        <td><input type="text" class="form-control flat dus" id="dus" name="dus[]" value="<?php echo $value->dus; ?>"></td>
+                        <td><?php echo ($value->harga_tersimpan - ($value->harga_tersimpan * $value->potongan / 100)) * $value->qty; ?></td>
+                        <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
+                    </tr>
+                    <?php
+                }
+                ?>
                 </tbody>
                 <tfoot>
                     <tr class="gradeX">
