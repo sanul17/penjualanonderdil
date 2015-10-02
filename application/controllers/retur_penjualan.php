@@ -83,6 +83,7 @@ class Retur_penjualan extends CI_Controller {
 							$create_detail['keterangan'] = $keterangan[$i];
 
 							$create_history['kd_barang'] = $create_detail['kd_barang'];
+							$create_history['kd_transaksi'] = $create_detail['kd_retur_penjualan'];
 							$create_history['qty_masuk'] = 0;
 							$create_history['qty_keluar'] = $create_detail['qty_retur'];
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);

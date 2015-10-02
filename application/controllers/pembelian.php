@@ -67,6 +67,7 @@ class Pembelian extends CI_Controller {
 							$create_detail['harga_beli'] = $harga_beli[$i];
 
 							$create_history['kd_barang'] = $create_detail['kd_barang'];
+							$create_history['kd_transaksi'] = $create_detail['kd_pembelian'];
 							$create_history['qty_masuk'] = $create_detail['qty'];
 							$create_history['qty_keluar'] = 0;
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);

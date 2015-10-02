@@ -48,7 +48,7 @@
                             </div>
                             <div class="cleaner_h3"></div>
                         </div>
-                        <form class="form-horizontal" id="create-cash" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url('penjualan/create') ?>">
+                        <form class="form-horizontal" id="create-cash" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url('penjualan/update/'.$kd_penjualan) ?>">
 
                             <?php
                             if (form_error('kd_penjualan')) {
@@ -144,24 +144,36 @@
                 </thead>
                 <tbody>
 
-                <?php
-                foreach ($data_penjualan_detail as $key => $value) {
-                    ?>
-                    <tr class="gradeX">
-                        <td><?php echo $value->kd_barang; ?></td>
-                        <td><?php echo $value->kategori.' '.$value->type; ?></td>
-                        <td><?php echo $value->brand; ?></td>
-                        <td><input type="text" class="form-control flat qty" id="qty" name="qty[]" value="<?php echo $value->qty; ?>"></td>
-                        <td><input type="text" class="form-control flat harga" id="harga" name="harga[]" value="<?php echo $value->harga_tersimpan; ?>"></td>
-                        <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="<?php echo $value->potongan; ?>"></td>
-                        <td><input type="text" readonly class="form-control flat harga_potongan" id="harga_potongan" name="harga_potongan[]" value="<?php echo $value->potongan * $value->harga_tersimpan; ?>"></td>
-                        <td><input type="text" class="form-control flat dus" id="dus" name="dus[]" value="<?php echo $value->dus; ?>"></td>
-                        <td><?php echo ($value->harga_tersimpan - ($value->harga_tersimpan * $value->potongan / 100)) * $value->qty; ?></td>
-                        <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
-                    </tr>
                     <?php
-                }
-                ?>
+                    foreach ($data_penjualan_detail as $key => $value) {
+                        ?>
+                        <tr class="gradeX">
+                            <td><?php echo $value->kd_barang; ?><input type="hidden" class="form-control flat" name="kd_barang[]" readonly value="<?php echo $value->kd_barang; ?>"></td>
+                            <td><?php echo $value->kategori.' '.$value->type; ?></td>
+                            <td><?php echo $value->brand; ?></td>
+                            <td>
+                                <select class="form-control flat qty" id="qty" name="qty[]" >
+                                    <?php
+                                    for ($i=0; $i <= $value->qty + $value->stok; $i++) { 
+                                        $selected = "";
+                                        if ($value->qty == $i) {
+                                            $selected = " selected ";
+                                        }
+                                        echo "<option ".$selected." value='".$i."'>".$i."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control flat harga" id="harga" name="harga[]" value="<?php echo $value->harga_tersimpan; ?>"></td>
+                            <td><input type="text" class="form-control flat potongan" id="potongan" name="potongan[]" value="<?php echo $value->potongan; ?>"></td>
+                            <td><input type="text" readonly class="form-control flat harga_potongan" id="harga_potongan" name="harga_potongan[]" value="<?php echo $value->harga_tersimpan - ($value->potongan * $value->harga_tersimpan); ?>"></td>
+                            <td><input type="text" class="form-control flat dus" id="dus" name="dus[]" value="<?php echo $value->dus; ?>"></td>
+                            <td><span class="subtotal-label"> <?php echo ($value->harga_tersimpan - ($value->harga_tersimpan * $value->potongan / 100)) * $value->qty; ?></span><input type="hidden" class="form-control flat subtotal" name="subtotal[]" value=" <?php echo ($value->harga_tersimpan - ($value->harga_tersimpan * $value->potongan / 100)) * $value->qty; ?>"></td>
+                            <td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
                 </tbody>
                 <tfoot>
                     <tr class="gradeX">
@@ -174,7 +186,7 @@
             <div class="cleaner_h20"></div>
             <div class="form-group">
                 <div class="col-sm-8">
-                    <button type="submit" class="btn btn-primary flat" id="submit" disabled>Jual Cash</button>
+                    <button type="submit" class="btn btn-primary flat" id="submit" disabled>Save</button>
                     <a href="<?php echo base_url('penjualan');?>" class="btn btn-default flat">Cancel</a>
                 </div>
             </div>
@@ -307,7 +319,9 @@ $("#add").on('click', function(event) {
     $(this).closest('#modalAddPenjualanBarang').modal('hide');
     $('#submit').removeAttr('disabled');
 
-    $(".delbutton").on('click', function(event) {
+});
+
+    $(document).on('click', '.delbutton', function(event) {
         event.preventDefault();
         $(this).closest('tr.gradeX').remove();
         var all_sub_total = $('.subtotal');
@@ -326,7 +340,7 @@ $("#add").on('click', function(event) {
 
     });
 
-    $('.gradeX').find('.qty').on('change keyup keydown', function(event) {
+    $(document).on('change keyup keydown', '.qty', function(event) {
         var qty = $(this).val();
         var harga = $(this).closest('.gradeX').find('.harga').val();
         var potongan = $(this).closest('.gradeX').find('.potongan').val();
@@ -357,7 +371,7 @@ $("#add").on('click', function(event) {
         }
     });
 
-    $('.potongan').on('keyup keydown change', function(event) {
+    $(document).on('keyup keydown change', '.potongan', function(event) {
         var potongan = $(this).val();
         var harga = $(this).closest('.gradeX').find('.harga').val();
         var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
@@ -388,7 +402,7 @@ $("#add").on('click', function(event) {
         }
     });
 
-    $('.harga').on('keyup keydown change', function(event) {
+    $(document).on('keyup keydown change', '.harga', function(event) {
         var harga = $(this).val();
         var potongan = $(this).closest('.gradeX').find('.potongan').val();
         var harga_potongan = $(this).closest('.gradeX').find('.harga_potongan');
@@ -420,7 +434,6 @@ $("#add").on('click', function(event) {
     });
 
 
-});
 
     $("#form-add-order").validate({
         rules: {
