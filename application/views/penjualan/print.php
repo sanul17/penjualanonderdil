@@ -82,7 +82,7 @@
             <strong>Tanggal  : </strong><?php echo $tgl_cetak; ?><br>
         </div><!-- /.col -->
         <div class="col-sm-4 invoice-col">
-            <strong>Pelanggan : </strong><?php echo $nama_pelanggan; ?><br>
+            <strong>Kepada Yth : <?php echo $nama_pelanggan; ?></strong><br>
             <strong>Alamat    : </strong><?php echo $alamat; ?><br>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -130,16 +130,17 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
 <div class="row">
-        <div class="span center">
-            <h5 class="text-center">Admin</h5>
-            <div class="sign"></div>
-            <h5 class="text-center"><?php echo $nama_user; ?></h5>
-        </div>
 
         <div class="span center"  style="float: right">
-            <h5 class="text-center">Pelanggan</h5>
+            <h5 class="text-center">Diterima Oleh</h5>
             <div class="sign"></div>
             <h5 class="text-center"><?php echo $nama_pelanggan?></h5>
+        </div>
+
+        <div class="span center">
+            <h5 class="text-center">Hormat Kami</h5>
+            <div class="sign"></div>
+            <h5 class="text-center"><?php echo $nama_user; ?></h5>
         </div>
     </div>
 

@@ -119,19 +119,29 @@
             <div class="col-md-4"><?php echo form_error('stok'); ?></div>
         </div>
 
-        <?php
-        if (form_error('modal')) {
-            echo '<div class="form-group has-error">';
-        }else{
-            echo '<div class="form-group">';
-        }
-        ?>
-        <label for="modal" class="col-md-2 control-label">Modal</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control flat" id="modal" name="modal" value='<?php echo set_value('modal'); ?>'>
+        <?php 
+        if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2) {
+            ?>
+
+
+
+            <?php
+            if (form_error('modal')) {
+                echo '<div class="form-group has-error">';
+            }else{
+                echo '<div class="form-group">';
+            }
+            ?>
+            <label for="modal" class="col-md-2 control-label">Modal</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control flat" id="modal" name="modal" value='<?php echo set_value('modal'); ?>'>
+            </div>
+            <div class="col-md-4"><?php echo form_error('modal'); ?></div>
         </div>
-        <div class="col-md-4"><?php echo form_error('modal'); ?></div>
-    </div>
+        <?php
+    }
+    ?>
+
     <?php
     if (form_error('harga')) {
         echo '<div class="form-group has-error">';

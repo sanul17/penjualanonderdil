@@ -6,18 +6,50 @@ class Penjualan extends CI_Controller {
 	 * @author : Adam Syufi Ikhsanul Khair
 	 */
 	
+	public function __construct()
+	{
+		parent::__construct();
+		if ($this->session->userdata('level') != 1 && $this->session->userdata('level') != 2 && $this->session->userdata('level') != 4) {
+			redirect('dashboard');
+		}
+	}
+
 	function index(){
 		$dt['title']='Pasti Jaya Motor | Penjualan';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$this_user = $this->session->userdata('kd_user');
-			$data['data'] = $this->app_model->manualQuery("SELECT a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, c.kd_sales, d.nama_sales, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=kd_penjualan) as jumlah from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user left join tbl_order c on a.kd_order=c.kd_order left join tbl_sales d on c.kd_sales=d.kd_sales")->result();
 			$this->load->view('elements/header', $dt);
-			$this->load->view('penjualan/index', $data);
+			$this->load->view('penjualan/index');
 			$this->load->view('elements/footer');
 		}else{
 			redirect(base_url('login'));
 		}
+	}
+
+	function getPenjualan(){
+		$arrayPenjualan['data'] = $this->app_model->manualQuery("SELECT a.kd_penjualan, a.kd_order, a.nama_pelanggan, a.tgl_penjualan, a.alamat, a.kd_user, a.jenis, b.nama_user, c.kd_sales, d.nama_sales, (select count(kd_penjualan) as jum from tbl_penjualan_detail where kd_penjualan=a.kd_penjualan) as jumlah, (select sum(harga_tersimpan * qty)as ttl from tbl_penjualan_detail where kd_penjualan=a.kd_penjualan) as total_harga from tbl_penjualan a left join tbl_user b on a.kd_user=b.kd_user left join tbl_order c on a.kd_order=c.kd_order left join tbl_sales d on c.kd_sales=d.kd_sales")->result_array();
+		foreach($arrayPenjualan['data'] as $i => $data) {
+			$data['action'] = "                                                <div class=\"btn-group\">
+			<a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
+			Action
+			<span class=\"caret\"></span>
+			</a>
+			<ul class=\"dropdown-menu\">
+			<li>
+			<a href=\"".base_url('penjualan/cetak/'.$data['kd_penjualan'])."\">Cetak</a>
+			</li>
+			<li>
+			<a href=\"".base_url('penjualan/update/'.$data['kd_penjualan'])."\">Update</a>
+			</li>
+			</ul>
+			</div>";
+
+			$arrayPenjualan['data'][$i] = $data;
+			$arrayPenjualan['tgl_penjualan'] = date('Y-m-d H:i:s', $data['tgl_penjualan']);
+			$arrayPenjualan['total_harga'] = number_format($data['total_harga'], 2, ",", ".");
+		}
+		echo json_encode($arrayPenjualan);
 	}
 
 	function create(){
@@ -122,6 +154,7 @@ class Penjualan extends CI_Controller {
 		$data['data_penjualan'] = $this->app_model->getSelectedData("tbl_penjualan", $update)->result();
 		$data['data_penjualan_detail'] = $this->app_model->manualQuery("select c.type, c.kategori, b.brand, b.kd_barang, b.stok, a.qty, a.harga_tersimpan, a.potongan, a.dus from tbl_penjualan_detail a left join tbl_barang b on a.kd_barang = b.kd_barang left join tbl_tipe_kategori c on b.id_tipe_kategori = c.id_tipe_kategori where a.kd_penjualan='".$update['kd_penjualan']."'")->result();
 
+		$data['total'] = $this->app_model->manualQuery("select sum(qty * (harga_tersimpan - (harga_tersimpan * potongan))) as total from tbl_penjualan_detail where kd_penjualan = '".$id."'")->row()->total;
 		foreach ($data['data_penjualan'] as $key => $value) {
 			$data['kd_penjualan'] = $value->kd_penjualan;
 			$data['kd_user'] = $this->session->userdata('kd_user');

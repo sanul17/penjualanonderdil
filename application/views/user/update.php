@@ -111,9 +111,10 @@
                 <label for="level" class="col-md-2 control-label">Level User</label>
                 <div class="col-md-2">
                     <select id="level" name="level" class="form-control flat">
-                        <option value="admin" <?php if ($level == 'admin') { echo 'selected';} ?>>Admin</option>
-                        <option value="gudang" <?php if ($level == 'gudang') { echo 'selected';} ?>>Gudang</option>
-                        <option value="keuangan" <?php if ($level == 'keuangan') { echo 'selected';} ?>>Keuangan</option>
+                    <option value="2" <?php if ($level == 2) { echo 'selected';} ?>>Super Admin</option>
+                    <option value="3" <?php if ($level == 3) { echo 'selected';} ?>>Admin Pembelian</option>
+                    <option value="4" <?php if ($level == 4) { echo 'selected';} ?>>Admin Penjualan</option>
+                    <option value="5" <?php if ($level == 5) { echo 'selected';} ?>>Gudang</option>
                     </select>
                 </div>
                 <div class="col-md-4"><?php echo form_error('level'); ?></div>

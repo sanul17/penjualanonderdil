@@ -53,13 +53,34 @@
                             <tbody>
                                 <?php
                                 foreach ($data as $key => $value) {
+                                    switch ($value->level) {
+                                        case 1:
+                                            $level_name = 'Owner';
+                                            break;
+                                        case 2:
+                                            $level_name = 'Super Admin';
+                                            break;
+                                        case 3:
+                                            $level_name = 'Admin Pembelian';
+                                            break;
+                                        case 4:
+                                            $level_name = 'Admin Penjualan';
+                                            break;
+                                        case 5:
+                                            $level_name = 'Gudang';
+                                            break;
+                                        
+                                        default:
+                                            $level_name = 'Unidentified';
+                                            break;
+                                    }
                                     ?>
                                     <tr>
                                         <td><?php echo $value->kd_user; ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td><?php echo $value->username; ?></td>
                                         <td><?php echo $value->password; ?></td>
-                                        <td><?php echo $value->level; ?></td>
+                                        <td><?php echo $level_name; ?></td>
                                         <td style="text-align:center;">
                                             <div class="btn-group">
                                                 <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">

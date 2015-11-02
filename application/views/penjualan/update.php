@@ -178,7 +178,7 @@
                 <tfoot>
                     <tr class="gradeX">
                         <td colspan="8">Total</td>
-                        <td><span id="total-label"></span><input type="hidden" class="form-control" id="total" name="total"></td>
+                        <td><span id="total-label"><?php echo $total; ?></span><input type="hidden" class="form-control" id="total" name="total" value="<?php echo $total; ?>"></td>
                         <td style="text-align:center;" colspan="2"> - </td>
                     </tr>
                 </tfoot>
@@ -268,7 +268,7 @@ $("#kd_barang_add").change(function(){
     });
 });
 
-$("#add").on('click', function(event) {
+$(document).on('click', "#add", function(event) {
     event.preventDefault();
     var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
     var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
@@ -324,6 +324,11 @@ $("#add").on('click', function(event) {
     $(document).on('click', '.delbutton', function(event) {
         event.preventDefault();
         $(this).closest('tr.gradeX').remove();
+        var qty_val = 0;
+        var qty = $('.qty');
+        for (var i = 0; i < qty.length; i++) {
+            qty_val += Number(qty[i].value);
+        };
         var all_sub_total = $('.subtotal');
         var total_val = 0;
         for (var i = 0; i < all_sub_total.length; i++) {
@@ -332,7 +337,9 @@ $("#add").on('click', function(event) {
         $('#total').val(total_val);
         $('#total-label').html(total_val);
 
-        if (qty == '' || qty == 0) {
+        console.log(total_val);
+console.log(qty_val);
+        if (qty_val == '' || qty_val == 0) {
             $('#submit').attr('disabled', 'disabled');
         }else{
             $('#submit').removeAttr('disabled');

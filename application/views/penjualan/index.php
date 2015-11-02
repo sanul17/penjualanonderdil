@@ -58,45 +58,13 @@
                                     <th>Alamat</th>
                                     <th width="80">Sales</th>
                                     <th width="150">Tanggal Jual</th>
+                                    <th width="100">Total Barang</th>
+                                    <th width="150">Total Harga</th>
                                     <th width="80">User</th>
                                     <th width="50">Jenis</th>
                                     <th style="text-align:center; width:80px;"  class="action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                foreach ($data as $key => $value) {
-                                    $TGL = gmdate('d/m/Y - H:i:s', $value->tgl_penjualan);
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $value->kd_penjualan; ?></td>
-                                        <td><?php echo $value->nama_pelanggan; ?></td>
-                                        <td><?php echo $value->alamat; ?></td>
-                                        <td><?php echo $value->nama_sales; ?></td>
-                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_penjualan); ?></td>
-                                        <td><?php echo $value->nama_user; ?></td>
-                                        <td><?php echo $value->jenis; ?></td>                                           
-                                        <td style="text-align:center;">
-                                            <div class="btn-group">
-                                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                                                    Action
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="<?php echo base_url('penjualan/cetak/'.$value->kd_penjualan)?>">Cetak</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo base_url('penjualan/update/'.$value->kd_penjualan);?>">Update</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Kode Penjualan</th>
@@ -104,6 +72,8 @@
                                     <th>Alamat</th>
                                     <th>Sales</th>
                                     <th>Tanggal Jual</th>
+                                    <th>Total Barang</th>
+                                    <th>Total Harga</th>
                                     <th>User</th>
                                     <th>Jenis</th>
                                     <th style="text-align:center;"  class="action">Action</th>
@@ -127,6 +97,37 @@
         "aoColumnDefs": [
         { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
         ],
-        "order": [[ 4, "desc" ]]
+        "order": [[ 4, "desc" ]], 
+    "ajax": "<?php echo base_url('penjualan/getPenjualan')?>",
+    "deferRender": true,
+       /*
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td class="bg-light-blue" colspan="11">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        },
+        */
+        "columns": [
+        { "data": "kd_penjualan" },
+        { "data": "nama_pelanggan" },
+        { "data": "alamat" },
+        { "data": "nama_sales" },
+        { "data": "tgl_penjualan" },
+        { "data": "jumlah" },
+        { "data": "total_harga" },
+        { "data": "nama_user" },
+        { "data": "jenis" },
+        { "data": "action" }
+        ]
     });    
     </script>

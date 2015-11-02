@@ -67,7 +67,7 @@
                                     <tr>
                                         <td><?php echo $value->kd_pembelian; ?></td>
                                         <td><?php echo $value->nama_supplier; ?></td>
-                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_pembelian); ?></td>
+                                        <td><?php echo date('Y-m-d H:i:s', $value->tgl_pembelian); ?></td>
                                         <td><?php echo $value->nama_user; ?></td>
                                         <td style="text-align:center;">
                                             <div class="btn-group">
@@ -76,6 +76,9 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="<?php echo base_url('pembelian/update/'.$value->kd_pembelian);?>">Update</a>
+                                                    </li>
                                                     <li>
                                                         <a href="<?php echo base_url('pembelian/detail/'.$value->kd_pembelian);?>">Detail</a>
                                                     </li>

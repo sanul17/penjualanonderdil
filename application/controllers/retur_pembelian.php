@@ -6,6 +6,13 @@ class Retur_pembelian extends CI_Controller {
 	 * @author : Adam Syufi Ikhsanul Khair
 	 */
 	
+  public function __construct()
+  {
+    parent::__construct();
+    if ($this->session->userdata('level') != 1 && $this->session->userdata('level') != 2 && $this->session->userdata('level') != 3) {
+    	redirect('dashboard');
+    }
+  }
 	function index(){
 		$dt['title']='Pasti Jaya Motor | Retur Pembelian';
 		$cek = $this->session->userdata('logged_in');
@@ -90,6 +97,7 @@ class Retur_pembelian extends CI_Controller {
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
 							$create_history['tgl_history'] = $create['tgl_retur_pembelian'];
 							$create_history['type_history'] = 3;
+							$create_history['kd_user'] = $this->session->userdata('kd_user');
 
 							$result2 = $this->app_model->insertData("tbl_retur_pembelian_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getBalancedStok($create_detail['kd_barang'], $create_detail['qty_retur']);

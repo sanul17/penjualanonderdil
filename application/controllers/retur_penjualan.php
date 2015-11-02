@@ -6,6 +6,13 @@ class Retur_penjualan extends CI_Controller {
 	 * @author : Adam Syufi Ikhsanul Khair
 	 */
 	
+  public function __construct()
+  {
+    parent::__construct();
+    if ($this->session->userdata('level') != 1 && $this->session->userdata('level') != 2 && $this->session->userdata('level') != 4) {
+    	redirect('dashboard');
+    }
+  }
 	function index(){
 		$dt['title']='Pasti Jaya Motor | Retur Penjualan';
 		$cek = $this->session->userdata('logged_in');
@@ -82,6 +89,7 @@ class Retur_penjualan extends CI_Controller {
 							$create_detail['qty_retur'] = $qty[$i];
 							$create_detail['keterangan'] = $keterangan[$i];
 
+
 							$create_history['kd_barang'] = $create_detail['kd_barang'];
 							$create_history['kd_transaksi'] = $create_detail['kd_retur_penjualan'];
 							$create_history['qty_masuk'] = 0;
@@ -89,6 +97,7 @@ class Retur_penjualan extends CI_Controller {
 							$create_history['qty_awal'] = $this->app_model->getSisaStok($create_detail['kd_barang']);
 							$create_history['tgl_history'] = $create['tgl_retur_penjualan'];
 							$create_history['type_history'] = 4;
+														$create_history['kd_user'] = $this->session->userdata('kd_user');
 
 							$result2 = $this->app_model->insertData("tbl_retur_penjualan_detail", $create_detail);
 							$stok['stok'] = $this->app_model->getSisaStok($create_detail['kd_barang']) + $qty[$i];

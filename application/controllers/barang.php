@@ -24,36 +24,36 @@ class Barang extends CI_Controller {
 		echo json_encode($arrayBarang);
 	}
 
-		function getBarang(){
+	function getBarang(){
 		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		foreach($arrayBarang['data'] as $i => $data) {
 			$data['action'] = "                                                <div class=\"btn-group\">
-                                                    <a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
-                                                        Action
-                                                        <span class=\"caret\"></span>
-                                                    </a>
-                                                    <ul class=\"dropdown-menu\">
-                                                        <li>
-                                                            <a href=\"".base_url('barang/addStok/'.$data['kd_barang'])."\">Tambah Stok</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href=\"".base_url('barang/update/'.$data['kd_barang'])."\">Update</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href=\"".base_url('barang/detail/'.$data['kd_barang'])."\">Detail</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['kd_barang']."')\">Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>";
+			<a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
+			Action
+			<span class=\"caret\"></span>
+			</a>
+			<ul class=\"dropdown-menu\">
+			<li>
+			<a href=\"".base_url('barang/addStok/'.$data['kd_barang'])."\">Tambah Stok</a>
+			</li>
+			<li>
+			<a href=\"".base_url('barang/update/'.$data['kd_barang'])."\">Update</a>
+			</li>
+			<li>
+			<a href=\"".base_url('barang/detail/'.$data['kd_barang'])."\">Detail</a>
+			</li>
+			<li>
+			<a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['kd_barang']."')\">Delete</a>
+			</li>
+			</ul>
+			</div>";
 
 			$arrayBarang['data'][$i] = $data;
 		}
 		echo json_encode($arrayBarang);
 	}
 
-		function getBarangGudang(){
+	function getBarangGudang(){
 		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		echo json_encode($arrayBarang);
 	}
@@ -62,18 +62,18 @@ class Barang extends CI_Controller {
 		$arrayBarang['data'] = $this->app_model->getAllData('tbl_tipe_kategori')->result_array();
 		foreach($arrayBarang['data'] as $i => $data) {
 			$data['action'] = "                                                <div class=\"btn-group\"><a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
-                                                    Action
-                                                    <span class=\"caret\"></span>
-                                                </a>
-                                                <ul class=\"dropdown-menu\">
-                                                    <li>
-                                                        <a href=\"".base_url('tipe_kategori/update/'.$data['id_tipe_kategori'])."\">Update</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['id_tipe_kategori']."')\">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>";
+			Action
+			<span class=\"caret\"></span>
+			</a>
+			<ul class=\"dropdown-menu\">
+			<li>
+			<a href=\"".base_url('tipe_kategori/update/'.$data['id_tipe_kategori'])."\">Update</a>
+			</li>
+			<li>
+			<a href=\"#deleteModal\" role=\"button\" data-toggle=\"modal\" onclick=\"deleteModalFunction('".$data['id_tipe_kategori']."')\">Delete</a>
+			</li>
+			</ul>
+			</div>";
 
 			$arrayBarang['data'][$i] = $data;
 		}
@@ -92,7 +92,6 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('brand', 'Brand', 'required');
 			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
-			$this->form_validation->set_rules('modal', 'Modal', 'required');
 			$this->form_validation->set_rules('harga', 'Harga', 'required');
 			$this->form_validation->set_rules('posisi', 'Posisi', 'required');
 			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
@@ -110,7 +109,12 @@ class Barang extends CI_Controller {
 				$create['brand'] = $this->input->post('brand');
 				$create['min_stok'] = $this->input->post('min_stok');
 				$create['stok'] = $this->input->post('stok');
-				$create['modal'] = $this->input->post('modal');
+				if ($this->input->post('modal')) {
+					$create['modal'] = $this->input->post('modal');
+				}else{
+
+					$create['modal'] = 0;
+				}
 				$create['harga'] = $this->input->post('harga');
 				$create['posisi'] = $this->input->post('posisi');
 				$create['keterangan'] = $this->input->post('keterangan');
@@ -186,7 +190,6 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('brand', 'Brand', 'required');
 			$this->form_validation->set_rules('min_stok', 'Minimal Stok', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
-			$this->form_validation->set_rules('modal', 'Modal', 'required');
 			$this->form_validation->set_rules('harga', 'Harga', 'required');
 			$this->form_validation->set_rules('posisi', 'Posisi', 'required');
 			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
@@ -200,27 +203,32 @@ class Barang extends CI_Controller {
 					if ($update['stok'] < 0) {
 						$update['stok'] = 0;
 					}
-					$update['modal'] = $this->input->post('modal'); 
+					if ($this->input->post('modal')) {
+						$update['modal'] = $this->input->post('modal');
+					}else{
+
+						$update['modal'] = 0;
+					}
 					$update['harga'] = $this->input->post('harga'); 
 					$update['posisi'] = $this->input->post('posisi'); 
 					$update['keterangan'] = $this->input->post('keterangan'); 
 					$create_history['qty_awal'] = $this->app_model->getSisaStok($id_update['kd_barang']);
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
-							$create_history['kd_barang'] = $id_update['kd_barang'];
-							if ($update['stok'] != 0) {
-								if ($update['stok'] > $create_history['qty_awal']) {
-							$create_history['qty_masuk'] = $update['stok'] - $create_history['qty_awal'];
-							$create_history['qty_keluar'] = 0;
-								}else if ($update['stok'] < $create_history['qty_awal']) {
-							$create_history['qty_masuk'] = 0;
-							$create_history['qty_keluar'] = abs($create_history['qty_awal'] - $update['stok']);
-								}
+						$create_history['kd_barang'] = $id_update['kd_barang'];
+						if ($update['stok'] != 0) {
+							if ($update['stok'] > $create_history['qty_awal']) {
+								$create_history['qty_masuk'] = $update['stok'] - $create_history['qty_awal'];
+								$create_history['qty_keluar'] = 0;
+							}else if ($update['stok'] < $create_history['qty_awal']) {
+								$create_history['qty_masuk'] = 0;
+								$create_history['qty_keluar'] = abs($create_history['qty_awal'] - $update['stok']);
+							}
 							$create_history['tgl_history'] = strtotime(date('Y-m-d H:i:s'));
 							$create_history['type_history'] = 6;
 							$create_history['qty_akhir'] = $update['stok'];
 							$create_history['kd_user'] = $this->session->userdata('kd_user');
 							$this->app_model->insertData('tbl_history', $create_history);
-							}
+						}
 
 						$pesan = 'Update Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);
@@ -274,21 +282,21 @@ class Barang extends CI_Controller {
 					$create_history['qty_awal'] = $this->app_model->getSisaStok($id_update['kd_barang']);
 					if ($this->app_model->updateData('tbl_barang', $update, $id_update)) {
 
-							$create_history['kd_barang'] = $id_update['kd_barang'];
-							if ($this->input->post('qty') != 0) {
-								if ($this->input->post('qty') > 0) {
-							$create_history['qty_masuk'] = $this->input->post('qty');
-							$create_history['qty_keluar'] = 0;
-								}else if ($this->input->post('qty') < 0) {
-							$create_history['qty_masuk'] = 0;
-							$create_history['qty_keluar'] = abs($this->input->post('qty'));
-								}
+						$create_history['kd_barang'] = $id_update['kd_barang'];
+						if ($this->input->post('qty') != 0) {
+							if ($this->input->post('qty') > 0) {
+								$create_history['qty_masuk'] = $this->input->post('qty');
+								$create_history['qty_keluar'] = 0;
+							}else if ($this->input->post('qty') < 0) {
+								$create_history['qty_masuk'] = 0;
+								$create_history['qty_keluar'] = abs($this->input->post('qty'));
+							}
 							$create_history['tgl_history'] = strtotime(date('Y-m-d H:i:s'));
 							$create_history['type_history'] = 5;
 							$create_history['qty_akhir'] = $update['stok'];
 							$create_history['kd_user'] = $this->session->userdata('kd_user');
 							$this->app_model->insertData('tbl_history', $create_history);
-							}
+						}
 
 						$pesan = 'Tambah Stok Barang Sukses';
 						$this->session->set_flashdata('pesan', $pesan);
@@ -378,8 +386,8 @@ class Barang extends CI_Controller {
 
 				for ($i=1; $i < $highestRow; $i++) { 
 					
-				$tipe_kategori = $this->app_model->getAllData('tbl_tipe_kategori')->result();
-				$total_tipe_kategori = count($tipe_kategori);
+					$tipe_kategori = $this->app_model->getAllData('tbl_tipe_kategori')->result();
+					$total_tipe_kategori = count($tipe_kategori);
 				//SET KATEGORI AND TYPE
 					$kategori = ($arraydata[$i][1]) ? $arraydata[$i][1] : "No Category" ;
 					$type = ($arraydata[$i][2]) ? $arraydata[$i][2] : "No Type" ;

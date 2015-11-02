@@ -104,7 +104,10 @@
                 <thead>
                     <tr>
                         <th>Nama Barang</th>
-                        <th style="width:100px;">Quantity</th>
+                        <th>Brand</th>
+                        <th>Quantity</th>
+                        <th>Harga Beli</th>
+                        <th>Sub Total</th>
                     </thead>
                     <tbody>
                         <?php
@@ -112,13 +115,20 @@
                             ?>
                             <tr class="gradeX">
                                 <td><?php echo $value->kategori.' '.$value->type; ?></td>
+                                <td><?php echo $value->brand; ?></td>
                                 <td><?php echo $value->qty; ?></td>
+                                <td>Rp. <?php echo number_format($value->harga_beli, 2, ",", "."); ?></td>
+                                <td>Rp. <?php echo number_format($value->qty*$value->harga_beli, 2, ",", "."); ?></td>
                             </tr>
                             <?php
                         }
                         ?>
                     </tbody>
                     <tfoot>
+                    <tr class="gradeX">
+                        <td colspan="4">Total</td>
+                        <td>Rp. <?php echo number_format($total, 2, ",", "."); ?></td>
+                    </tr>
                     </tfoot>
                 </table>
                 <div class="cleaner_h20"></div>

@@ -50,189 +50,199 @@
                                 echo '<div class="form-group">';
                             }
                             ?>
-                                <label for="kd_barang" class="col-md-2 control-label">Kode Barang</label>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control flat" id="kd_barang" name="kd_barang" value='<?php echo $kd_barang; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('kd_barang'); ?></div>
+                            <label for="kd_barang" class="col-md-2 control-label">Kode Barang</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control flat" id="kd_barang" name="kd_barang" value='<?php echo $kd_barang; ?>' readonly>
                             </div>
-                            
-                            <?php
-                            if (form_error('nama_barang')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="nama_barang" class="col-md-2 control-label">Nama Barang</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="nama_barang" name="nama_barang" value='<?php echo $kategori." ".$type; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('nama_barang'); ?></div>
-                            </div>
-                            
-                            <?php
-                            if (form_error('kategori')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="kategori" class="col-md-2 control-label">Kategori</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="kategori" name="kategori" value='<?php echo $kategori; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('kategori'); ?></div>
-                            </div>
-                            
-                            <?php
-                            if (form_error('type')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="type" class="col-md-2 control-label">Type</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="type" name="type" value='<?php echo $type; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('type'); ?></div>
-                            </div>
-                            
-                            <?php
-                            if (form_error('brand')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="brand" class="col-md-2 control-label">Brand</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="brand" name="brand" value='<?php echo $brand; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('brand'); ?></div>
-                            </div>
-                            
-                            
-                            <?php
-                            if (form_error('min_stok')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="min_stok" class="col-md-2 control-label">Minimal Stok</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="min_stok" name="min_stok" value='<?php echo $min_stok; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('min_stok'); ?></div>
-                            </div>
-                            
-                            <?php
-                            if (form_error('stok')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="stok" class="col-md-2 control-label">Stok</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="stok" name="stok" value='<?php echo $stok; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('stok'); ?></div>
-                            </div>
-                            
-                            <?php
-                            if (form_error('modal')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="modal" class="col-md-2 control-label">Modal</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="modal" name="modal" value='<?php echo $modal; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('modal'); ?></div>
-                            </div>
-                            <?php
-                            if (form_error('harga')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="harga" class="col-md-2 control-label">Harga</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="harga" name="harga" value='<?php echo $harga; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('harga'); ?></div>
-                            </div>
-                            <?php
-                            if (form_error('posisi')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="posisi" class="col-md-2 control-label">Posisi</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control flat" id="posisi" name="posisi" value='<?php echo $posisi; ?>' readonly>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('posisi'); ?></div>
-                            </div>
-                            <?php
-                            if (form_error('keterangan')) {
-                                echo '<div class="form-group has-error">';
-                            }else{
-                                echo '<div class="form-group">';
-                            }
-                            ?>
-                                <label for="keterangan" class="col-md-2 control-label">Keterangan</label>
-                                <div class="col-md-3">
-                                    <textarea class="form-control flat" id="keterangan" name="keterangan" readonly><?php echo $keterangan; ?></textarea>
-                                </div>
-                                <div class="col-md-4"><?php echo form_error('keterangan'); ?></div>
-                            </div>
-                        </form>
-                        <div class="cleaner_h10"></div>
-                        <div class="box-button">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="<?php echo base_url('barang/addStok/'.$kd_barang);?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Tambah Stok</a>
-                                    <a href="<?php echo base_url('barang/update/'.$kd_barang);?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> Update</a>
-                                    <a href="#deleteModal" class="btn btn-default flat" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $kd_barang; ?>')"><i class="fa fa-trash fa-fw"></i> Delete</a>
-                                </div>
-                            </div>
-                            <div class="cleaner_h3"></div>
+                            <div class="col-md-4"><?php echo form_error('kd_barang'); ?></div>
                         </div>
-                        <div class="cleaner_h20"></div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
+                        
+                        <?php
+                        if (form_error('nama_barang')) {
+                            echo '<div class="form-group has-error">';
+                        }else{
+                            echo '<div class="form-group">';
+                        }
+                        ?>
+                        <label for="nama_barang" class="col-md-2 control-label">Nama Barang</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control flat" id="nama_barang" name="nama_barang" value='<?php echo $kategori." ".$type; ?>' readonly>
+                        </div>
+                        <div class="col-md-4"><?php echo form_error('nama_barang'); ?></div>
+                    </div>
+                    
+                    <?php
+                    if (form_error('kategori')) {
+                        echo '<div class="form-group has-error">';
+                    }else{
+                        echo '<div class="form-group">';
+                    }
+                    ?>
+                    <label for="kategori" class="col-md-2 control-label">Kategori</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control flat" id="kategori" name="kategori" value='<?php echo $kategori; ?>' readonly>
+                    </div>
+                    <div class="col-md-4"><?php echo form_error('kategori'); ?></div>
+                </div>
+                
+                <?php
+                if (form_error('type')) {
+                    echo '<div class="form-group has-error">';
+                }else{
+                    echo '<div class="form-group">';
+                }
+                ?>
+                <label for="type" class="col-md-2 control-label">Type</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control flat" id="type" name="type" value='<?php echo $type; ?>' readonly>
+                </div>
+                <div class="col-md-4"><?php echo form_error('type'); ?></div>
             </div>
+            
+            <?php
+            if (form_error('brand')) {
+                echo '<div class="form-group has-error">';
+            }else{
+                echo '<div class="form-group">';
+            }
+            ?>
+            <label for="brand" class="col-md-2 control-label">Brand</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control flat" id="brand" name="brand" value='<?php echo $brand; ?>' readonly>
+            </div>
+            <div class="col-md-4"><?php echo form_error('brand'); ?></div>
         </div>
+        
+        
+        <?php
+        if (form_error('min_stok')) {
+            echo '<div class="form-group has-error">';
+        }else{
+            echo '<div class="form-group">';
+        }
+        ?>
+        <label for="min_stok" class="col-md-2 control-label">Minimal Stok</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control flat" id="min_stok" name="min_stok" value='<?php echo $min_stok; ?>' readonly>
+        </div>
+        <div class="col-md-4"><?php echo form_error('min_stok'); ?></div>
+    </div>
+    
+    <?php
+    if (form_error('stok')) {
+        echo '<div class="form-group has-error">';
+    }else{
+        echo '<div class="form-group">';
+    }
+    ?>
+    <label for="stok" class="col-md-2 control-label">Stok</label>
+    <div class="col-md-3">
+        <input type="text" class="form-control flat" id="stok" name="stok" value='<?php echo $stok; ?>' readonly>
+    </div>
+    <div class="col-md-4"><?php echo form_error('stok'); ?></div>
+</div>
 
-                                    </section><!-- /.content -->
+<?php 
+if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2) {
+    ?>
+    <?php
+    if (form_error('modal')) {
+        echo '<div class="form-group has-error">';
+    }else{
+        echo '<div class="form-group">';
+    }
+    ?>
+    <label for="modal" class="col-md-2 control-label">Modal</label>
+    <div class="col-md-3">
+        <input type="text" class="form-control flat" id="modal" name="modal" value='<?php echo $modal; ?>' readonly>
+    </div>
+    <div class="col-md-4"><?php echo form_error('modal'); ?></div>
+</div>
 
-    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 class="modal-title" id="deleteLabel">Delete</h3>
-                </div>
-                <div class="modal-body">
-                    <h4>Barang ini akan dihapus, Anda Yakin?</h4>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" href="javascript:;">Tidak</a>
-                    <a class="btn btn-primary" id="deleteModalFunction" href="javascript:;">Ya</a>
-                </div>
+
+
+<?php
+}
+?>
+
+<?php
+if (form_error('harga')) {
+    echo '<div class="form-group has-error">';
+}else{
+    echo '<div class="form-group">';
+}
+?>
+<label for="harga" class="col-md-2 control-label">Harga</label>
+<div class="col-md-3">
+    <input type="text" class="form-control flat" id="harga" name="harga" value='<?php echo $harga; ?>' readonly>
+</div>
+<div class="col-md-4"><?php echo form_error('harga'); ?></div>
+</div>
+<?php
+if (form_error('posisi')) {
+    echo '<div class="form-group has-error">';
+}else{
+    echo '<div class="form-group">';
+}
+?>
+<label for="posisi" class="col-md-2 control-label">Posisi</label>
+<div class="col-md-3">
+    <input type="text" class="form-control flat" id="posisi" name="posisi" value='<?php echo $posisi; ?>' readonly>
+</div>
+<div class="col-md-4"><?php echo form_error('posisi'); ?></div>
+</div>
+<?php
+if (form_error('keterangan')) {
+    echo '<div class="form-group has-error">';
+}else{
+    echo '<div class="form-group">';
+}
+?>
+<label for="keterangan" class="col-md-2 control-label">Keterangan</label>
+<div class="col-md-3">
+    <textarea class="form-control flat" id="keterangan" name="keterangan" readonly><?php echo $keterangan; ?></textarea>
+</div>
+<div class="col-md-4"><?php echo form_error('keterangan'); ?></div>
+</div>
+</form>
+<div class="cleaner_h10"></div>
+<div class="box-button">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="<?php echo base_url('barang/addStok/'.$kd_barang);?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> Tambah Stok</a>
+            <a href="<?php echo base_url('barang/update/'.$kd_barang);?>" class="btn btn-default flat"><i class="fa fa-list fa-fw"></i> Update</a>
+            <a href="#deleteModal" class="btn btn-default flat" role="button" data-toggle="modal" onclick="deleteModalFunction('<?php echo $kd_barang; ?>')"><i class="fa fa-trash fa-fw"></i> Delete</a>
+        </div>
+    </div>
+    <div class="cleaner_h3"></div>
+</div>
+<div class="cleaner_h20"></div>
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+</div>
+</div>
+
+</section><!-- /.content -->
+
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="deleteLabel">Delete</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Barang ini akan dihapus, Anda Yakin?</h4>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" href="javascript:;">Tidak</a>
+                <a class="btn btn-primary" id="deleteModalFunction" href="javascript:;">Ya</a>
             </div>
         </div>
     </div>
-    <script>
-    function deleteModalFunction(temp_id){
-        $("#deleteModalFunction").attr("href","<?php echo base_url();?>barang/delete/"+temp_id);
-    }
-    </script>
+</div>
+<script>
+function deleteModalFunction(temp_id){
+    $("#deleteModalFunction").attr("href","<?php echo base_url();?>barang/delete/"+temp_id);
+}
+</script>

@@ -123,6 +123,10 @@
             <div class="col-md-4"><?php echo form_error('stok'); ?></div>
         </div>
 
+        <?php 
+        if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2) {
+            ?>
+
         <?php
         if (form_error('modal')) {
             echo '<div class="form-group has-error">';
@@ -136,6 +140,13 @@
         </div>
         <div class="col-md-4"><?php echo form_error('modal'); ?></div>
     </div>
+
+
+
+<?php
+}
+?>
+    
     <?php
     if (form_error('harga')) {
         echo '<div class="form-group has-error">';

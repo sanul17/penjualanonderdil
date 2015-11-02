@@ -109,8 +109,10 @@
             <label for="level" class="col-md-2 control-label">Level User</label>
             <div class="col-md-2">
                 <select id="level" name="level" class="form-control flat">
-                    <option value="admin">Admin</option>
-                    <option value="gudang">Gudang</option>
+                    <option value="2">Super Admin</option>
+                    <option value="3">Admin Pembelian</option>
+                    <option value="4">Admin Penjualan</option>
+                    <option value="5">Gudang</option>
             </select>
         </div>
         <div class="col-md-4"><?php echo form_error('level'); ?></div>

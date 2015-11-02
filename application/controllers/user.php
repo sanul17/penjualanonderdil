@@ -6,6 +6,13 @@ class User extends CI_Controller {
 	 * @author : Adam Syufi Ikhsanul Khair
 	 */
 	
+  public function __construct()
+  {
+    parent::__construct();
+    if ($this->session->userdata('level') != 1) {
+    	redirect('dashboard');
+    }
+  }
 	function index(){
 		$dt['title']='Pasti Jaya Motor | User';
 		$cek = $this->session->userdata('logged_in');

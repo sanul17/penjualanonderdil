@@ -197,7 +197,7 @@ $("#kd_barang_add").change(function(){
     });
 });
 
-$("#add").on('click', function(event) {
+$(document).on('click', "#add", function(event) {
     event.preventDefault();
     var kd_barang = $(this).closest('#form-add-order').find('#kd_barang').val();
     var nama_barang = $(this).closest('#form-add-order').find('#nama_barang').val();
@@ -235,7 +235,10 @@ $("#add").on('click', function(event) {
     $(this).closest('#modalAddPembelianBarang').modal('hide');
     $('#submit').removeAttr('disabled');
 
-    $(".delbutton").on('click', function(event) {
+
+});
+    
+    $(document).on('click', '.delbutton', function(event) {
         event.preventDefault();
         $(this).closest('tr.gradeX').remove();var all_sub_total = $('.subtotal');
         var total_val = 0;
@@ -252,8 +255,6 @@ $("#add").on('click', function(event) {
         }
 
     });
-
-});
 
 
     </script>

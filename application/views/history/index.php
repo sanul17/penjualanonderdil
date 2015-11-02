@@ -73,7 +73,7 @@
                                     <tr>
                                         <td><?php echo $value->kd_barang; ?></td>
                                         <td><?php echo $value->nama_barang; ?></td>
-                                        <td><?php echo gmdate('Y-m-d H:i:s', $value->tgl_history); ?></td>
+                                        <td><?php echo date('Y-m-d H:i:s', $value->tgl_history); ?></td>
                                         <td><?php echo $value->qty_masuk; ?></td>
                                         <td><?php echo $value->qty_keluar; ?></td>
                                         <td><?php echo $type; ?></td>

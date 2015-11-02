@@ -6,6 +6,13 @@ class Report extends CI_Controller {
 	 * @author : Adam Syufi Ikhsanul Khair
 	 */
 	
+  public function __construct()
+  {
+    parent::__construct();
+    if ($this->session->userdata('level') != 1 && $this->session->userdata('level') != 2 && $this->session->userdata('level') != 3 && $this->session->userdata('level') != 4) {
+    	redirect('dashboard');
+    }
+  }
 	function index(){
 		$dt['title']='Pasti Jaya Motor | Home';
 		$cek = $this->session->userdata('logged_in');

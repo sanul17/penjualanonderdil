@@ -13,7 +13,7 @@
             <section class="content">
                 <?php
 
-                if ($this->session->userdata('level') == 'owner' || $this->session->userdata('level') == 'admin') {
+                if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2) {
                     ?>
                     <p class="lead">Selamat Datang di Sistem Penjualan Pasti Jaya Motor</p>
                     <ul>
@@ -35,7 +35,7 @@
                         <li><h5>Orderan -> Orderan yang belum dikonfirmasi</h5></li>
                     </ul>
                     <?php
-                }else if ($this->session->userdata('level') == 'sales') {
+                }else if ($this->session->userdata('level') == 6) {
                     ?>
                     <p class="lead">Selamat Datang di Sistem Penjualan Pasti Jaya Motor</p>
                     <ul>

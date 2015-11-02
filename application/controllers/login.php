@@ -36,12 +36,36 @@ class Login extends CI_Controller {
 				$sess_data['last_login'] = date('D-M-Y');
 				if(!$login_as_admin){
 				$sess_data['nama'] = $value->nama_sales;
-				$sess_data['level'] = 'sales';
+				$sess_data['level'] = 6;
 				$sess_data['kd_sales'] = $value->kd_sales;
 			}else{
 				$sess_data['nama'] = $value->nama_user;
 				$sess_data['level'] = $value->level;
 				$sess_data['kd_user'] = $value->kd_user;
+			}
+			switch ($sess_data['level']) {
+				case 1:
+				$sess_data['level_name'] = 'Owner';
+					break;
+				case 2:
+				$sess_data['level_name'] = 'Super Admin';
+					break;
+				case 3:
+				$sess_data['level_name'] = 'Admin Pembelian';
+					break;
+				case 4:
+				$sess_data['level_name'] = 'Admin Penjualan';
+					break;
+				case 5:
+				$sess_data['level_name'] = 'Gudang';
+					break;
+				case 6:
+				$sess_data['level_name'] = 'Sales';
+					break;
+				
+				default:
+				$sess_data['level_name'] = 'Undentified';
+					break;
 			}
 			$this->session->set_userdata($sess_data);
 			redirect(base_url('dashboard'));
