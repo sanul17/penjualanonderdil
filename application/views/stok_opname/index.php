@@ -44,7 +44,7 @@
                                     <th>Kode Stok Opname</th>
                                     <th>Tanggal Stok Opname</th>
                                     <th>Total Barang</th>
-                                    <th>User</th>
+                                    <th>Last User</th>
                                     <th>Status</th>
                                     <th style="text-align:center; width:80px;"  class="action">Action</th> 
                                 </tr>
@@ -127,6 +127,6 @@
        "aoColumnDefs": [
        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
        ],
-        "order": [[ 1, "desc" ]]
+        "order": [[ 4, "desc" ], [ 1, "desc" ]]
    });    
 </script>

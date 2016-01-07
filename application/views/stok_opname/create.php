@@ -74,7 +74,7 @@
                                             <th style="width:150px;">Kode Barang</th>
                                             <th>Nama Barang</th>
                                             <th>Brand</th>
-                                            <!--<th style="width:150px;">Stok</th>-->
+                                            <th style="width:150px;">Stok</th>
                                             <th style="width:150px;">Stok Fisik</th>
                                             <th style="width:150px;">Action</th>
                                             <!-- <th style="width:150px;">Selisih</th> -->
@@ -157,12 +157,12 @@ $(document).on('click', "#add", function(event) {
                 var tdKode = $('<td>'+val.kd_barang+'<input type="hidden" class="kd_barang form-control flat" name="kd_barang[]" readonly value="'+val.kd_barang+'"></td>');
                 var tdNama = $('<td>'+val.nama_barang+'</td>');
                 var tdBrand = $('<td>'+val.brand+'</td>');
-                // var tdStok = $('<td>'+val.stok+'<input type="hidden" class="form-control flat" name="stok_komp[]" value="'+val.stok+'"></td>');
+                var tdStok = $('<td>'+val.stok+'<input type="hidden" class="form-control flat" name="stok_komp[]" value="'+val.stok+'"></td>');
                 var tdStokFisik = $('<td><input type="text" class="form-control flat" name="stok_fisik[]" value="0"></td>');
-                $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
+                var $tdDelbutton = $('<td style="text-align:center; width:150px;" ><a class="btn btn-default flat delbutton"><i class="fa fa-trash fa-fw"></i> Delete</a></td>');
             //var tdSelisih = $('<td>''<input type="hidden" class="form-control flat" name="stok_komp[]" value="'+val.stok+'"></td>');
-            //row.append(tdKode).append(tdNama).append(tdBrand).append(tdStok).append(tdStokFisik).append($tdDelbutton);
-            row.append(tdKode).append(tdNama).append(tdBrand).append(tdStokFisik).append($tdDelbutton);
+            row.append(tdKode).append(tdNama).append(tdBrand).append(tdStok).append(tdStokFisik).append($tdDelbutton);
+            //row.append(tdKode).append(tdNama).append(tdBrand).append(tdStokFisik).append($tdDelbutton);
             row.appendTo('tbody');
         };
     });

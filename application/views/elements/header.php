@@ -31,6 +31,9 @@
           <script type="text/javascript" src="<?php echo base_url('assets/datepicker/bootstrap-datepicker.js')?>"></script>  
       </head>
       <body class="skin-blue">
+        <script type="text/javascript">
+            var BASE_URL = "<?php echo base_url(); ?>";
+        </script>
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="<?php echo base_url('dashboard')?>" class="logo">

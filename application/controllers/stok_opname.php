@@ -54,9 +54,9 @@ class Stok_opname extends CI_Controller {
 						*/
 						$create_detail['kd_opname'] = $create['kd_opname'];
 						$create_detail['kd_barang'] = $kd_barang[$i];
-						$create_detail['stok_komp'] = 0;
+						$create_detail['stok_komp'] = $this->app_model->getSisaStok($kd_barang[$i]);
 						$create_detail['stok_fisik'] = $stok_fisik[$i];
-						$create_detail['selisih'] = 0;
+						$create_detail['selisih'] = $create_detail['stok_fisik'] - $create_detail['stok_komp'];
 
 						$result2 = $this->app_model->insertData('tbl_stok_opname_detail', $create_detail);
 						//var_dump($create_detail);
@@ -145,9 +145,9 @@ class Stok_opname extends CI_Controller {
 						*/
 						$add_detail['kd_opname'] = $id_add['kd_opname'];
 						$add_detail['kd_barang'] = $kd_barang[$i];
-						$add_detail['stok_komp'] = 0;
+						$add_detail['stok_komp'] = $this->app_model->getSisaStok($kd_barang[$i]);
 						$add_detail['stok_fisik'] = $stok_fisik[$i];
-						$add_detail['selisih'] = 0;
+						$add_detail['selisih'] = $add_detail['stok_fisik'] - $add_detail['stok_komp'];
 
 						$result2 = $this->app_model->insertData('tbl_stok_opname_detail', $add_detail);
 						//var_dump($add_detail);
@@ -297,6 +297,86 @@ class Stok_opname extends CI_Controller {
 		}else{
 			redirect(base_url('login'));
 		}
+	}
+
+	function detail($id){
+		$cek = $this->session->userdata('logged_in');
+		$dt['title']='Pasti Jaya Motor | Detail Stok Opname';
+		$detail['kd_opname'] = $id;
+		$data['kd_opname'] = $detail['kd_opname'];
+		$data['data_opname'] = $this->app_model->manualQuery('SELECT a.kd_opname, a.tgl_opname, (select count(kd_barang) from tbl_stok_opname_detail where kd_opname = a.kd_opname) as total, a.kd_user, b.nama_user, a.status from tbl_stok_opname a left join tbl_user b on a.kd_user = b.kd_user where a.kd_opname = "'.$id.'"')->result();
+		$data['data_opname_detail'] = $this->app_model->manualQuery('select b.kd_barang, CONCAT(d.kategori, " ", d.type) as nama_barang, c.brand, b.stok_fisik, b.stok_komp, b.selisih from tbl_stok_opname a left join tbl_stok_opname_detail b on a.kd_opname = b.kd_opname left join tbl_barang c on b.kd_barang = c.kd_barang left join tbl_tipe_kategori d on c.id_tipe_kategori = d.id_tipe_kategori where a.kd_opname = "'.$id.'"')->result();
+
+		foreach ($data['data_opname'] as $key => $value) {
+			$data['kd_opname'] = $value->kd_opname;
+			$data['tgl_opname'] = $value->tgl_opname;
+			$data['kd_user'] = $value->kd_user;
+			$data['nama_user'] = $value->nama_user;
+			switch ($value->status) {
+				case 0:
+			$data['status'] = 'Pending';
+					break;
+				
+				case 1:
+			$data['status'] = 'Completed';
+					break;
+				
+				default:
+			$data['status'] = 'Pending';
+					break;
+			}
+		}
+
+		if (!empty($cek)) {
+			$this->load->view('elements/header', $dt);
+			$this->load->view('stok_opname/detail', $data);
+			$this->load->view('elements/footer');
+
+		}else{
+			redirect(base_url('login'));
+		}
+	}
+
+function delete($kd_opname, $kd_barang){
+		$delete['kd_opname'] = $kd_opname;
+		$delete['kd_barang'] = $kd_barang;
+		$cek = $this->session->userdata('logged_in');
+		if (!empty($cek)) {
+			if(isset($kd_barang) && isset($kd_opname)){
+				$pesan=($this->app_model->deleteData('tbl_stok_opname_detail', $delete) ? 'Delete Barang Sukses' : 'Delete Barang Gagal');
+				echo $pesan;
+			}else{
+			echo "No Parameter";
+			}
+		}else{
+			echo "Not Login";
+		}
+
+	}
+function update(){
+		$id_update['kd_opname'] = $this->input->post('kd_opname');
+		$id_update['kd_barang'] = $this->input->post('kd_barang');
+		$update['stok_fisik'] = $this->input->post('stok_fisik');
+		$cek = $this->session->userdata('logged_in');
+		if (!empty($cek)) {
+			if(isset($id_update['kd_opname']) && isset($id_update['kd_barang']) && isset($update['stok_fisik'])){
+
+		$update['stok_komp'] = $this->app_model->getSisaStok($id_update['kd_barang']);
+		$update['selisih'] = $update['stok_fisik'] - $update['stok_komp'];
+				$pesan=($this->app_model->updateData('tbl_stok_opname_detail', $update, $id_update) ? 'Update Stok Fisik Sukses' : 'Update Stok Fisik Gagal');
+				$data['stok_fisik'] = $update['stok_fisik'];
+				$data['stok_komp'] = $update['stok_komp'];
+				$data['selisih'] = $update['selisih'];
+				$data['message'] = $pesan;
+		header('Content-Type: application/json');
+				echo json_encode($data);
+			}else{
+			echo "No Parameter";
+			}
+		}else{
+			echo "Not Login";
+		}
+
 	}
 
 	public function getBarang(){
