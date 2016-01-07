@@ -49,6 +49,7 @@ class Penjualan extends CI_Controller {
 			$arrayPenjualan['tgl_penjualan'] = date('Y-m-d H:i:s', $data['tgl_penjualan']);
 			$arrayPenjualan['total_harga'] = number_format($data['total_harga'], 2, ",", ".");
 		}
+		header('Content-Type: application/json');
 		echo json_encode($arrayPenjualan);
 	}
 

@@ -1,10 +1,3 @@
-   <style type="text/css">
-.show-detail-modal{
-    display: block;
-    cursor: pointer;
-}
-
-   </style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -38,13 +31,7 @@
                                     <th style="width:200px !important;">Total Pembayaran</th>
                                     <th style="width:200px !important;">Sisa Tagihan</th>
                                     <th style="width:150px !important;">Status</th>
-                                        <?php
-                                        if ($this->session->userdata['level'] == 'sales') {
-                                            ?>
-                                    <th clas=="action" style="width:150px; text-align:center; !important;">Action</th>
-                                    <?php
-                                }
-                                ?>
+                                    <th class=="action" style="width:150px; text-align:center; !important;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,9 +45,9 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $value->bulan; ?></td>
-                                        <td><a class="show-detail-modal" data-id="1" data-bul="$value->kd_bulan.'_'.$value->kd_tahun);?>"><?php echo number_format($value->total_tagihan, 2, ",", "."); ?></a></td>
-                                        <td><a class="show-detail-modal" data-id="2" data-bul="$value->kd_bulan.'_'.$value->kd_tahun);?>"><?php echo number_format($value->total_retur, 2, ",", "."); ?></a></td>
-                                        <td><a class="show-detail-modal" data-id="3" data-bul="$value->kd_bulan.'_'.$value->kd_tahun);?>"><?php echo number_format($value->total_pembayaran_tagihan, 2, ",", "."); ?></a></td>
+                                        <td><?php echo number_format($value->total_tagihan, 2, ",", "."); ?></td>
+                                        <td><?php echo number_format($value->total_retur, 2, ",", "."); ?></td>
+                                        <td><?php echo number_format($value->total_pembayaran_tagihan, 2, ",", "."); ?></td>
                                         <td><?php echo number_format($value->total_tagihan-$value->total_retur-$value->total_pembayaran_tagihan, 2, ",", "."); ?></td>
                                         <td><?php if ($value->total_tagihan-$value->total_retur > $value->total_pembayaran_tagihan) {
                                             echo "Belum Lunas";
@@ -69,13 +56,33 @@
                                         }
                                         ?></td>
                                         <?php
-                                        if ($this->session->userdata['level'] == 'sales') {
+                                        if ($this->session->userdata['level'] == 4) {
                                             ?>
                                             <td style="text-align:center;">
                                                 <a class="btn btn-default" <?php if ($value->total_tagihan-$value->total_retur <= $value->total_pembayaran_tagihan) {
                                                     echo "disabled";
                                                 } ?> href="<?php echo base_url('tagihan/bayar_tagihan/'.$value->kd_bulan.'_'.$value->kd_tahun);?>">Bayar Tagihan</a>
                                             </td>
+                                            <?php
+                                        }elseif ($this->session->userdata['level'] == 1) {
+                                            ?>
+
+                                        <td style="text-align:center;">
+                                            <div class="btn-group">
+                                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                                                    Action
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="<?php echo base_url('tagihan/update/'.$value->kd_bulan.'_'.$value->kd_tahun);?>">Process</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?php echo base_url('tagihan/detail/'.$value->kd_bulan.'_'.$value->kd_tahun);?>">Detail</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                             <?php
                                         }
                                         ?>
@@ -110,22 +117,6 @@
     </section><!-- /.content -->
 
 
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content flat">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="modal-title" id="myModalLabel"></h3>
-        </div>
-        <div class="modal-body">
-
-        </div>
-        <div class="modal-footer">
-        </div>
-    </div>
-</div>
-</div>
-
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
@@ -135,12 +126,5 @@
 $("#dataTable").DataTable({
 
     "order": [[ 0, "desc" ]]
-});  
-
-$('.show-detail-modal').on('click', function(event) {
-    event.preventDefault();
-    var bul_tah = $(this).data('bul');
-    var id = $(this).data('id');
-    $('#myModal').modal('show');
-});  
+}); 
 </script>

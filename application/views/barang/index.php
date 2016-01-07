@@ -34,6 +34,7 @@
                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2 || $this->session->userdata('level') == 3 || $this->session->userdata('level') == 4 ) {
                       ?>
                       <a href="<?php echo base_url('barang/create')?>" class="btn btn-default flat"><i class="fa fa-plus fa-fw"></i> New</a>
+                      <a href="<?php echo base_url('stok_opname')?>" class="btn btn-default flat"><i class="fa fa-cubes fa-fw"></i> Stok Opname</a>
                       <?php
                     }
                     ?>
@@ -59,7 +60,8 @@
                 ?>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Total Stok Barang : <?php echo $total_stok['total_stok']; ?></h3>
+                    <h3>Total Stok Barang : <?php echo $total_stok;?></h3>
+                    <h3>Total Value : <?php echo $total_value;?></h3>
                   </div>
                 </div>
                 <div class="cleaner_h3"></div>
@@ -75,6 +77,7 @@
                       <th>Stok</th>
                       <th class="none">Modal</th>
                       <th class="none">Harga</th>
+                      <th >Value</th>
                       <th class="none">Posisi</th>
                       <th class="none">Keterangan</th>
                       <th style="text-align:center;"  class="action desktop">Action</th>
@@ -91,6 +94,7 @@
                       <th>Stok</th>
                       <th>Modal</th>
                       <th>Harga</th>
+                      <th>Value</th>
                       <th>Posisi</th>
                       <th>Keterangan</th>
                       <th style="text-align:center;">Action</th>
@@ -250,6 +254,7 @@
         { "data": "stok" },
         { "data": "modal" },
         { "data": "harga" },
+        { "data": "value" },
         { "data": "posisi" },
         { "data": "keterangan" },
         { "data": "action" }

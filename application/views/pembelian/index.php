@@ -60,36 +60,6 @@
                                     <th style="text-align:center; width:80px;"  class="action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                foreach ($data as $key => $value) {
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $value->kd_pembelian; ?></td>
-                                        <td><?php echo $value->nama_supplier; ?></td>
-                                        <td><?php echo date('Y-m-d H:i:s', $value->tgl_pembelian); ?></td>
-                                        <td><?php echo $value->nama_user; ?></td>
-                                        <td style="text-align:center;">
-                                            <div class="btn-group">
-                                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                                                    Action
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="<?php echo base_url('pembelian/update/'.$value->kd_pembelian);?>">Update</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo base_url('pembelian/detail/'.$value->kd_pembelian);?>">Detail</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Kode Pembelian</th>
@@ -107,16 +77,43 @@
 
     </section><!-- /.content -->
 
-<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
-<script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>
+    <script type="text/javascript">
     
     $("#dataTable").DataTable({
         responsive: true,
-       "aoColumnDefs": [
-       { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
-       ],
-        "order": [[ 2, "desc" ]]
-   });    
-</script>
+        "order": [[ 2, "desc" ]],
+        "aoColumnDefs": [
+        { 'bSortable': false, 'bSearchable' : false, 'aTargets': [ 'action' ] }
+        ],
+        "order": [[ 4, "desc" ]], 
+        "ajax": "<?php echo base_url('pembelian/getPembelian')?>",
+        "deferRender": true,
+       /*
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td class="bg-light-blue" colspan="11">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        },
+        */
+        "columns": [
+        { "data": "kd_pembelian" },
+        { "data": "nama_supplier" },
+        { "data": "tgl_pembelian" },
+        { "data": "nama_user" },
+        { "data": "action" }
+        ]
+    });    
+    </script>

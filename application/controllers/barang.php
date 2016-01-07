@@ -10,7 +10,8 @@ class Barang extends CI_Controller {
 		$dt['title']='Pasti Jaya Motor | Barang';
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
-			$data['total_stok'] = $this->app_model->manualQuery('select  SUM(stok) as total_stok from tbl_barang')->row_array();
+			$data['total_stok'] = $this->app_model->manualQuery('select  SUM(stok) as total_stok from tbl_barang')->row()->total_stok;
+			$data['total_value'] = "Rp. ".number_format($this->app_model->manualQuery('select  SUM(stok * modal) as total_value from tbl_barang')->row()->total_value, 2, ",", ".");
 			$this->load->view('elements/header', $dt);
 			$this->load->view('barang/index', $data);
 			$this->load->view('elements/footer');
@@ -25,7 +26,7 @@ class Barang extends CI_Controller {
 	}
 
 	function getBarang(){
-		$arrayBarang['data'] = $this->app_model->manualQuery('select *, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
+		$arrayBarang['data'] = $this->app_model->manualQuery('select *, (a.stok * a.modal) as value, CONCAT(kategori, " ", type, " ", brand) as nama_barang from tbl_barang a left join tbl_tipe_kategori b on a.id_tipe_kategori = b.id_tipe_kategori')->result_array();
 		foreach($arrayBarang['data'] as $i => $data) {
 			$data['action'] = "                                                <div class=\"btn-group\">
 			<a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
@@ -47,9 +48,12 @@ class Barang extends CI_Controller {
 			</li>
 			</ul>
 			</div>";
-
+			$data['modal'] = "Rp. ".number_format($data['modal'], 2, ",", ".");
+			$data['harga'] = "Rp. ".number_format($data['harga'], 2, ",", ".");
+			$data['value'] = "Rp. ".number_format($data['value'], 2, ",", ".");
 			$arrayBarang['data'][$i] = $data;
 		}
+		header('Content-Type: application/json');
 		echo json_encode($arrayBarang);
 	}
 

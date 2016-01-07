@@ -227,6 +227,25 @@ class App_model extends CI_Model {
 		}	
 		return "RP".$kd;
 	}
+
+	public function getMaxKodeStokOpname()
+	{
+		$q = $this->db->query("select MAX(RIGHT(kd_opname, 8)) as kd_max from tbl_stok_opname");
+		$kd = "";
+		if($q->num_rows()>0)
+		{
+			foreach($q->result() as $k)
+			{
+				$tmp = ((int)$k->kd_max)+1;
+				$kd = sprintf("%08s", $tmp);
+			}
+		}
+		else
+		{
+			$kd = "00000001";
+		}	
+		return "SO".$kd;
+	}
 	
 	public function getSisaStok($kd_barang)
 	{

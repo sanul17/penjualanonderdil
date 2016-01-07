@@ -152,21 +152,21 @@
                         <?php
                         if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2 || $this->session->userdata('level') == 3 || $this->session->userdata('level') == 4 ) {
                             ?>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-cubes"></i>
-                                <span>Barang</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url('tipe_kategori')?>"><i class="fa fa-angle-double-right"></i>Tipe Kategori</a></li>
-                                <li><a href="<?php echo base_url('barang')?>"><i class="fa fa-angle-double-right"></i><span>Stok Barang</span> <span class="barang_notification"></span></a></li>
-                                <li><a href="<?php echo base_url('barang/importexcel')?>"><i class="fa fa-angle-double-right"></i>Import Excel</a></li>
-                            </ul>
-                        </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-cubes"></i>
+                                    <span>Barang</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url('tipe_kategori')?>"><i class="fa fa-angle-double-right"></i>Tipe Kategori</a></li>
+                                    <li><a href="<?php echo base_url('barang')?>"><i class="fa fa-angle-double-right"></i><span>Stok Barang</span> <span class="barang_notification"></span></a></li>
+                                    <li><a href="<?php echo base_url('barang/importexcel')?>"><i class="fa fa-angle-double-right"></i>Import Excel</a></li>
+                                </ul>
+                            </li>
                             <?php
                         }else if($this->session->userdata('level') == 5){
-                                ?>
+                            ?>
 
 
                             <li>
@@ -230,12 +230,12 @@
                                         ?>
                                         <li><a href="<?php echo base_url('orderan')?>"><i class="fa fa-angle-double-right"></i> <span>Orderan</span> <span class="order_notification"></span></a></li>
                                         <li><a href="<?php echo base_url('penjualan')?>"><i class="fa fa-angle-double-right"></i> Penjualan</a></li>
-                                <?php
-                            }
-                            ?>
+                                        <?php
+                                    }
+                                    ?>
 
-                                    </ul>
-                                </li>
+                                </ul>
+                            </li>
                             <?php
                         }
                         ?>
@@ -260,12 +260,12 @@
                                     if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 2 || $this->session->userdata('level') == 4 ) {
                                         ?>
                                         <li><a href="<?php echo base_url('retur_penjualan')?>"><i class="fa fa-angle-double-right"></i>Retur Penjualan</a></li>
-                                <?php
-                            }
-                            ?>
-                                    </ul>
-                                </li>
-                                <?php
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </li>
+                            <?php
                         }
                         ?>
                         <?php

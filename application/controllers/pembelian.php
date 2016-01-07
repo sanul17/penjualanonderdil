@@ -20,15 +20,39 @@ class Pembelian extends CI_Controller {
 		$cek = $this->session->userdata('logged_in');
 		if (!empty($cek)) {	
 			$this_user = $this->session->userdata('kd_user');
-			$data['data'] = $this->app_model->manualQuery("SELECT a.kd_pembelian, a.kd_supplier, a.tgl_pembelian, a.kd_user, b.nama_supplier, c.nama_user from tbl_pembelian a left join tbl_supplier b on a.kd_supplier = b.kd_supplier left join tbl_user c on a.kd_user = c.kd_user")->result();
+			//$data['data'] = $this->app_model->manualQuery("SELECT a.kd_pembelian, a.kd_supplier, a.tgl_pembelian, a.kd_user, b.nama_supplier, c.nama_user from tbl_pembelian a left join tbl_supplier b on a.kd_supplier = b.kd_supplier left join tbl_user c on a.kd_user = c.kd_user")->result();
 			$this->load->view('elements/header', $dt);
-			$this->load->view('pembelian/index', $data);
+			$this->load->view('pembelian/index');
 			$this->load->view('elements/footer');
 		}else{
 			redirect(base_url('login'));
 		}
 	}
 
+	function getPembelian(){
+		$arrayPembelian['data'] = $this->app_model->manualQuery("SELECT a.kd_pembelian, a.kd_supplier, a.tgl_pembelian, a.kd_user, b.nama_supplier, c.nama_user from tbl_pembelian a left join tbl_supplier b on a.kd_supplier = b.kd_supplier left join tbl_user c on a.kd_user = c.kd_user")->result_array();
+		foreach($arrayPembelian['data'] as $i => $data) {
+			$data['action'] = "                                                <div class=\"btn-group\">
+			<a class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">
+			Action
+			<span class=\"caret\"></span>
+			</a>
+			<ul class=\"dropdown-menu\">
+			<li>
+			<a href=\"".base_url('pembelian/update/'.$data['kd_pembelian'])."\">Update</a>
+			</li>
+			<li>
+			<a href=\"".base_url('pembelian/detail/'.$data['kd_pembelian'])."\">Detail</a>
+			</li>
+			</ul>
+			</div>";
+
+			$arrayPembelian['data'][$i] = $data;
+			$arrayPembelian['tgl_pembelian'] = date('Y-m-d H:i:s', $data['tgl_pembelian']);
+		}
+		header('Content-Type: application/json');
+		echo json_encode($arrayPembelian);
+	}
 	function create(){
 		$dt['title']='Pasti Jaya Motor | Create pembelian';
 		$data['kd_pembelian'] = $this->app_model->getMaxKodePembelian();
