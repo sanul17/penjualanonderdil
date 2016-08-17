@@ -106,7 +106,7 @@
                ?>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Total Stok Barang : <?php echo $total_stok['total_stok']; ?></h3>
+                    <h3>Total Stok Barang : <?php echo $total_stok; ?></h3>
                   </div>
                 </div>
                 <div class="cleaner_h3"></div>
